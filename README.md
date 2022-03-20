@@ -9,8 +9,8 @@ The first things you need to do are cloning this repository and installing its
 dependencies:
 
 ```sh
-git clone https://github.com/Zilly-social/Zilly.git
-cd Zilly
+git clone https://github.com/LFGrow-Hackathon/lfgrow.git
+cd lfgrow
 yarn install
 ```
 
