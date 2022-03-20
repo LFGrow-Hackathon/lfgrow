@@ -27,5 +27,5 @@ VITE_REACT_APP_MORALIS_APPLICATION_ID=""
 You're then ready to launch the app on localhost
 
 ```sh
-yarn start
+yarn dev
 ```
