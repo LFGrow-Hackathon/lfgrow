@@ -3,7 +3,7 @@ import { useMoralis } from "react-moralis";
 import { Outlet, Routes, Route, NavLink } from "react-router-dom";
 import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
-import { login } from "@/login/login-users.js"
+import { login } from "@/lens/login-users.js";
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =

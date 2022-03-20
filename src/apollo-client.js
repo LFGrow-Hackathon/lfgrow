@@ -1,20 +1,24 @@
 // this is showing you how you use it with react for example
 // if your using node or something else you can import using
 // @apollo/client/core!
-import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from "@apollo/client";
+import { getAuthenticationToken } from "@/lens/utils/state";
 
-const httpLink = new HttpLink({ uri: 'https://api-mumbai.lens.dev/' });
+const httpLink = new HttpLink({ uri: "https://api-mumbai.lens.dev/" });
 
 // example how you can pass in the x-access-token into requests using `ApolloLink`
 const authLink = new ApolloLink((operation, forward) => {
   // Retrieve the authorization token from local storage.
   // if your using node etc you have to handle your auth different
-  const token = localStorage.getItem('accessToken');
+  // const token = localStorage.getItem('accessToken');
+  const token = getAuthenticationToken();
+  console.log("jwt token:", token);
+
 
   // Use the setContext method to set the HTTP headers.
   operation.setContext({
     headers: {
-      'x-access-token': token ? `Bearer ${token}` : ''
+      "x-access-token": token ? `Bearer ${token}` : ""
     }
   });
 
@@ -25,4 +29,4 @@ const authLink = new ApolloLink((operation, forward) => {
 export const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-})
+});
