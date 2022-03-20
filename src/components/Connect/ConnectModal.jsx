@@ -1,19 +1,27 @@
-import { Fragment, useRef } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import Metamask from "@/assets/WalletIcons/metamaskWallet.png"
-import WalletConnect from "@/assets/WalletIcons/wallet-connect.svg"
+import { Fragment, useRef } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import Metamask from "@/assets/WalletIcons/metamaskWallet.png";
+import WalletConnect from "@/assets/WalletIcons/wallet-connect.svg";
 
-export default function ConnectModal({isAuthModalVisible, setIsAuthModalVisible, authenticate}) {
-
-  const cancelButtonRef = useRef(null)
+export default function ConnectModal({
+  isAuthModalVisible,
+  setIsAuthModalVisible,
+  authenticate,
+}) {
+  const cancelButtonRef = useRef(null);
 
   /*
-  * This component can looks scarry but it does not do much, it's just the modal for the wallet connection.
-  * We took it from TailwindCss pre-made modal, that handles the responsiveness for us.
-  */
+   * This component can looks scarry but it does not do much, it's just the modal for the wallet connection.
+   * We took it from TailwindCss pre-made modal, that handles the responsiveness for us.
+   */
   return (
     <Transition.Root show={isAuthModalVisible} as={Fragment}>
-      <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setIsAuthModalVisible}>
+      <Dialog
+        as="div"
+        className="fixed z-10 inset-0 overflow-y-auto"
+        initialFocus={cancelButtonRef}
+        onClose={setIsAuthModalVisible}
+      >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
@@ -28,7 +36,10 @@ export default function ConnectModal({isAuthModalVisible, setIsAuthModalVisible,
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+          <span
+            className="hidden sm:inline-block sm:align-middle sm:h-screen"
+            aria-hidden="true"
+          >
             &#8203;
           </span>
           <Transition.Child
@@ -43,7 +54,10 @@ export default function ConnectModal({isAuthModalVisible, setIsAuthModalVisible,
             <div className="inline-block align-bottom bg-white rounded-2xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
               <div>
                 <div className="mt-3 text-center sm:mt-3">
-                  <Dialog.Title as="h3" className="text-2xl leading-6 font-medium text-gray-900">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-2xl leading-6 font-medium text-gray-900"
+                  >
                     Connect Wallet
                   </Dialog.Title>
                 </div>
@@ -73,12 +87,11 @@ export default function ConnectModal({isAuthModalVisible, setIsAuthModalVisible,
                   <img src={Metamask} alt={"Metamask"} />
                   Metamask
                 </button>
-                
               </div>
             </div>
           </Transition.Child>
         </div>
       </Dialog>
     </Transition.Root>
-  )
+  );
 }

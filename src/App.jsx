@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { Outlet, Routes, Route, NavLink } from 'react-router-dom';
+import { Outlet, Routes, Route, NavLink } from "react-router-dom";
 import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
 
 function App() {
-
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
+    useMoralis();
 
   /* ------------------------------- 
   Enable Web3 provider if the user isn't authentificated
@@ -17,9 +17,9 @@ function App() {
       enableWeb3({ provider: connectorId });
     }
   }, [isAuthenticated, isWeb3Enabled]);
-  
+
   function Layout() {
-    return(
+    return (
       <div>
         <div className="flex justify-center items-center space-x-10 p-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
           <NavLink to="/" className="text-white text-xl font-bold">
@@ -27,19 +27,16 @@ function App() {
           </NavLink>
           <Account />
         </div>
-          <Outlet />
+        <Outlet />
       </div>
-    )
+    );
   }
 
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route 
-            path="/"
-            element={<HomePage />}
-        /> 
-      </Route> 
+        <Route path="/" element={<HomePage />} />
+      </Route>
     </Routes>
   );
 }

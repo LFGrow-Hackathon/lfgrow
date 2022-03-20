@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import '@/index.css';
-import App from '@/App.jsx';
+import "@/index.css";
+import App from "@/App.jsx";
 import { MoralisProvider } from "react-moralis";
 
 /* ------------------------------- 
@@ -14,7 +14,7 @@ const SERVER_URL = import.meta.env.VITE_REACT_APP_MORALIS_SERVER_URL;
 const Application = () => {
   if (!APP_ID || !SERVER_URL) {
     throw new Error(
-      "Missing Moralis Application ID or Server URL. Make sure to set your .env file.",
+      "Missing Moralis Application ID or Server URL. Make sure to set your .env file."
     );
   }
   return (
@@ -30,5 +30,5 @@ ReactDOM.render(
       <Application />
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

@@ -4,7 +4,5 @@ import DisplayProfile from "@/components/DisplayProfile.jsx";
 export default function HomePage() {
   const { account } = useMoralis();
 
-  return (
-    <DisplayProfile address={account} />
-  )
+  return <DisplayProfile address={account} />;
 }
