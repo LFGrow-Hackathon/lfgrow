@@ -1,6 +1,7 @@
 import { getAddress, signText } from "@/ethers-service"; 
 import { gql } from "@apollo/client";
 import { apolloClient } from "@/apollo-client";
+import getProfiles from "@/lens/get-profiles.js"
 import { getAuthenticationToken, setAuthenticationToken } from "./utils/state";
 
 const AUTHENTICATION = `
@@ -58,6 +59,14 @@ export const login = async () => {
   const signature = await signText(challengeResponse.data.challenge.text);
   
   const accessTokens = await authenticate(address, signature);
+  
+  const request = {
+    ownedBy: [address]
+  }
+  
+  const { profiles } = await getProfiles(request)
+  
+  window.localStorage.setItem("profileId", profiles.items[0]?.id);
 
   setAuthenticationToken(accessTokens.data.authenticate.accessToken);
   // window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);

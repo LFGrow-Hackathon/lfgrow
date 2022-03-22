@@ -2,6 +2,7 @@ import { signedTypeData, splitSignature } from '@/ethers-service.js';
 import { lensHub } from '../utils/lens-hub';
 import { apolloClient } from '@/apollo-client.js';
 import { gql } from '@apollo/client'
+import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed.js'
 
 const CREATE_POST_TYPED_DATA = `
   mutation($request: CreatePublicPostRequest!) { 
@@ -46,8 +47,10 @@ function createPostTypedData(createPostTypedDataRequest) {
 }
 
 async function createPost() {
+  const profileId = localStorage.getItem('profileId');
+  
   const createPostRequest = {
-    profileId: "0xed",
+    profileId,
     contentURI: "ipfs://QmcfbLAciGdNFQJwiHTwoM287wE8hjprMq7pLNUUpQTfSc",
     collectModule: {
       emptyCollectModule: true
@@ -58,6 +61,10 @@ async function createPost() {
   } 
   
   try {
+    if (profileId === 'undefined') {
+      throw new Error("You do not have a Lens profile");
+    }
+
     const result = await createPostTypedData(createPostRequest);
     console.log('create post: createPostTypedData', result);
     
@@ -83,7 +90,12 @@ async function createPost() {
         deadline: typedData.value.deadline,
       },
     });
+    await tx.wait();
     console.log('create post: tx hash', tx.hash);
+    
+    const content = await pollUntilIndexed(tx.hash);
+    console.log(content)
+    
     return tx;
   } catch(error) {
     console.error(error);

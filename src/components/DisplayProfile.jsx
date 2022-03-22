@@ -12,7 +12,7 @@ export default function DisplayProfile(props) {
         {error && <>{JSON.stringify(error)}</>}
         <p>Numer of transactions: {Transactions?.total}</p>
         <p>
-          Age of address: {Transactions?.result.slice(-1)[0].block_timestamp}
+          Age of address: {Transactions?.result.slice(-1)[0]?.block_timestamp}
         </p>
       </div>
     );

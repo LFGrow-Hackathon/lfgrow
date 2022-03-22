@@ -119,7 +119,7 @@ export const pollUntilIndexed = async (txHash) => {
 
       console.log("pool until indexed: sleep for 1500 milliseconds then try again");
       // sleep for a second before trying again
-      await sleep(1500);
+      await sleep(4000);
     } else {
       // it got reverted and failed!
       throw new Error(response.reason);
