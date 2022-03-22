@@ -103,7 +103,6 @@ const getProfilesRequest = (request) => {
 ** Note how everything is plural, so you can pass multiple id/handle/address in the array. Example : ["0x01", "0x02"]
 */
 async function getProfiles(request) {
-  console.log("profiles: request", request);
 
   const profiles = await getProfilesRequest(request);
 
