@@ -1,6 +1,7 @@
 import { useMoralis } from "react-moralis";
 import DisplayProfile from "@/components/DisplayProfile.jsx";
-import { createProfile } from "@/lens/create-profile"; 
+import createProfile from "@/lens/create-profile"; 
+import CreatePublication from "@/components/CreatePublication.jsx"
 import { useState } from "react";
 
 
@@ -10,7 +11,6 @@ export default function HomePage() {
   
   const handleSubmit = event => {
     event.preventDefault();
-    console.log("sdfg");
     createProfile(handle);
   };
 
@@ -36,6 +36,7 @@ export default function HomePage() {
         </form>
       </div>
       <DisplayProfile address={account} />
+      <CreatePublication />
     </>
   );
 }

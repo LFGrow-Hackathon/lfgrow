@@ -28,7 +28,7 @@ const createProfileRequest = (createProfileRequest) => {
   });
 };
 
-export const createProfile = async (handleInput) => {
+const createProfile = async (handleInput) => {
   const address = getAddressFromSigner();
   console.log("create profile: address", address);
 
@@ -71,3 +71,5 @@ export const createProfile = async (handleInput) => {
 
   return result.data;
 };
+
+export default createProfile;
