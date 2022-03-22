@@ -1,10 +1,25 @@
 import { useEnsAddress, useNativeTransactions } from "react-moralis";
+import { profiles } from '@/lens/get-profile'
+import { useState } from "react";
+
 
 export default function DisplayProfile(props) {
+  const [ profile, setProfile] = useState()
+
   const { name } = useEnsAddress(props.address);
   const { data: Transactions, error } = useNativeTransactions({
     address: props?.address,
   });
+
+  const getProfile = async () => {
+    console.log('a')
+    let importProfile = await profiles({ownedBy: props?.address});
+    setProfile(importProfile.profiles.items[0])
+    console.log(profile)
+  }
+
+  getProfile()
+
 
   const NativeTransactions = () => {
     return (
@@ -25,6 +40,9 @@ export default function DisplayProfile(props) {
           <p>Address: {props?.address}</p>
           <p>ENS: {name}</p>
           <NativeTransactions />
+          <p>Name: {profile?.name || "No name available"}</p>
+          <p>Description: {profile?.bio || "No description available"}</p>
+          <p>Followers: {profile?.stats?.totalFollowers}</p>
         </>
       )}
     </div>
