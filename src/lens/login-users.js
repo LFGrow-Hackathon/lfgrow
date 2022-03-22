@@ -1,8 +1,8 @@
 import { getAddress, signText } from "@/ethers-service"; 
 import { gql } from "@apollo/client";
 import { apolloClient } from "@/apollo-client";
-import getProfiles from "@/lens/get-profiles.js"
-import { getAuthenticationToken, setAuthenticationToken } from "./utils/state";
+import getProfiles from "@/lens/get-profiles.js";
+import * as jose from "jose";
 
 const AUTHENTICATION = `
   mutation($request: SignedAuthChallenge!) { 
@@ -42,16 +42,68 @@ const generateChallenge = (address) => {
   });
 };
 
+const REFRESH_AUTHENTICATION = `
+  mutation($request: RefreshRequest!) { 
+    refresh(request: $request) {
+      accessToken
+      refreshToken
+    }
+ }
+`;
+
+const refreshAuth = (refreshToken) => {
+  return apolloClient.mutate({
+    mutation: gql(REFRESH_AUTHENTICATION),
+    variables: {
+      request: {
+        refreshToken,
+      },
+    },
+  });
+};
+
+const refresh = async () => {
+  const refreshToken = window.localStorage.getItem("refreshToken");
+  const accessToken = window.localStorage.getItem("accessToken");
+  let decodedRefresh = jose.decodeJwt(refreshToken);
+  let decodedAccess = jose.decodeJwt(accessToken);
+  
+  //Check if the accessToken is still valid
+  if ( decodedAccess.exp > Date.now()/1000) {
+    return true;
+  }
+
+  //Check if the RefreshToken is valid, if yes we refresh them.
+  if ( decodedRefresh.exp > Date.now()/1000) {
+    try {
+      const newAccessToken = await refreshAuth(
+        refreshToken
+      );
+      window.localStorage.setItem("accessToken", newAccessToken.data.refresh.accessToken);
+      window.localStorage.setItem("refreshToken", newAccessToken.data.refresh.refreshToken);
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+  // console.log("2", decodedAccess.exp > Date.now()/1000);
+  // console.log("2bis", decodedAccess.exp, Date.now()/1000);
+  //If both "if" failed, we return false to request a new challenge in login()
+  return false;
+};
+
 export const login = async () => {
   
-  if (getAuthenticationToken()) {
+  const address = await getAddress();
+  console.log("login: address", address);
+
+  const isTokenValid = await refresh();
+
+  if (isTokenValid) {
     console.log("login: already logged in");
     return;
   }
-
-  const address = await getAddress();
-  console.log("login: address", address);
-  
   // we request a challenge from the server
   const challengeResponse = await generateChallenge(address);
   
@@ -68,8 +120,8 @@ export const login = async () => {
   
   window.localStorage.setItem("profileId", profiles.items[0]?.id);
 
-  setAuthenticationToken(accessTokens.data.authenticate.accessToken);
-  // window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
-  // window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
+  // setAuthenticationToken(accessTokens.data.authenticate.accessToken);
+  window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
+  window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
   console.log("accesTokens", accessTokens);
 };
