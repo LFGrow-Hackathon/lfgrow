@@ -12,9 +12,8 @@ export default function DisplayProfile(props) {
   });
 
   const getProfile = async () => {
-    let importProfile = await getProfiles({ownedBy: props?.address});
-    setProfile(importProfile.profiles.items[0])
-    console.log(profile)
+    let { profiles } = await getProfiles({ownedBy: props?.address});
+    setProfile(profiles.items[0])
   }
 
   getProfile()
@@ -24,7 +23,7 @@ export default function DisplayProfile(props) {
     return (
       <div>
         {error && <>{JSON.stringify(error)}</>}
-        <p>Numer of transactions: {Transactions?.total}</p>
+        <p>Number of transactions: {Transactions?.total}</p>
         <p>
           Age of address: {Transactions?.result.slice(-1)[0]?.block_timestamp}
         </p>
