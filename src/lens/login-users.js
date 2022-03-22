@@ -1,4 +1,4 @@
-import { getAddress, signText } from "@/ethers-service"; 
+import { getAddress, signText } from "@/ethers-service";
 import { gql } from "@apollo/client";
 import { apolloClient } from "@/apollo-client";
 import getProfiles from "@/lens/get-profiles.js";
@@ -65,16 +65,21 @@ const refreshAuth = (refreshToken) => {
 const refresh = async () => {
   const refreshToken = window.localStorage.getItem("refreshToken");
   const accessToken = window.localStorage.getItem("accessToken");
+
+  if (accessToken === null || accessToken === "undefined") {
+    return false;
+  }
+
   let decodedRefresh = jose.decodeJwt(refreshToken);
   let decodedAccess = jose.decodeJwt(accessToken);
-  
-  //Check if the accessToken is still valid
-  if ( decodedAccess.exp > Date.now()/1000) {
+
+  //Check if the accessToken is expired or not
+  if (decodedAccess.exp > Date.now() / 1000) {
     return true;
   }
 
   //Check if the RefreshToken is valid, if yes we refresh them.
-  if ( decodedRefresh.exp > Date.now()/1000) {
+  if (decodedRefresh.exp > Date.now() / 1000) {
     try {
       const newAccessToken = await refreshAuth(
         refreshToken
@@ -87,14 +92,13 @@ const refresh = async () => {
       return false;
     }
   }
-  // console.log("2", decodedAccess.exp > Date.now()/1000);
-  // console.log("2bis", decodedAccess.exp, Date.now()/1000);
+
   //If both "if" failed, we return false to request a new challenge in login()
   return false;
 };
 
 export const login = async () => {
-  
+
   const address = await getAddress();
   console.log("login: address", address);
 
@@ -106,18 +110,18 @@ export const login = async () => {
   }
   // we request a challenge from the server
   const challengeResponse = await generateChallenge(address);
-  
+
   // sign the text with the wallet
   const signature = await signText(challengeResponse.data.challenge.text);
-  
+
   const accessTokens = await authenticate(address, signature);
-  
+
   const request = {
     ownedBy: [address]
-  }
-  
-  const { profiles } = await getProfiles(request)
-  
+  };
+
+  const { profiles } = await getProfiles(request);
+
   window.localStorage.setItem("profileId", profiles.items[0]?.id);
 
   // setAuthenticationToken(accessTokens.data.authenticate.accessToken);

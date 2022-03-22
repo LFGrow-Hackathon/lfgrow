@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client/core';
-import { apolloClient } from '../apollo-client';
+import { gql } from "@apollo/client/core";
+import { apolloClient } from "../apollo-client";
 
 const GET_PROFILES = `
   query($request: ProfileQueryRequest!) {
@@ -103,11 +103,11 @@ const getProfilesRequest = (request) => {
 ** Note how everything is plural, so you can pass multiple id/handle/address in the array. Example : ["0x01", "0x02"]
 */
 async function getProfiles(request) {
-  console.log('profiles: request', request);
+  console.log("profiles: request", request);
 
   const profiles = await getProfilesRequest(request);
 
-  console.log('profiles: result', profiles.data);
+  // console.log('profiles: result', profiles.data);
 
   return profiles.data;
 };
