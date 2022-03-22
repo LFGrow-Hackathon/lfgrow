@@ -1,5 +1,5 @@
 import { useEnsAddress, useNativeTransactions } from "react-moralis";
-import { profiles } from '@/lens/get-profile'
+import  getProfiles  from '@/lens/get-profiles.js'
 import { useState } from "react";
 
 
@@ -12,8 +12,7 @@ export default function DisplayProfile(props) {
   });
 
   const getProfile = async () => {
-    console.log('a')
-    let importProfile = await profiles({ownedBy: props?.address});
+    let importProfile = await getProfiles({ownedBy: props?.address});
     setProfile(importProfile.profiles.items[0])
     console.log(profile)
   }
@@ -27,7 +26,7 @@ export default function DisplayProfile(props) {
         {error && <>{JSON.stringify(error)}</>}
         <p>Numer of transactions: {Transactions?.total}</p>
         <p>
-          Age of address: {Transactions?.result.slice(-1)[0].block_timestamp}
+          Age of address: {Transactions?.result.slice(-1)[0]?.block_timestamp}
         </p>
       </div>
     );

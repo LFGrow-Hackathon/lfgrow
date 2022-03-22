@@ -1,8 +1,5 @@
-import { gql } from '@apollo/client/core';
-import { apolloClient } from '../apollo-client';
-import { login } from "@/lens/login-users"; 
-import { getAddressFromSigner } from '@/ethers-service'
-import { prettyJSON } from '@/helpers';
+import { gql } from "@apollo/client/core";
+import { apolloClient } from "../apollo-client";
 
 const GET_PROFILES = `
   query($request: ProfileQueryRequest!) {
@@ -85,13 +82,6 @@ const GET_PROFILES = `
   }
 `;
 
-// export interface ProfilesRequest {
-//   profileIds?: string[];
-//   ownedBy?: string;
-//   handles?: string[];
-//   whoMirroredPublicationId?: string;
-// }
-
 const getProfilesRequest = (request) => {
   return apolloClient.query({
     query: gql(GET_PROFILES),
@@ -101,22 +91,25 @@ const getProfilesRequest = (request) => {
   });
 };
 
-export const profiles = async (request) => {
-  const address = getAddressFromSigner();
-  console.log('profiles: address', address);
+/*
+** You can request profiles in 3 differents ways: 
+**  - with handles. Example of request object:
+**       request: { handles: ["josh.dev"], limit: 1 }
+**   - with addresses. Example of request object:
+**       request: { ownedBy: ["0xD020E01C0c90Ab005A01482d34B808874345FD82"], limit: 10 }
+**   - with profileIds. Example of request object:
+**       request: { profileIds: ["0x01"], limit: 10 }
+**
+** Note how everything is plural, so you can pass multiple id/handle/address in the array. Example : ["0x01", "0x02"]
+*/
+async function getProfiles(request) {
+  console.log("profiles: request", request);
 
-//   await login(address);
+  const profiles = await getProfilesRequest(request);
 
-  if (!request) {
-    request = { ownedBy: address };
-  }
+  // console.log('profiles: result', profiles.data);
 
-  // only showing one example to query but you can see from request
-  // above you can query many
-  const profilesFromProfileIds = await getProfilesRequest(request);
-
-  // prettyJSON('profiles: result', profilesFromProfileIds.data);
-
-  return profilesFromProfileIds.data;
+  return profiles.data;
 };
 
+export default getProfiles;

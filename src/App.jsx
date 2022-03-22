@@ -3,7 +3,6 @@ import { useMoralis } from "react-moralis";
 import { Outlet, Routes, Route, NavLink } from "react-router-dom";
 import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
-import { login } from "@/lens/login-users.js";
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
@@ -27,11 +26,6 @@ function App() {
             Home
           </NavLink>
           <Account />
-          <button 
-            className="text-gray-500 text-xl font-bold rounded-full bg-white py-2 px-5"
-            onClick={login}>
-              Connect to Lens
-          </button>
         </div>
         <Outlet />
       </div>

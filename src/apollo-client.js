@@ -2,7 +2,6 @@
 // if your using node or something else you can import using
 // @apollo/client/core!
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from "@apollo/client";
-import { getAuthenticationToken } from "@/lens/utils/state";
 
 const httpLink = new HttpLink({ uri: "https://api-mumbai.lens.dev/" });
 
@@ -11,9 +10,7 @@ const authLink = new ApolloLink((operation, forward) => {
   // Retrieve the authorization token from local storage.
   // if your using node etc you have to handle your auth different
   // const token = localStorage.getItem('accessToken');
-  const token = getAuthenticationToken();
-  console.log("jwt token:", token);
-
+  const token = window.localStorage.getItem("accessToken");
 
   // Use the setContext method to set the HTTP headers.
   operation.setContext({
