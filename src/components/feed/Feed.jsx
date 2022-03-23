@@ -43,15 +43,17 @@ const Feed = () => {
   }, []);
 
   return (
-    <>
-      {posts.length ? (
-        posts.map((post, key) => {
-          return <SingleFeed data={post} key={key} />;
-        })
-      ) : (
-        <>updating post</>
-      )}
-    </>
+    <div className="flex flex-col max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
+        {posts.length ? (
+          posts.map((post, key) => {
+            return <SingleFeed data={post} key={key} />;
+          })
+        ) : (
+          <>updating post</>
+        )}
+      </div>
+    </div>
   );
 };
 
