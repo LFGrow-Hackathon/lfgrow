@@ -1,23 +1,31 @@
 import { useEnsAddress, useNativeTransactions } from "react-moralis";
-import  getProfiles  from '@/lens/get-profiles.js'
-import { useState } from "react";
-
+import getProfiles from "@/lens/get-profiles.js";
+import doesFollowFunc from '@/lens/does-follow'
+import { useEffect, useState } from "react";
+import FollowBtn from "./FollowBtn";
+import UnfollowBtn from "./UnfollowBtn";
 
 export default function DisplayProfile(props) {
-  const [ profile, setProfile] = useState()
+  const [profile, setProfile] = useState();
+  const [doesFollow, setDoesFollow] = useState();
 
   const { name } = useEnsAddress(props.address);
   const { data: Transactions, error } = useNativeTransactions({
     address: props?.address,
   });
 
-  const getProfile = async () => {
-    let { profiles } = await getProfiles({ownedBy: props?.address});
-    setProfile(profiles.items[0])
-  }
+  useEffect(() => {
+    async function getProfile() {
+      const { profiles } = await getProfiles({ ownedBy: [props.address] });
+      setProfile(profiles.items[0]);
+      const resultFollow = await doesFollowFunc(profiles.items[0].id);
+      setDoesFollow(resultFollow);
+    };
 
-  getProfile()
-
+    if (props.address) {
+      getProfile();
+    }
+  }, [props.address])
 
   const NativeTransactions = () => {
     return (
@@ -41,6 +49,7 @@ export default function DisplayProfile(props) {
           <p>Name: {profile?.name || "No name available"}</p>
           <p>Description: {profile?.bio || "No description available"}</p>
           <p>Followers: {profile?.stats?.totalFollowers}</p>
+          {doesFollow ? <UnfollowBtn profileId={profile?.id} /> : <FollowBtn profileId={profile?.id} />}
         </>
       )}
     </div>

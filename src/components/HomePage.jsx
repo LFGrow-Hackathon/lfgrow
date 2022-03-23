@@ -1,14 +1,14 @@
 import { useMoralis } from "react-moralis";
 import DisplayProfile from "@/components/DisplayProfile.jsx";
-import createProfile from "@/lens/create-profile"; 
+import createProfile from "@/lens/create-profile";
 import CreatePublication from "@/components/CreatePublication.jsx"
 import { useState } from "react";
 
 
 export default function HomePage() {
   const { account } = useMoralis();
-  const [ handle, setHandle ] = useState();
-  
+  const [handle, setHandle] = useState();
+
   const handleSubmit = event => {
     event.preventDefault();
     createProfile(handle);
@@ -21,7 +21,7 @@ export default function HomePage() {
           <label className="block text-sm font-medium text-gray-700">
             Choose your handle then hit enter
           </label>
-          <div className="mt-1"> 
+          <div className="mt-1">
             <input
               type="handle"
               name="handle"
