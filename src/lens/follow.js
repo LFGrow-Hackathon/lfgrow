@@ -45,10 +45,13 @@ const createFollowTypedData = (followRequestInfo) => {
 };
 
 export const follow = async (profileId = '0x12') => {
+  if (!profileId) {
+    throw new Error('profileId is undefined');
+  }
   const address = getAddress();
   console.log('follow: address', address);
   console.log(profileId)
-  
+
   // hard coded to make the code example clear
   const followRequest = [
     {
@@ -68,7 +71,7 @@ export const follow = async (profileId = '0x12') => {
   const { v, r, s } = splitSignature(signature);
 
   const tx = await lensHub.followWithSig({
-    follower: getAddress() ,
+    follower: getAddress(),
     profileIds: typedData.value.profileIds,
     datas: typedData.value.datas,
     sig: {

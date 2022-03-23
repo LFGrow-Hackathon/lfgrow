@@ -44,6 +44,10 @@ const createUnfollowTypedData = (profile) => {
 };
 
 const unfollow = async (unfollowProfileId) => {
+  if (!unfollowProfileId) {
+    throw new Error('unfollowProfileId is undefined');
+  }
+
   const address = await getAddress();
   console.log('unfollow: address', address);
 

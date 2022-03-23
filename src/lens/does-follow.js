@@ -24,6 +24,10 @@ const doesFollowRequest = (followInfos) => {
 };
 
 const doesFollow = async (profileId) => {
+  if (!profileId) {
+    throw new Error('profileId is undefined');
+  }
+
   const address = await getAddress();
   const followInfos = [
     {
