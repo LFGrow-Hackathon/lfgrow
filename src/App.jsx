@@ -3,6 +3,7 @@ import { useMoralis } from "react-moralis";
 import { Outlet, Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
+import Welcome from "./components/Welcome/welcome";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
 import ProfileButton from "@/components/ProfileButton";
@@ -21,6 +22,7 @@ function App() {
     }
   }, [isAuthenticated, isWeb3Enabled]);
 
+
   function TopBar() {
     return (
       <div>
@@ -28,11 +30,13 @@ function App() {
           <NavLink to="/" className="text-white text-xl font-bold">
             Home
           </NavLink>
-
           <NavLink to="/feed" className="text-white text-xl font-bold">
             Feed
           </NavLink>
           <Account />
+          <NavLink to="/welcome" className="text-white text-lg font-bold ">
+            Switch profile
+          </NavLink>
         </div>
         <Outlet />
       </div>
@@ -61,6 +65,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Route>
+      <Route path="/welcome" element={<Welcome />} />
     </Routes>
   );
 }
