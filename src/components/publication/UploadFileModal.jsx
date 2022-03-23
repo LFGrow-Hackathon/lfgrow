@@ -1,48 +1,22 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState, useMemo } from 'react'
+import { Fragment, useState, useMemo, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/outline'
 import { useDropzone } from 'react-dropzone';
 
-const baseStyle = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: '#eeeeee',
-  borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
-  color: '#bdbdbd',
-  outline: 'none',
-  transition: 'border .24s ease-in-out'
-};
+function UploadFileModal({ isModalVisible, setIsModalVisible, file, setFile }) {
+  const config = {
+    accept: 'image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/svg+xml, image/webp',
+    maxFiles: 1,
+    onDrop: acceptedFiles => {
+      setFile(acceptedFiles.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      })));
+      setIsModalVisible(false);
+    }
+  }
 
-const focusedStyle = {
-  borderColor: '#2196f3'
-};
-
-const acceptStyle = {
-  borderColor: '#00e676'
-};
-
-const rejectStyle = {
-  borderColor: '#ff1744'
-};
-
-
-function UploadFileModal({ isModalVisible, setIsModalVisible }) {
-  // const { acceptedFiles, getRootProps, getInputProps} = useDropzone();
-  const {
-    acceptedFiles,
-    getRootProps,
-    getInputProps,
-    isFocused,
-    isDragAccept,
-    isDragReject
-  } = useDropzone({ accept: 'image/*' });
+  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone(config);
 
   const style = useMemo(() => ({
     ...baseStyle,
@@ -54,12 +28,6 @@ function UploadFileModal({ isModalVisible, setIsModalVisible }) {
     isDragAccept,
     isDragReject
   ]);
-
-  const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
   return (
     <Transition.Root show={isModalVisible} as={Fragment}>
@@ -95,20 +63,9 @@ function UploadFileModal({ isModalVisible, setIsModalVisible }) {
                 <section className="container">
                   <div {...getRootProps({ style })}>
                     <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <p>Drag 'n' drop a file here, or click to select one</p>
                   </div>
-                  <aside>
-                    <h4>Files</h4>
-                    <ul>{files}</ul>
-                  </aside>
                 </section>
-                <button
-                  type="button"
-                  className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-                  onClick={() => setIsModalVisible(false)}
-                >
-                  Go back to dashboard
-                </button>
               </div>
             </div>
           </Transition.Child>
@@ -119,3 +76,31 @@ function UploadFileModal({ isModalVisible, setIsModalVisible }) {
 }
 
 export default UploadFileModal;
+
+const baseStyle = {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '20px',
+  borderWidth: 2,
+  borderRadius: 2,
+  borderColor: '#eeeeee',
+  borderStyle: 'dashed',
+  backgroundColor: '#fafafa',
+  color: '#bdbdbd',
+  outline: 'none',
+  transition: 'border .24s ease-in-out'
+};
+
+const focusedStyle = {
+  borderColor: '#2196f3'
+};
+
+const acceptStyle = {
+  borderColor: '#00e676'
+};
+
+const rejectStyle = {
+  borderColor: '#ff1744'
+};

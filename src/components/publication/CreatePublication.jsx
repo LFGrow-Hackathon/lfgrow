@@ -1,26 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import createPost from "@/lens/publication/create-post.js"
-import { uploadIpfs } from "@/helpers/ipfs";
+import { uploadImageIpfs, uploadMetadataIpfs } from "@/helpers/ipfs";
 import UploadFileModal from "./UploadFileModal";
-import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/solid'
+import { PaperClipIcon } from '@heroicons/react/solid'
+
+// protect the post button can be clicked only if message is not empty, or file
 
 function CreatePublication() {
+  const [file, setFile] = useState([]);
   const [message, setMessage] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   async function createPublication(event) {
+    let media = []
     event.preventDefault();
 
-    try {
-      const ipfsCid = await uploadIpfs({ message });
-      console.log("ipfs CID: ", ipfsCid);
-
-      const result = await createPost({ ipfsCid });
-      console.log("Post tx has been sent", result);
-    } catch (error) {
-      console.error(error);
+    if (file) {
+      media = await uploadImageIpfs(file[0]);
     }
+
+    const ipfsCid = await uploadMetadataIpfs({ message, media });
+    console.log("ipfs CID: ", ipfsCid);
+
+    const result = await createPost({ ipfsCid });
+    console.log("Post tx has been sent", result);
   }
+
+  const thumbs = file?.map(file => (
+    <div style={thumb} key={file.name}>
+      <div style={thumbInner}>
+        <img
+          src={file.preview}
+          style={img}
+        />
+      </div>
+    </div>
+  ));
+
+  useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks
+    URL.revokeObjectURL(file?.preview);
+  }, [file]);
+
 
   return (
     <>
@@ -41,6 +62,9 @@ function CreatePublication() {
                   setMessage(e.target.value);
                 }}
               />
+              {file && <aside style={thumbsContainer}>
+                {thumbs}
+              </aside>}
 
               {/* Spacer element to match the height of the toolbar */}
               <div className="py-2" aria-hidden="true">
@@ -63,15 +87,6 @@ function CreatePublication() {
                     <span className="sr-only">Attach a file</span>
                   </button>
                 </div>
-                <div className="flex items-center">
-                  <button
-                    type="button"
-                    className="-m-2.5 w-10 h-10 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-500"
-                  >
-                    <EmojiHappyIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
-                    <span className="sr-only">Add an emoji</span>
-                  </button>
-                </div>
               </div>
               <div className="flex-shrink-0">
                 <button
@@ -86,9 +101,48 @@ function CreatePublication() {
           </form>
         </div>
       </div>
-      <UploadFileModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
+
+      {isModalVisible &&
+        <UploadFileModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          file={file}
+          setFile={setFile}
+        />
+      }
     </>
   )
 }
 
 export default CreatePublication;
+
+const thumbsContainer = {
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  marginTop: 16
+};
+
+const thumb = {
+  display: 'inline-flex',
+  borderRadius: 2,
+  border: '1px solid #eaeaea',
+  marginBottom: 8,
+  marginRight: 8,
+  width: 100,
+  height: 100,
+  padding: 4,
+  boxSizing: 'border-box'
+};
+
+const thumbInner = {
+  display: 'flex',
+  minWidth: 0,
+  overflow: 'hidden'
+};
+
+const img = {
+  display: 'block',
+  width: 'auto',
+  height: '100%'
+};

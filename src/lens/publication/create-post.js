@@ -53,10 +53,9 @@ async function createPost({ ipfsCid }) {
 
   const profileId = localStorage.getItem('profileId');
 
-  // contentURI: "ipfs://" + ipfsCid,
   const createPostRequest = {
     profileId,
-    contentURI: "ipfs://Qmc2u7LzJi8V66Wzkg1CgrFUPgTyBS3M8VFs8GcVjU8wMi",
+    contentURI: "ipfs://" + ipfsCid,
     collectModule: {
       emptyCollectModule: true
     },

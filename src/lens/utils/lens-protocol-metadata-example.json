@@ -17,3 +17,37 @@ Here is the IPFS CID for this file: Qmc2u7LzJi8V66Wzkg1CgrFUPgTyBS3M8VFs8GcVjU8w
 	],
 	"appId": "zilly"
 }
+
+{
+	"version": "1.0.0",
+	"metadata_id": "f058a222-d956-4bfb-896f-ac6e053cfaf4",
+	"description": "A social network to connect web3 users and their communities.",
+	"content": "Gm Lens fam, this post has an image btw. Pepe, a silent hero and a watchful protector. the one we don't deserve!",
+	"external_url": "https://zilly.social",
+	"name": "Zilly",
+	"attributes": [],
+	"media": [
+		{
+			"item": "https://gateway.moralisipfs.com/ipfs/QmNdVmkQfns64e8wNGuCRsfH1nTF8S9LXKXGbYuDhjCwUE",
+			"type": "image/png"
+		}
+	],
+	"appId": "zilly"
+}
+
+{
+	"version": "1.0.0",
+	"metadata_id": "932b08c1-5045-426b-8f86-df88d0bf9e52",
+	"description": "A social network to connect web3 users and their communities.",
+	"content": "Gm Lens fam, this post has an image btw. Pepe, a silent hero and a watchful protector. The one we don't deserve!",
+	"external_url": "https://zilly.social",
+	"name": "Zilly",
+	"attributes": [],
+	"media": [
+		{
+			"item": "ipfs://QmNdVmkQfns64e8wNGuCRsfH1nTF8S9LXKXGbYuDhjCwUE",
+			"type": "image/png"
+		}
+	],
+	"appId": "zilly"
+}
