@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { Outlet, Routes, Route, NavLink } from "react-router-dom";
+import { Outlet, Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
 import Feed from "@/components/feed/Feed";
+import ProfilePage from "@/components/ProfilePage";
+import ProfileButton from "@/components/ProfileButton";
+import FeedButton from "@/components/FeedButton";
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
     useMoralis();
-
   /* ------------------------------- 
   Enable Web3 provider if the user isn't authentificated
   ---------------------------------*/
@@ -39,9 +41,11 @@ function App() {
 
   function SideBar() {
     return (
-      <div className="flex flex-row ">
-        <div>
-          SIDEBAR STUFF
+      <div className="flex flex-row">
+        <div className="flex flex-col">
+          <div>SIDEBAR STUFF</div>
+          <ProfileButton />
+          <FeedButton />
         </div>
         <Outlet />
       </div>
@@ -54,6 +58,7 @@ function App() {
         <Route element={<SideBar />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Route>
     </Routes>
