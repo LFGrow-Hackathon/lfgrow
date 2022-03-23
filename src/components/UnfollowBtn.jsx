@@ -1,4 +1,3 @@
-import { getAddress, getAddressFromSigner } from '@/ethers-service'
 import unfollow from '@/lens/unfollow'
 
 export default function UnfollowBtn(props){
@@ -10,6 +9,9 @@ export default function UnfollowBtn(props){
     
     
     return(
-        <button onClick={unfollowFunc}>UNFOLLOW</button>
+        <button
+            onClick={unfollowFunc}
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-black bg-gray-100"
+        >UNFOLLOW</button>
     )
 }

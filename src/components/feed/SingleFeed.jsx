@@ -1,5 +1,4 @@
 const SingleFeed = ({ data }) => {
-  console.log("prop: ", data);
   const userProPic = data.profile.picture;
   const userProName = data.profile.name;
   const userProDesc = data.profile.description;
