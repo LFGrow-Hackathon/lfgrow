@@ -15,8 +15,8 @@ export default function HomePage() {
   };
 
   return (
-    <>
-      <div className="px-10 py-5 max-w-lg">
+    <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
         <form onSubmit={handleSubmit}>
           <label className="block text-sm font-medium text-gray-700">
             Choose your handle then hit enter
@@ -37,6 +37,7 @@ export default function HomePage() {
       </div>
       <DisplayProfile address={account} />
       <CreatePublication />
-    </>
+    </div>
+
   );
 }

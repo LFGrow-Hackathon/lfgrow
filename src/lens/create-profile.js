@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 // import { BigNumber, utils } from "ethers";
-import { apolloClient } from "@/apollo-client"; 
-import { login } from "@/lens/login-users"; 
+import { apolloClient } from "@/apollo-client";
+import { login } from "@/lens/login-users";
 import { getAddressFromSigner } from "@/ethers-service";
 import { pollUntilIndexed } from "./utils/has-transaction-been-indexed";
 
@@ -29,6 +29,11 @@ const createProfileRequest = (createProfileRequest) => {
 };
 
 const createProfile = async (handleInput) => {
+
+  // if (!handleInput) {
+  //   throw new Error("profileId is undefined");
+  // }
+
   const address = getAddressFromSigner();
   console.log("create profile: address", address);
 

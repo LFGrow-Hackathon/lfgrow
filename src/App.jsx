@@ -19,7 +19,7 @@ function App() {
     }
   }, [isAuthenticated, isWeb3Enabled]);
 
-  function Layout() {
+  function TopBar() {
     return (
       <div>
         <div className="flex justify-center items-center space-x-10 p-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
@@ -37,11 +37,24 @@ function App() {
     );
   }
 
+  function SideBar() {
+    return (
+      <div className="flex flex-row ">
+        <div>
+          SIDEBAR STUFF
+        </div>
+        <Outlet />
+      </div>
+    );
+  }
+
   return (
     <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/feed" element={<Feed />} />
+      <Route element={<TopBar />}>
+        <Route element={<SideBar />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/feed" element={<Feed />} />
+        </Route>
       </Route>
     </Routes>
   );
