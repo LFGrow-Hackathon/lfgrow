@@ -6,7 +6,7 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(async () => {
-    const reqData = { sortCriteria: "TOP_COMMENTED", limit: 30 };
+    const reqData = { sortCriteria: "TOP_COMMENTED", limit: 50 };
     const res = await getPublications(reqData);
     let filterdPosts = res.explorePublications.items.filter(
       (singlePost) => singlePost.__typename == "Post"

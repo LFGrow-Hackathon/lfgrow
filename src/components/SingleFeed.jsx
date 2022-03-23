@@ -1,5 +1,3 @@
-import {} from "react";
-
 const SingleFeed = ({ data }) => {
   console.log("prop: ", data);
   const userProPic = data.profile.picture;
@@ -7,7 +5,7 @@ const SingleFeed = ({ data }) => {
   const userProDesc = data.profile.description;
   const pubContent = data.postContent;
   const pubTime = data.postTimeStamp;
-  const pubImge = data.postMedia;
+  const pubImge = data.postMedia[0]?.original.url;
 
   return (
     <>
@@ -43,10 +41,13 @@ const SingleFeed = ({ data }) => {
                 </div>
                 <p className="text-sm text-gray-500">{pubTime}</p>
               </div>
-              <p className="text-base text-gray-800">{pubContent}</p>
+              <p className="text-base text-gray-800">
+                {pubContent?.replace(/(<([^>]+)>)/gi, "")}
+                {/* {pubContent} */}
+              </p>
               <img
-                src={pubImge.length ? pubImge[0] : ""}
-                alt={pubImge.length ? "publication image" : ""}
+                src={pubImge?.length ? pubImge : ""}
+                alt={pubImge?.length ? "publication image" : ""}
                 className="rounded w-96 pr-2"
               />
             </div>

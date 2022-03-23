@@ -324,6 +324,9 @@ export const getPublicationsRequest = (request) => {
 };
 
 export const getPublications = async (request) => {
+  if (!request) {
+    throw new Error("argument undefined in getPunlications call");
+  }
   const pubs = await getPublicationsRequest(request);
   return pubs.data;
 };
