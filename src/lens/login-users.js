@@ -100,7 +100,6 @@ const refresh = async () => {
 export const login = async () => {
 
   const address = await getAddress();
-  console.log("login: address", address);
 
   const isTokenValid = await refresh();
 

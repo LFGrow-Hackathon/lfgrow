@@ -4,6 +4,7 @@ import { Outlet, Routes, Route, NavLink } from "react-router-dom";
 import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
 import Feed from "@/components/Feed";
+import Welcome from "./components/Welcome/welcome";
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
@@ -19,6 +20,7 @@ function App() {
     }
   }, [isAuthenticated, isWeb3Enabled]);
 
+
   function TopBar() {
     return (
       <div>
@@ -26,11 +28,13 @@ function App() {
           <NavLink to="/" className="text-white text-xl font-bold">
             Home
           </NavLink>
-
           <NavLink to="/feed" className="text-white text-xl font-bold">
             Feed
           </NavLink>
           <Account />
+          <NavLink to="/welcome" className="text-white text-lg font-bold ">
+            Switch profile
+          </NavLink>
         </div>
         <Outlet />
       </div>
@@ -56,6 +60,7 @@ function App() {
           <Route path="/feed" element={<Feed />} />
         </Route>
       </Route>
+      <Route path="/welcome" element={<Welcome />} />
     </Routes>
   );
 }
