@@ -1,20 +1,28 @@
 import { useState } from "react";
 import createPost from "@/lens/publication/create-post.js"
+import { uploadIpfs } from "@/helpers/ipfs";
 import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/solid'
 
 function CreatePublication() {
-  const [ message, setMessage ] = useState();
-  
+  const [message, setMessage] = useState();
+
   async function createPublication(event) {
     event.preventDefault();
-    console.log(message);
-    const result = await createPost();
-    console.log("Post tx has been sent", result);
+
+    try {
+      const ipfsCid = await uploadIpfs({ message });
+      console.log("ipfs CID: ", ipfsCid);
+
+      const result = await createPost({ ipfsCid });
+      console.log("Post tx has been sent", result);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
-    <div className="flex items-start space-x-4">
-      <div className="min-w-0 flex-1 px-64">
+    <div className="flex items-start space-x-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto flex-1">
         <form action="#" className="relative">
           <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
             <label htmlFor="comment" className="sr-only">

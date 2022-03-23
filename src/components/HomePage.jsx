@@ -35,8 +35,8 @@ export default function HomePage() {
           </div>
         </form>
       </div>
-      <DisplayProfile address={account} />
       <CreatePublication />
+      <DisplayProfile address={account} />
     </>
   );
 }

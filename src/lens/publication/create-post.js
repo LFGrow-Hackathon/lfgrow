@@ -38,7 +38,7 @@ const CREATE_POST_TYPED_DATA = `
 `;
 
 function createPostTypedData(createPostTypedDataRequest) {
-   return apolloClient.mutate({
+  return apolloClient.mutate({
     mutation: gql(CREATE_POST_TYPED_DATA),
     variables: {
       request: createPostTypedDataRequest
@@ -46,20 +46,20 @@ function createPostTypedData(createPostTypedDataRequest) {
   })
 }
 
-async function createPost() {
+async function createPost({ ipfsCid }) {
   const profileId = localStorage.getItem('profileId');
-  
+
   const createPostRequest = {
     profileId,
-    contentURI: "ipfs://QmcfbLAciGdNFQJwiHTwoM287wE8hjprMq7pLNUUpQTfSc",
+    contentURI: "ipfs://" + ipfsCid,
     collectModule: {
       emptyCollectModule: true
     },
     referenceModule: {
       followerOnlyReferenceModule: false
     }
-  } 
-  
+  }
+
   try {
     if (profileId === 'undefined') {
       throw new Error("You do not have a Lens profile");
@@ -67,7 +67,7 @@ async function createPost() {
 
     const result = await createPostTypedData(createPostRequest);
     console.log('create post: createPostTypedData', result);
-    
+
     const typedData = result.data.createPostTypedData.typedData;
     console.log('create post: typedData', typedData);
 
@@ -92,12 +92,11 @@ async function createPost() {
     });
     await tx.wait();
     console.log('create post: tx hash', tx.hash);
-    
-    const content = await pollUntilIndexed(tx.hash);
-    console.log(content)
-    
+
+    // const content = await pollUntilIndexed(tx.hash);
+
     return tx;
-  } catch(error) {
+  } catch (error) {
     console.error(error);
   }
 }
