@@ -3,6 +3,7 @@ import { useMoralis } from "react-moralis";
 import { Outlet, Routes, Route, NavLink } from "react-router-dom";
 import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
+import Welcome from "./components/welcome";
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
@@ -25,6 +26,9 @@ function App() {
           <NavLink to="/" className="text-white text-xl font-bold">
             Home
           </NavLink>
+          <NavLink to="/welcome" className="text-white text-xl font-bold">
+            Welcome
+          </NavLink>
           <Account />
         </div>
         <Outlet />
@@ -32,11 +36,24 @@ function App() {
     );
   }
 
+  function SideBar() {
+    return (
+      <div className="flex">
+        <div>
+          <p>TTTTTTTTT</p>
+        </div>
+        <Outlet />
+      </div>);
+  }
+
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
+        <Route element={<SideBar />}>
+          <Route path="/" element={<HomePage />} />
+        </Route>
       </Route>
+      <Route path="/welcome" element={<Welcome />} />
     </Routes>
   );
 }

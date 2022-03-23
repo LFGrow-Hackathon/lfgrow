@@ -1,10 +1,10 @@
 import { useState } from "react";
-import createPost from "@/lens/publication/create-post.js"
-import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/solid'
+import createPost from "@/lens/publication/create-post.js";
+import { EmojiHappyIcon, PaperClipIcon } from "@heroicons/react/solid";
 
 function CreatePublication() {
-  const [ message, setMessage ] = useState();
-  
+  const [message, setMessage] = useState();
+
   async function createPublication(event) {
     event.preventDefault();
     console.log(message);
@@ -74,7 +74,7 @@ function CreatePublication() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
 export default CreatePublication;
