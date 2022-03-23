@@ -3,6 +3,8 @@ import { ethers } from 'ethers';
 import { apolloClient } from '../apollo-client';
 import { LENS_HUB_ABI } from '@/lens/utils/config-abi';
 import { getAddress, getSigner, signedTypeData, splitSignature } from '@/ethers-service';
+import { login } from '@/lens/login-users'
+
 
 const CREATE_UNFOLLOW_TYPED_DATA = `
   mutation($request: UnfollowRequest!) { 
@@ -44,6 +46,9 @@ const createUnfollowTypedData = (profile) => {
 };
 
 const unfollow = async (unfollowProfileId) => {
+
+  await login()
+
   if (!unfollowProfileId) {
     throw new Error('unfollowProfileId is undefined');
   }
