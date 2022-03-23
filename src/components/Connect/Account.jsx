@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useMoralis } from "react-moralis";
-import ConnectModal from "@/components/Connect/ConnectModal.jsx";
+import ConnectModal from "@/components/connect/ConnectModal.jsx";
 import { useRef } from "react";
 
 function Account() {
   const { authenticate, isAuthenticated, account, logout } = useMoralis();
-  const [ isAuthModalVisible, setIsAuthModalVisible ] = useState(false);
+  const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
   const isMounted = useRef(false);
-  
+
   if (!isAuthenticated || !account) {
     return (
       <>

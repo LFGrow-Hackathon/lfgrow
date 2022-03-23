@@ -1,15 +1,19 @@
 This is a simple metadata example of what lens is expecting.
 
-Here is the IPFS CID for this file: QmZsrx2afYzoP8tVuYmBnxonhAvofou2mJr6pXSeCWHtAB
+Here is the IPFS CID for this file: Qmc2u7LzJi8V66Wzkg1CgrFUPgTyBS3M8VFs8GcVjU8wMi
 {
 	"version": "1.0.0",
 	"metadata_id": 42,
 	"description": "A silent hero. A watchful protector.",
 	"content": "Some content",
 	"external_url": "https://zilly.social",
-	"image": "ipfs://QmZSnPtXe9SZnFLdd15Ntm7qkEqYqz989gRTcA1jsGkZ47",
-	"imageMimeType": "image/jpeg",
 	"name": "pepe-karate",
 	"attributes": [],
+	"media": [
+		{
+			"item": "ipfs://QmZSnPtXe9SZnFLdd15Ntm7qkEqYqz989gRTcA1jsGkZ47",
+			"type": "image/jpeg"
+		}
+	],
 	"appId": "zilly"
 }

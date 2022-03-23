@@ -47,11 +47,16 @@ function createPostTypedData(createPostTypedDataRequest) {
 }
 
 async function createPost({ ipfsCid }) {
+  if (!ipfsCid) {
+    throw new Error('ipfsCid is undefined');
+  }
+
   const profileId = localStorage.getItem('profileId');
 
+  // contentURI: "ipfs://" + ipfsCid,
   const createPostRequest = {
     profileId,
-    contentURI: "ipfs://" + ipfsCid,
+    contentURI: "ipfs://Qmc2u7LzJi8V66Wzkg1CgrFUPgTyBS3M8VFs8GcVjU8wMi",
     collectModule: {
       emptyCollectModule: true
     },
@@ -93,7 +98,7 @@ async function createPost({ ipfsCid }) {
     await tx.wait();
     console.log('create post: tx hash', tx.hash);
 
-    // const content = await pollUntilIndexed(tx.hash);
+    const content = await pollUntilIndexed(tx.hash);
 
     return tx;
   } catch (error) {
