@@ -8,6 +8,7 @@ import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
 import ProfileButton from "@/components/buttons/ProfileButton";
 import FeedButton from "@/components/buttons/FeedButton";
+import { ViewPost } from "@/components/post/ViewPost";
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
@@ -87,6 +88,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/post/:postId" element={<ViewPost />} />
         </Route>
       </Route>
       <Route path="/welcome" element={<Welcome />} />
