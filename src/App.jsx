@@ -11,8 +11,13 @@ import FeedButton from "@/components/buttons/FeedButton";
 import { ViewPost } from "@/components/post/ViewPost";
 
 function App() {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
-    useMoralis();
+  const {
+    isWeb3Enabled,
+    enableWeb3,
+    isAuthenticated,
+    isWeb3EnableLoading,
+    account,
+  } = useMoralis();
 
   /* ------------------------------- 
   Enable Web3 provider if the user isn't authentificated
@@ -70,9 +75,8 @@ function App() {
 
   function SideBar() {
     return (
-      <div className="flex flex-row">
-        <div className="flex flex-col">
-          <div>SIDEBAR STUFF</div>
+      <div className="flex">
+        <div className="flex w-1/5 flex-col mt-10">
           <ProfileButton />
           <FeedButton />
         </div>
@@ -87,7 +91,7 @@ function App() {
         <Route element={<SideBar />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfilePage address={account} />} />
           <Route path="/post/:postId" element={<ViewPost />} />
         </Route>
       </Route>
