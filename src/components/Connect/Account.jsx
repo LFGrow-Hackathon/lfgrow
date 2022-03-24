@@ -13,9 +13,10 @@ function Account() {
 
   useEffect(async () => {
     isMounted.current = true;
-    if (isAuthenticated && profileId !== "undefined") {
+    if (isAuthenticated && profileId) {
+      console.log("profileId: ", profileId);
       const request = {
-        profileIds: [profileId]
+        profileIds: [profileId],
       };
       const { profiles } = await getProfiles(request);
 
@@ -23,7 +24,9 @@ function Account() {
         setProfileInfo(profiles.items[0]);
       }
     }
-    return () => { isMounted.current = false; };
+    return () => {
+      isMounted.current = false;
+    };
   }, [isAuthenticated, profileId]);
 
   if (!isAuthenticated || !account) {
@@ -47,7 +50,6 @@ function Account() {
   }
 
   function LensProfile() {
-
     let navigate = useNavigate();
     if (profileId === "undefined") {
       useEffect(() => {
@@ -55,9 +57,7 @@ function Account() {
       }, []);
     }
     return (
-      <button
-        className="text-gray-500 text-xl font-bold rounded-full bg-white py-2 px-5"
-      >
+      <button className="text-gray-500 text-xl font-bold rounded-full bg-white py-2 px-5">
         Lens handle:
         {profileInfo?.handle}
       </button>
