@@ -117,6 +117,7 @@ query($request: ExplorePublicationRequest!) {
     name
     description
     content
+    image
     media {
       original {
         ...MediaFields

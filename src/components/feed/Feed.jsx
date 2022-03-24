@@ -4,7 +4,7 @@ import SingleFeed from "./SingleFeed";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
@@ -12,6 +12,7 @@ const Feed = () => {
     const query = async () => {
       const reqData = { sortCriteria: "TOP_COMMENTED", limit: 50 };
       const res = await getPublications(reqData);
+      // console.log("res: ", res);
 
       let filterdPosts = res.explorePublications.items.filter(
         (singlePost) => singlePost.__typename == "Post"
@@ -25,21 +26,27 @@ const Feed = () => {
           picture: filterdPost?.profile?.picture
             ? filterdPost?.profile?.picture?.original.url
             : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg",
-          description: filterdPost?.profile?.bio ? filterdPost?.profile?.bio : "",
+          description: filterdPost?.profile?.bio
+            ? filterdPost?.profile?.bio
+            : "",
         },
+        postId: filterdPost?.id,
         postContent: filterdPost?.metadata?.content,
-        postMedia: filterdPost?.metadata?.media,
+        postMedia: filterdPost?.metadata?.image,
         postTimeStamp: filterdPost?.createdAt,
       }));
 
       if (isMounted.current) {
         setPosts([...postDataObj]);
+        // console.log("postDataObj: ", postDataObj);
       }
-    }
+    };
 
     query();
 
-    return () => { isMounted.current = false };
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   return (

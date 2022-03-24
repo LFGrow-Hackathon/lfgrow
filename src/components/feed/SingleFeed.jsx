@@ -4,7 +4,7 @@ const SingleFeed = ({ data }) => {
   const userProDesc = data.profile.description;
   const pubContent = data.postContent;
   const pubTime = data.postTimeStamp;
-  const pubImge = data.postMedia[0]?.original.url;
+  const pubImge = data.postMedia;
 
   return (
     <>
