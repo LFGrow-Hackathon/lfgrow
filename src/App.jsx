@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { Outlet, Routes, Route, NavLink, useNavigate } from "react-router-dom";
-import Account from "@/components/Connect/Account.jsx";
+import { Outlet, Routes, Route, NavLink } from "react-router-dom";
+import Account from "@/components/connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
 import Welcome from "./components/Welcome/welcome";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
-import ProfileButton from "@/components/ProfileButton";
-import FeedButton from "@/components/FeedButton";
+import ProfileButton from "@/components/buttons/ProfileButton";
+import FeedButton from "@/components/buttons/FeedButton";
 
 function App() {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
-    useMoralis();
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+
   /* ------------------------------- 
   Enable Web3 provider if the user isn't authentificated
   ---------------------------------*/
@@ -61,9 +61,9 @@ function App() {
           <NavLink to="/welcome" className="text-white text-lg font-bold ">
             Switch profile
           </NavLink>
-        </div>
+        </div >
         <Outlet />
-      </div>
+      </div >
     );
   }
 

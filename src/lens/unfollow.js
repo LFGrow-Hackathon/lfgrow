@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client/core';
 import { ethers } from 'ethers';
-import { apolloClient } from '../apollo-client';
+import { apolloClient } from '../helpers/apollo-client';
 import { LENS_HUB_ABI } from '@/lens/utils/config-abi';
-import { getAddress, getSigner, signedTypeData, splitSignature } from '@/ethers-service';
+import { getAddress, getSigner, signedTypeData, splitSignature } from '@/helpers/ethers-service';
 import { login } from '@/lens/login-users'
 
 

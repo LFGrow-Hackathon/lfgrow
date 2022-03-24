@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client/core';
-import { apolloClient } from '../apollo-client';
-import { signedTypeData, splitSignature, getAddress } from '@/ethers-service';
+import { apolloClient } from '../helpers/apollo-client';
+import { signedTypeData, splitSignature, getAddress } from '@/helpers/ethers-service';
 import { lensHub } from '@/lens/utils/lens-hub';
 import { login } from '@/lens/login-users'
 
@@ -48,7 +48,7 @@ const createFollowTypedData = (followRequestInfo) => {
 export const follow = async (profileId = '0x12') => {
 
   await login()
-  
+
   if (!profileId) {
     throw new Error('profileId is undefined');
   }

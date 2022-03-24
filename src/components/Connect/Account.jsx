@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useMoralis } from "react-moralis";
 import ConnectModal from "@/components/Connect/ConnectModal.jsx";
 import getProfiles from "@/lens/get-profiles";
-import { login } from "@/lens/login-users";
 import { useNavigate } from "react-router-dom";
 
 function Account() {

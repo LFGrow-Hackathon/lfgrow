@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client/core";
-import { apolloClient } from "@/apollo-client";
-import { getAddress } from "@/ethers-service";
+import { apolloClient } from "@/helpers/apollo-client";
+import { getAddress } from "@/helpers/ethers-service";
 
 const DOES_FOLLOW = `
   query($request: DoesFollowRequest!) {

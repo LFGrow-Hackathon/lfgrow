@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from '@/lens/utils/config-abi.js';
-import { getSigner } from '@/ethers-service';
+import { getSigner } from '@/helpers/ethers-service';
 
 
 // lens contract info can all be found on the deployed

@@ -1,6 +1,6 @@
-import { getAddress, signText } from "@/ethers-service";
+import { getAddress, signText } from "@/helpers/ethers-service";
 import { gql } from "@apollo/client";
-import { apolloClient } from "@/apollo-client";
+import { apolloClient } from "@/helpers/apollo-client";
 import getProfiles from "@/lens/get-profiles.js";
 import * as jose from "jose";
 
