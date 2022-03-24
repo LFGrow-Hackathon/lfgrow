@@ -4,7 +4,9 @@ import { uploadImageIpfs, uploadMetadataIpfs } from "@/helpers/ipfs";
 import UploadFileModal from "./UploadFileModal";
 import { PaperClipIcon } from '@heroicons/react/solid'
 
-// protect the post button can be clicked only if message is not empty, or file
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 function CreatePublication() {
   const [file, setFile] = useState([]);
@@ -12,18 +14,17 @@ function CreatePublication() {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   async function createPublication(event) {
-    let media = []
     event.preventDefault();
 
-    if (file) {
-      media = await uploadImageIpfs(file[0]);
-    }
+    const media = (file.length > 0) ? await uploadImageIpfs(file[0]) : [];
 
     const ipfsCid = await uploadMetadataIpfs({ message, media });
-    console.log("ipfs CID: ", ipfsCid);
 
-    const result = await createPost({ ipfsCid });
-    console.log("Post tx has been sent", result);
+    const tx = await createPost({ ipfsCid });
+
+    if (tx) {
+      alert("Post has been successfully created :)");
+    }
   }
 
   const thumbs = file?.map(file => (
@@ -53,10 +54,10 @@ function CreatePublication() {
                 Add your comment
               </label>
               <textarea
-                rows={3}
+                rows={4}
                 name="comment"
                 id="comment"
-                className="block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm"
+                className="block w-full pt-3 border-0 resize-none focus:ring-0 sm:text-sm"
                 placeholder="Add your comment..."
                 onChange={(e) => {
                   setMessage(e.target.value);
@@ -67,7 +68,7 @@ function CreatePublication() {
               </aside>}
 
               {/* Spacer element to match the height of the toolbar */}
-              <div className="py-2" aria-hidden="true">
+              <div className="pb-2" aria-hidden="true">
                 {/* Matches height of button in toolbar (1px border + 36px content height) */}
                 <div className="py-px">
                   <div className="h-9" />
@@ -92,7 +93,12 @@ function CreatePublication() {
                 <button
                   type="submit"
                   onClick={createPublication}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className={
+                    classNames(
+                      (message || file.length > 0) ? "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" : "bg-indigo-100 cursor-not-allowed",
+                      "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white"
+                    )
+                  }
                 >
                   Post
                 </button>
@@ -119,8 +125,7 @@ export default CreatePublication;
 const thumbsContainer = {
   display: 'flex',
   flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginTop: 16
+  flexWrap: 'wrap'
 };
 
 const thumb = {

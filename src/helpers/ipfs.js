@@ -2,17 +2,13 @@ import { Moralis } from "moralis"
 import { v4 as uuidv4 } from 'uuid';
 
 async function uploadImageIpfs(fileToUpload) {
-  console.log(fileToUpload);
   const file = new Moralis.File(fileToUpload.name, fileToUpload);
   await file.saveIPFS();
-  console.log(file);
 
-  const media = [{
+  return [{
     item: "ipfs://" + file._hash,
     type: fileToUpload.type
   }]
-  console.log("media :", media);
-  return media;
 }
 
 async function uploadMetadataIpfs({ message, media }) {
@@ -31,19 +27,12 @@ async function uploadMetadataIpfs({ message, media }) {
     appId: "zilly"
   });
 
-  console.log(object);
-
   const encodedFile = { base64: btoa(object) }
   const file = new Moralis.File(`publication-${profileId}-${metadata_id}.json`, encodedFile);
 
-  try {
-    await file.saveIPFS();
+  await file.saveIPFS();
 
-    return file._hash;
-  } catch (error) {
-    console.error(error);
-    return undefined;
-  }
+  return file._hash;
 }
 
 export { uploadImageIpfs, uploadMetadataIpfs };
