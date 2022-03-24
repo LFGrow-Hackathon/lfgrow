@@ -1,13 +1,14 @@
 import { useEnsAddress, useNativeTransactions } from "react-moralis";
 import getProfiles from "@/lens/get-profiles.js";
-import doesFollowFunc from '@/lens/does-follow'
-import { useEffect, useState } from "react";
-import FollowBtn from "./FollowBtn";
-import UnfollowBtn from "./UnfollowBtn";
+import doesFollowFunc from "@/lens/does-follow";
+import { useEffect, useState, useRef } from "react";
+import FollowBtn from "./buttons/FollowBtn";
+import UnfollowBtn from "./buttons/UnfollowBtn";
 
 export default function DisplayProfile(props) {
   const [profile, setProfile] = useState();
   const [doesFollow, setDoesFollow] = useState();
+  const isMounted = useRef(false);
 
   const { name } = useEnsAddress(props.address);
   const { data: Transactions, error } = useNativeTransactions({
@@ -15,17 +16,21 @@ export default function DisplayProfile(props) {
   });
 
   useEffect(() => {
+    isMounted.current = true;
     async function getProfile() {
       const { profiles } = await getProfiles({ ownedBy: [props.address] });
-      setProfile(profiles.items[0]);
       const resultFollow = await doesFollowFunc(profiles.items[0].id);
-      setDoesFollow(resultFollow);
+      if (isMounted.current) {
+        setProfile(profiles.items[0]);
+        setDoesFollow(resultFollow);
+      }
     };
 
     if (props.address) {
       getProfile();
     }
-  }, [props.address])
+    return () => { isMounted.current = false; };
+  }, [props.address]);
 
   const NativeTransactions = () => {
     return (

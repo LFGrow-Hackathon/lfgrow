@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client/core";
-import { apolloClient } from "@/apollo-client"; 
+import { apolloClient } from "@/helpers/apollo-client";
 
 const HAS_TX_BEEN_INDEXED = `
   query($request: HasTxHashBeenIndexedRequest!) {

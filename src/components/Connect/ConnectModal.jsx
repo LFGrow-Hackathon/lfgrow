@@ -9,7 +9,7 @@ export default function ConnectModal({
   authenticate,
 }) {
   const cancelButtonRef = useRef(null);
-  
+
   /*
    * This component can looks scarry but it does not do much, it's just the modal for the wallet connection.
    * We took it from TailwindCss pre-made modal, that handles the responsiveness for us.
@@ -80,7 +80,7 @@ export default function ConnectModal({
                       window.localStorage.setItem("connectorId", "injected");
                     } catch (e) {
                       console.error(e);
-                    } 
+                    }
                   }}
                 >
                   <img src={Metamask} alt={"Metamask"} />

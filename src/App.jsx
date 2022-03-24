@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { Outlet, Routes, Route, NavLink, useNavigate } from "react-router-dom";
-import Account from "@/components/Connect/Account.jsx";
+import { Outlet, Routes, Route, NavLink } from "react-router-dom";
+import Account from "@/components/connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
+import Welcome from "./components/Welcome/welcome";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
-import ProfileButton from "@/components/ProfileButton";
-import FeedButton from "@/components/FeedButton";
+import ProfileButton from "@/components/buttons/ProfileButton";
+import FeedButton from "@/components/buttons/FeedButton";
 
 function App() {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
-    useMoralis();
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+
   /* ------------------------------- 
   Enable Web3 provider if the user isn't authentificated
   ---------------------------------*/
@@ -21,6 +22,31 @@ function App() {
     }
   }, [isAuthenticated, isWeb3Enabled]);
 
+
+  // asks the user for permission to change network to polygon mumbain testnet if other network is detected
+  useEffect(() => {
+    (async () => {
+      await window.ethereum.request({
+        id: 1,
+        jsonrpc: "2.0",
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            rpcUrls: ["https://rpc-mumbai.maticvigil.com"],
+            chainName: "Polygon Testnet Mumbai",
+            nativeCurrency: {
+              name: "tMATIC",
+              symbol: "tMATIC", // 2-6 characters long
+              decimals: 18,
+            },
+            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+          },
+        ],
+      });
+    })();
+  }, []);
+
   function TopBar() {
     return (
       <div>
@@ -28,14 +54,16 @@ function App() {
           <NavLink to="/" className="text-white text-xl font-bold">
             Home
           </NavLink>
-
           <NavLink to="/feed" className="text-white text-xl font-bold">
             Feed
           </NavLink>
           <Account />
-        </div>
+          <NavLink to="/welcome" className="text-white text-lg font-bold ">
+            Switch profile
+          </NavLink>
+        </div >
         <Outlet />
-      </div>
+      </div >
     );
   }
 
@@ -60,6 +88,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Route>
+      <Route path="/welcome" element={<Welcome />} />
     </Routes>
   );
 }

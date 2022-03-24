@@ -17,18 +17,19 @@ const Application = () => {
       "Missing Moralis Application ID or Server URL. Make sure to set your .env file."
     );
   }
+
   return (
     <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </MoralisProvider>
   );
 };
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Application />
-    </BrowserRouter>
+    <Application />
   </React.StrictMode>,
   document.getElementById("root")
 );
