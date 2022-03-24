@@ -69,9 +69,8 @@ function App() {
 
   function SideBar() {
     return (
-      <div className="flex flex-row">
-        <div className="flex flex-col">
-          <div>SIDEBAR STUFF</div>
+      <div className="flex">
+        <div className="flex w-1/5 flex-col mt-10">
           <ProfileButton />
           <FeedButton />
         </div>
