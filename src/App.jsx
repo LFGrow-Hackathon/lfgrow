@@ -10,7 +10,7 @@ import ProfileButton from "@/components/buttons/ProfileButton";
 import FeedButton from "@/components/buttons/FeedButton";
 
 function App() {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading, account } =
     useMoralis();
 
   /* ------------------------------- 
@@ -85,7 +85,7 @@ function App() {
         <Route element={<SideBar />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfilePage address={account}/>} />
         </Route>
       </Route>
       <Route path="/welcome" element={<Welcome />} />
