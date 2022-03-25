@@ -10,7 +10,7 @@ const Comment = ({ data }) => {
   const userProDesc = profile.bio?.length ? profile.bio : "";
 
   return (
-    <div className="flex m-2 p-2 border rounded">
+    <div className="flex m-2 p-2 border rounded" id={id}>
       <ul className="divide-y divide-gray-200 w-full" role="list">
         <li className="py-4 self-start justify-start">
           <div className="flex space-x-3">
