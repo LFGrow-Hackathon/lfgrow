@@ -51,7 +51,7 @@ const SingleFeed = ({ data }) => {
                 src={userProPic}
                 alt="profile picture"
               />
-              <div className="flex-1 space-y-1 flex flex-col items-center">
+              <div className="flex-1 space-y-1 flex flex-col">
                 <div className="flex items-center justify-between">
                   <div className="">
                     <h3 className="text-sm font-medium">{userProName}</h3>
@@ -66,7 +66,7 @@ const SingleFeed = ({ data }) => {
                 <img
                   src={pubImge?.length ? pubImge : ""}
                   alt={pubImge?.length ? "publication image" : ""}
-                  className="rounded w-96 pr-2"
+                  className="rounded w-96 pr-2 self-center"
                 />
               </div>
             </div>
