@@ -1,8 +1,9 @@
 import { useMoralis } from "react-moralis";
 import DisplayProfile from "@/components/DisplayProfile.jsx";
-import CreatePublication from "@/components/publication/CreatePublication.jsx"
+import CreatePublication from "@/components/publications/CreatePublication.jsx";
 
 export default function HomePage() {
+
   const { account } = useMoralis();
 
   return (
