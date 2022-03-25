@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { SearchIcon } from '@heroicons/react/solid'
 import { Combobox } from '@headlessui/react'
+import { useNavigate } from "react-router-dom";
 import LoadingSearchModal from '@/components/navbar/search/LoadingSearchModal'
 import searchAddress from '@/components/navbar/search/searchAddress'
 
 const myFunc = () => { console.log("LESSSSSGO") };
 
 const searchFeature = [
-  { id: 1, base: 'handle: ', func: myFunc },
+  { id: 1, base: 'handle: ', func: ({ query }) => `/profile/${query}` },
   { id: 2, base: 'address: ', func: searchAddress },
-  { id: 3, base: 'community: ', func: myFunc },
-  { id: 4, base: 'hashtag: ', func: myFunc },
+  { id: 3, base: 'community: ', func: ({ query }) => `/communities/${query}` },
+  { id: 4, base: 'hashtag: ', func: ({ query }) => `/hastag/${query}` },
 ]
 
 function classNames(...classes) {
@@ -22,13 +23,16 @@ function Search() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('Loading search')
   const [isError, setIsError] = useState(false)
+  const navigate = useNavigate();
 
   async function onSubmit({ query, feature }) {
     setIsLoading(true);
     const result = await feature.func({ query, setMessage, setIsError });
-    setIsLoading(false);
-    setMessage("Loading search");
-    setIsError(false);
+    if (result) {
+      setIsLoading(false);
+      setMessage("Loading search");
+      navigate(result);
+    }
   }
 
   return (
@@ -73,6 +77,7 @@ function Search() {
         setIsLoading={setIsLoading}
         message={message}
         isError={isError}
+        setIsError={setIsError}
       />
     </div>
   )

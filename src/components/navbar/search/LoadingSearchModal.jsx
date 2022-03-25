@@ -1,10 +1,16 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-function LoadingSearchModal({ isLoading, setIsLoading, message, isError }) {
+function LoadingSearchModal({ isLoading, setIsLoading, message, isError, setIsError }) {
   return (
     <Transition.Root show={isLoading} as={Fragment}>
-      <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={() => setIsLoading(false)}>
+      <Dialog
+        as="div"
+        className="fixed z-10 inset-0 overflow-y-auto"
+        onClose={() => {
+          setIsError(false)
+          setIsLoading(false)
+        }}>
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
@@ -38,7 +44,10 @@ function LoadingSearchModal({ isLoading, setIsLoading, message, isError }) {
                 {isError && <button
                   type="button"
                   className="inline-flex justify-center w-auto rounded-md border border-transparent shadow-sm px-4 py-2 mt-5 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
-                  onClick={() => setIsLoading(false)}
+                  onClick={() => {
+                    setIsLoading(false)
+                    setIsError(false)
+                  }}
                 >
                   Go back
                 </button>}

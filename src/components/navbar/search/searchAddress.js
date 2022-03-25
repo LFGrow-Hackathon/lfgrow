@@ -41,16 +41,18 @@ async function searchAddress({ query, setMessage, setIsError }) {
 
     setMessage(`Checking if ${query} has a Lens profile`)
     const { profiles } = await getProfiles({ ownedBy: [address] });
-    console.log("final addr: ", profiles);
+
     if (profiles.items.length > 0) {
-      return profiles.items[0].handle;
+      return `/profile/${profiles.items[0].handle}`;
     }
+
     setMessage(`${query} isn't using Lens. Generating a profile based on his on-chain data`)
-    return profiles;
+    return `/profile/${address}`;
   } catch (error) {
-    console.error(error);
     setIsError(true);
     setMessage("No user found for this address, try with a valid one, please.")
+    console.error(error);
+    return null;
   }
 
 }
