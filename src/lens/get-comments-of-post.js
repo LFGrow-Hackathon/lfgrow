@@ -74,7 +74,7 @@ fragment MediaFields on Media {
 `;
 
 const getCommets = (request) => {
-  console.log("request: ", request);
+  // console.log("request: ", request);
   return apolloClient.query({
     query: gql(GET_COMMENTS_BY_POST),
     variables: request,
