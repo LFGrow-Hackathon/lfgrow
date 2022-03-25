@@ -1,4 +1,68 @@
-export default function EditProfile() {
+import updateProfile from "@/lens/update-profile";
+import getProfiles from "@/lens/get-profiles.js";
+import { useState, useRef, useEffect } from "react";
+
+export default function EditProfile(props) {
+  const isMounted = useRef(false);
+  const [profile, setProfile] = useState();
+
+  useEffect(() => {
+    isMounted.current = true;
+    async function getProfile() {
+      const { profiles } = await getProfiles({ ownedBy: [props.address] });
+      if (isMounted.current) {
+        setProfile(profiles.items[0]);
+
+        setUserInfo({
+          name: profiles.items[0].name,
+          bio: profiles.items[0].bio || "",
+          location: profiles.items[0].location || "",
+          website: profiles.items[0].website || "",
+          twitterUrl: profiles.items[0].twitterUrl || "",
+        });
+      }
+    }
+
+    if (props.address) {
+      getProfile();
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [props.address]);
+
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    bio: "",
+    location: "",
+    website: "",
+    twitterUrl: "",
+  });
+
+  const inputsHandler = (e) => {
+    const val = e.target.value;
+
+    setUserInfo((prevState) => ({
+      ...prevState,
+      [e.target.name]: val,
+    }));
+  };
+
+  const update = async () => {
+    let data = {};
+    // only send fields who have value
+    userInfo.name ? (data.name = userInfo.name) : "";
+    userInfo.bio ? (data.bio = userInfo.bio) : "";
+    userInfo.location ? (data.location = userInfo.location) : "";
+    userInfo.website ? (data.website = userInfo.website) : "";
+    userInfo.twitterUrl ? (data.twitterUrl = userInfo.twitterUrl) : "";
+
+    if (!data.name) data.name = profile.name;
+    data.profileId = profile.id;
+    await updateProfile(data);
+  };
+
   return (
     <div className="flex w-4/5 max-w-[60%] px-4 justify-center">
       <div className="w-full h-full pl-5 pr-5 mt-10 mb-10 bg-white border-2 border-[#e1e8f7] rounded-md">
@@ -27,10 +91,12 @@ export default function EditProfile() {
                     <div className="max-w-lg flex rounded-md shadow-sm">
                       <input
                         type="text"
-                        name="username"
+                        name="name"
                         id="username"
                         autoComplete="username"
                         className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                        value={userInfo.name}
+                        onChange={inputsHandler}
                       />
                     </div>
                   </div>
@@ -46,10 +112,11 @@ export default function EditProfile() {
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <textarea
                       id="about"
-                      name="about"
+                      name="bio"
                       rows={3}
                       className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-                      defaultValue={""}
+                      value={userInfo.bio}
+                      onChange={inputsHandler}
                     />
                     <p className="mt-2 text-sm text-gray-500">
                       Write a few sentences about yourself.
@@ -141,10 +208,12 @@ export default function EditProfile() {
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input
                       type="text"
-                      name="first-name"
+                      name="twitterUrl"
                       id="first-name"
                       autoComplete="given-name"
                       className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                      value={userInfo.twitterUrl}
+                      onChange={inputsHandler}
                     />
                   </div>
                 </div>
@@ -158,10 +227,12 @@ export default function EditProfile() {
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input
                       type="text"
-                      name="first-name"
+                      name="website"
                       id="first-name"
                       autoComplete="given-name"
                       className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                      value={userInfo.website}
+                      onChange={inputsHandler}
                     />
                   </div>
                 </div>
@@ -175,10 +246,12 @@ export default function EditProfile() {
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input
                       type="text"
-                      name="first-name"
+                      name="location"
                       id="first-name"
                       autoComplete="given-name"
                       className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                      value={userInfo.location}
+                      onChange={inputsHandler}
                     />
                   </div>
                 </div>
@@ -362,8 +435,9 @@ export default function EditProfile() {
                 Cancel
               </button>
               <button
-                type="submit"
+                type="button"
                 className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={update}
               >
                 Save
               </button>
