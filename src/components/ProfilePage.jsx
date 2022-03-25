@@ -7,12 +7,9 @@ import Nfts from "@/components/profile/Nfts";
 import getProfiles from "@/lens/get-profiles.js";
 import { useEffect, useState, useRef } from "react";
 
-
 export default function ProfilePage(props) {
-
   const [profile, setProfile] = useState();
   const isMounted = useRef(false);
-
 
   useEffect(() => {
     isMounted.current = true;
@@ -20,22 +17,17 @@ export default function ProfilePage(props) {
       const { profiles } = await getProfiles({ ownedBy: [props.address] });
       if (isMounted.current) {
         setProfile(profiles.items[0]);
-        console.log(profiles.items[0])
+        console.log(profiles.items[0]);
       }
-    };
+    }
 
     if (props.address) {
       getProfile();
     }
-    return () => { isMounted.current = false; };
+    return () => {
+      isMounted.current = false;
+    };
   }, [props.address]);
-
-
-
-
-
-
-
 
   return (
     <div className="flex w-4/5">
@@ -46,13 +38,19 @@ export default function ProfilePage(props) {
               <div className="mr-4 flex">
                 <img
                   className="inline-block h-20 w-20 rounded-full"
-                  src={profile?.picture || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                  src={
+                    profile?.picture ||
+                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  }
                   alt=""
                 />
               </div>
               <div className="">
                 <h4 className="text-lg font-bold">{profile?.name || "-"}</h4>
-                <a href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"} target="_blank">
+                <a
+                  href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
+                  target="_blank"
+                >
                   <img className="inline-block h-5 w-5" src={Twitter} alt="" />
                 </a>
               </div>
@@ -67,11 +65,15 @@ export default function ProfilePage(props) {
                 <h4 className="text-xs text-slate-500">POAPS RECEIVED</h4>
               </div>
               <div className="justify-center pl-2">
-                <h4 className="text-md font-bold">{profile?.stats.totalFollowing}</h4>
+                <h4 className="text-md font-bold">
+                  {profile?.stats.totalFollowing}
+                </h4>
                 <h4 className="text-xs text-slate-500">FOLLOWING</h4>
               </div>
               <div className="justify-center pl-2">
-                <h4 className="text-md font-bold">{profile?.stats.totalFollowers}</h4>
+                <h4 className="text-md font-bold">
+                  {profile?.stats.totalFollowers}
+                </h4>
                 <h4 className="text-xs text-slate-500">FOLLOWERS</h4>
               </div>
             </div>

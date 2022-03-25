@@ -1,10 +1,11 @@
 import { getPublications } from "@/lens/get-publications";
 import { useState, useEffect, useRef } from "react";
 import SingleFeed from "./SingleFeed";
+import CreatePublication from "../publications/CreatePublication";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
@@ -25,7 +26,9 @@ const Feed = () => {
           picture: filterdPost?.profile?.picture
             ? filterdPost?.profile?.picture?.original.url
             : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg",
-          description: filterdPost?.profile?.bio ? filterdPost?.profile?.bio : "",
+          description: filterdPost?.profile?.bio
+            ? filterdPost?.profile?.bio
+            : "",
         },
         postContent: filterdPost?.metadata?.content,
         postMedia: filterdPost?.metadata?.media,
@@ -35,16 +38,19 @@ const Feed = () => {
       if (isMounted.current) {
         setPosts([...postDataObj]);
       }
-    }
+    };
 
     query();
 
-    return () => { isMounted.current = false };
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   return (
-    <div className="flex flex-col max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+    <div className="flex w-4/5 max-w-[60%] px-4">
+      <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
+        <CreatePublication />
         {posts.length ? (
           posts.map((post, key) => {
             return <SingleFeed data={post} key={key} />;
@@ -52,7 +58,9 @@ const Feed = () => {
         ) : (
           <div className="flex flex-col mt-20">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black m-auto" />
-            <p className="flex justify-center mt-5 text-lg text-black">Loading feed</p>
+            <p className="flex justify-center mt-5 text-lg text-black">
+              Loading feed
+            </p>
           </div>
         )}
       </div>
