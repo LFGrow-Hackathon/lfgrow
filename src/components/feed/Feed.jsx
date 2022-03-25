@@ -13,6 +13,7 @@ const Feed = () => {
     const query = async () => {
       const reqData = { sortCriteria: "TOP_COMMENTED", limit: 50 };
       const res = await getPublications(reqData);
+      // console.log("res: ", res);
 
       let filterdPosts = res.explorePublications.items.filter(
         (singlePost) => singlePost.__typename == "Post"
@@ -30,14 +31,15 @@ const Feed = () => {
             ? filterdPost?.profile?.bio
             : "",
         },
-        postContent: filterdPost?.metadata?.content,
-        postMedia: filterdPost?.metadata?.media,
-        postTimeStamp: filterdPost?.createdAt,
         postId: filterdPost?.id,
+        postContent: filterdPost?.metadata?.content,
+        postMedia: filterdPost?.metadata?.image,
+        postTimeStamp: filterdPost?.createdAt,
       }));
 
       if (isMounted.current) {
         setPosts([...postDataObj]);
+        // console.log("postDataObj: ", postDataObj);
       }
     };
 
