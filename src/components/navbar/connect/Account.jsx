@@ -3,7 +3,7 @@ import { useMoralis } from "react-moralis";
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { NavLink } from "react-router-dom";
-import ConnectModal from "@/components/Connect/ConnectModal.jsx";
+import ConnectModal from "@/components/navbar/connect/ConnectModal.jsx";
 import getProfiles from "@/lens/get-profiles";
 import { useNavigate } from "react-router-dom";
 
@@ -57,7 +57,6 @@ function Account() {
     );
   }
 
-  // className="text-gray-600 text-sm font-bold rounded-full bg-white py-2 px-5"
   return (
     <>
       <Menu as="div" className="flex-shrink-0 relative ml-5">

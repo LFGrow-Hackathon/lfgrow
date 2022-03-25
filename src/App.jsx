@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { Outlet, Routes, Route, NavLink } from "react-router-dom";
 import HomePage from "@/components/HomePage.jsx";
-import Welcome from "@/components/Welcome/welcome";
+import Welcome from "@/components/welcome/Welcome";
 import TopBar from "@/components/navbar/TopBar"
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
