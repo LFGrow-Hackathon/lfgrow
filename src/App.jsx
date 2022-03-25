@@ -7,6 +7,7 @@ import TopBar from "@/components/navbar/TopBar";
 import Sidebar from "@/components/navbar/Sidebar";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
+import EditProfile from "@/components/profile/EditProfile";
 import DiscoverCommunities from "./components/DiscoverCommunities";
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/communities" element={<DiscoverCommunities />} />
+          <Route path="/edit" element={<EditProfile />} />
         </Route>
       </Route>
       <Route path="/welcome" element={<Welcome />} />

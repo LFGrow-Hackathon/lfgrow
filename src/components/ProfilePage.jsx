@@ -1,11 +1,12 @@
 import Twitter from "@/assets/twitter_logo.png";
-import { UserIcon, BookmarkIcon } from "@heroicons/react/outline";
+import { UserIcon, BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
 import CreatePublication from "@/components/publications/CreatePublication.jsx";
 import Poaps from "@/components/profile/Poaps";
 import Daos from "@/components/profile/Daos";
 import Nfts from "@/components/profile/Nfts";
 import getProfiles from "@/lens/get-profiles.js";
 import { useEffect, useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function ProfilePage(props) {
   const [profile, setProfile] = useState();
@@ -78,8 +79,17 @@ export default function ProfilePage(props) {
               </div>
             </div>
           </div>
+          <div className="flex justify-end">
+            <NavLink
+              to="/edit"
+              className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit
+              profile
+            </NavLink>
+          </div>
         </div>
-        <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
+        <div className="w-full h-full pl-5 pr-5 mt-5 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
           <div className="mt-5 p-3 border rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Communities
             <span className="inline-flex items-center mr-1 ml-3 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
@@ -100,7 +110,7 @@ export default function ProfilePage(props) {
         </div>
       </div>
       <div className="w-2/5 mr-5">
-        <div className="flex max-h-10 mt-[112px] font-medium text-lg items-center">
+        <div className="flex max-h-10 mt-[129px] font-medium text-lg items-center">
           Badges <BookmarkIcon className="h-5 w-5 ml-2" aria-hidden="true" />
         </div>
         <Poaps />
