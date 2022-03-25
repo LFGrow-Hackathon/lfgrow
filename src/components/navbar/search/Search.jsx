@@ -4,11 +4,11 @@ import { Combobox } from '@headlessui/react'
 import { useNavigate } from "react-router-dom";
 import LoadingSearchModal from '@/components/navbar/search/LoadingSearchModal'
 import searchAddress from '@/components/navbar/search/searchAddress'
+import searchHandle from '@/components/navbar/search/searchHandle'
 
-const myFunc = () => { console.log("LESSSSSGO") };
 
 const searchFeature = [
-  { id: 1, base: 'handle: ', func: ({ query }) => `/profile/${query}` },
+  { id: 1, base: 'handle: ', func: searchHandle },
   { id: 2, base: 'address: ', func: searchAddress },
   { id: 3, base: 'community: ', func: ({ query }) => `/communities/${query}` },
   { id: 4, base: 'hashtag: ', func: ({ query }) => `/hastag/${query}` },
