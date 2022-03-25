@@ -1,7 +1,7 @@
 const FullPost = ({ postData }) => {
-  console.log("postData: ", postData);
-  const userProPic = postData.profile.picture?.length
-    ? postData.profile.picture
+  // console.log("postData: ", postData);
+  const userProPic = postData.profile.picture?.medium?.url.length
+    ? postData.profile.picture?.medium?.url
     : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg";
   const userProName = postData.profile.name?.length
     ? postData.profile.name
@@ -23,7 +23,7 @@ const FullPost = ({ postData }) => {
             <div className="text-gray-500 text-sm">{userProDesc}</div>
           </div>
         </div>
-        <div className="mx-3">
+        <div className="m-3">
           <div className="post content">{postData.metadata.content}</div>
           {!postData.metadata.image?.length ? (
             <></>
@@ -37,13 +37,13 @@ const FullPost = ({ postData }) => {
             </div>
           )}
         </div>
-        <div className="w-full flex justify-between">
+        <div className="w-full flex px-2 justify-between">
           <div className="text-gray-800 self-start flex space-x-3">
             <p>mirrors: {postData.stats.totalAmountOfMirrors}</p>
             <p>collection: {postData.stats.totalAmountOfCollects}</p>
             <p>comments: {postData.stats.totalAmountOfComments}</p>
           </div>
-          <div className="self-end pr-5">
+          <div className="self-end pr-3">
             <p className="text-sm text-gray-500">{postData.createdAt}</p>
           </div>
         </div>

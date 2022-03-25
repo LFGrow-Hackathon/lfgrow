@@ -17,8 +17,7 @@ query getCommentsByPost(
         }
         createdAt
         profile {
-          name
-          id
+          ...UserProfile
         }
         mainPost {
           ... on Post {
@@ -48,20 +47,23 @@ query getCommentsByPost(
         totalAmountOfComments
       }
       profile {
-        id
-        name
-        bio
-        picture {
-          ... on NftImage {
-            uri
-            contractAddress
-          }
-          ... on MediaSet {
-            medium {
-              ...MediaFields
-            }
-          }
-        }
+        ...UserProfile
+      }
+    }
+  }
+}
+fragment UserProfile on Profile {
+  id
+  name
+  bio
+  picture {
+    ... on NftImage {
+      uri
+      contractAddress
+    }
+    ... on MediaSet {
+      medium: original {
+        ...MediaFields
       }
     }
   }
@@ -74,7 +76,6 @@ fragment MediaFields on Media {
 `;
 
 const getCommets = (request) => {
-  // console.log("request: ", request);
   return apolloClient.query({
     query: gql(GET_COMMENTS_BY_POST),
     variables: request,
