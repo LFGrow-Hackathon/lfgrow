@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import getAllPoap from "@/api_call/getAllPoap";
 import getVote from "@/api_call/getVote";
-import { useNFTBalances } from "react-moralis";
+import { useNFTBalances, useNativeTransactions } from "react-moralis";
 
 //@Tomas:
 //Once the props.address is connected again, should be be able to get all the poap and start displaying them (rely on already made components as much as you can using tailwind)
@@ -17,13 +17,14 @@ import { useNFTBalances } from "react-moralis";
 //To display the NFT you can use the NFTbalances I've added. We want to display them in the Nfts.js but you can see a working example of how to get the nft + the metadata in Nfts_old.js,
 //For the snapshot vote, use the query getVote(address).
 
-
 export default function ProfilePage(props) {
-
   const [profile, setProfile] = useState();
   const isMounted = useRef(false);
   const [poap, setPoap] = useState();
   const { data: NFTBalances } = useNFTBalances({ address: props.address });
+  const { data: Transactions, error } = useNativeTransactions({
+    address: props?.address,
+  });
 
   useEffect(() => {
     isMounted.current = true;
@@ -53,6 +54,29 @@ export default function ProfilePage(props) {
     };
   }, [props.address]);
 
+  let monthsDisplay;
+  let yearsDisplay;
+
+  const getAccoutAge = () => {
+    const firstTx =
+      Transactions?.result[Transactions.result.length - 1].block_timestamp;
+    if (firstTx) {
+      const firstTxDate = new Date(
+        `${firstTx?.substring(5, 7)}/${firstTx.substring(
+          8,
+          10
+        )}/${firstTx?.substring(0, 4)}`
+      );
+      const actualDate = new Date();
+      const diffInTime = actualDate.getTime() - firstTxDate.getTime();
+      const diffInMonths = Math.ceil(diffInTime / (1000 * 3600 * 24 * 30));
+      const years = Math.floor(diffInMonths / 12);
+      const months = diffInMonths % 12;
+      yearsDisplay = years;
+      monthsDisplay = months;
+    }
+  };
+  getAccoutAge();
 
   return (
     <div className="flex w-4/5">
@@ -75,7 +99,8 @@ export default function ProfilePage(props) {
                 <p>{profile?.bio}</p>
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
-                  target="_blank" rel="noreferrer"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   <img className="inline-block h-5 w-5" src={Twitter} alt="" />
                 </a>
@@ -83,7 +108,18 @@ export default function ProfilePage(props) {
             </div>
             <div className="flex justify-center divide-x-2 h-10 space-x-3">
               <div className="justify-center">
-                <h4 className="text-md font-bold">8mo</h4>
+                <div className="flex gap-2">
+                  {yearsDisplay ? (
+                    <h4 className="text-md font-bold">{yearsDisplay}y</h4>
+                  ) : (
+                    ""
+                  )}
+                  {monthsDisplay ? (
+                    <h4 className="text-md font-bold">{monthsDisplay}mo</h4>
+                  ) : (
+                    ""
+                  )}
+                </div>
                 <h4 className="text-xs text-slate-500">IN WEB3</h4>
               </div>
               <div className="block justify-center pl-2">
@@ -138,7 +174,7 @@ export default function ProfilePage(props) {
         <div className="flex max-h-10 mt-[129px] font-medium text-lg items-center">
           Badges <BookmarkIcon className="h-5 w-5 ml-2" aria-hidden="true" />
         </div>
-        <Poaps poaps={poap}/>
+        <Poaps poaps={poap} />
         <Nfts />
       </div>
     </div>
