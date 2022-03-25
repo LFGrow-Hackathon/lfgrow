@@ -53,7 +53,6 @@ export default function DiscoverCommunities() {
   return (
     <div className="mt-10 mx-20">
       <p className="pb-10 text-xl  font-bold text-gray-500">Discover 4000+ web3 communities</p>
-
       <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {communities.map((community) => (
           <li
