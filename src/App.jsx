@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { Outlet, Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "@/components/HomePage.jsx";
 import Welcome from "@/components/welcome/Welcome";
 import TopBar from "@/components/navbar/TopBar";
@@ -8,7 +8,8 @@ import Sidebar from "@/components/navbar/Sidebar";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
 import EditProfile from "@/components/profile/EditProfile";
-import DiscoverCommunities from "./components/DiscoverCommunities";
+import DiscoverCommunities from "./components/communities/DiscoverCommunities";
+import CommunityPage from "./components/communities/CommunityPage";
 
 function App() {
   const {
@@ -16,7 +17,6 @@ function App() {
     enableWeb3,
     isAuthenticated,
     isWeb3EnableLoading,
-    account,
   } = useMoralis();
 
   /* ------------------------------- 
@@ -53,6 +53,8 @@ function App() {
     })();
   }, []);
 
+
+
   return (
     <Routes>
       <Route element={<TopBar />}>
@@ -60,8 +62,9 @@ function App() {
           <Route path="/" element={<Feed />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/communities" element={<DiscoverCommunities />} />
           <Route path="/edit" element={<EditProfile />} />
+          <Route path="/communities" element={<DiscoverCommunities />} />
+          <Route path="/communities/:id" element={<CommunityPage />} />
         </Route>
       </Route>
       <Route path="/welcome" element={<Welcome />} />

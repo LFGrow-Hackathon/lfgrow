@@ -1,46 +1,46 @@
 export default function Nfts() {
   const poaps = [
     {
-      name: "Jan",
+      name: "Jane",
       title: "Paradigm Representative",
       role: "Admin",
-      email: "janecooper@example.com",
+      email: "janecoper@example.com",
       telephone: "+1-202-555-0170",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jae",
+      name: "Jane",
       title: "Paradigm Representative",
       role: "Admin",
-      email: "janecooper@example.com",
+      email: "janecooper@eample.com",
       telephone: "+1-202-555-0170",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Janef",
+      name: "Jane",
       title: "Paradigm Representative",
       role: "Admin",
-      email: "janecooper@example.com",
+      email: "jnecooper@example.com",
       telephone: "+1-202-555-0170",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Janer",
+      name: "Jane",
       title: "Paradigm Representative",
       role: "Admin",
-      email: "janecooper@example.com",
+      email: "janecooper@exampe.com",
       telephone: "+1-202-555-0170",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Janenj",
+      name: "Jane",
       title: "Paradigm Representative",
       role: "Admin",
-      email: "janecooper@example.com",
+      email: "janecooper@example.cm",
       telephone: "+1-202-555-0170",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
@@ -55,7 +55,7 @@ export default function Nfts() {
       >
         {poaps.map((person) => (
           <li
-            key={person.name}
+            key={person.email}
             className="col-span-1 flex flex-col text-center bg-white rounded-lg"
           >
             <div className="flex-1 flex flex-col">
