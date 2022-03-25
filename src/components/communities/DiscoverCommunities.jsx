@@ -27,7 +27,7 @@ export default function DiscoverCommunities() {
       const Community = Moralis.Object.extend("Community");
       const query = new Moralis.Query(Community);
       query.greaterThan("followersCount", 100);
-      query.limit(100);
+      query.limit(10);
       query.descending("followersCount");
       const result = await query.find();
       setCommunities(result);
@@ -75,3 +75,4 @@ export default function DiscoverCommunities() {
     </div>
   );
 }
+

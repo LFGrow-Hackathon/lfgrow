@@ -53,8 +53,6 @@ function App() {
     })();
   }, []);
 
-
-
   return (
     <Routes>
       <Route element={<TopBar />}>
