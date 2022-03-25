@@ -1,3 +1,5 @@
+import { createMirror } from "@/lens/mirror.js";
+
 const SingleFeed = ({ data }) => {
   const userProPic = data.profile.picture;
   const userProName = data.profile.name;
@@ -5,6 +7,12 @@ const SingleFeed = ({ data }) => {
   const pubContent = data.postContent;
   const pubTime = data.postTimeStamp;
   const pubImge = data.postMedia[0]?.original.url;
+  const postId = data.postId;
+  const profileId = window.localStorage.getItem("profileId");
+
+  const mirrorFunc = async (_postId) => {
+    await createMirror(profileId, _postId);
+  };
 
   return (
     <>
@@ -50,6 +58,15 @@ const SingleFeed = ({ data }) => {
                 className="rounded w-96 pr-2"
               />
             </div>
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={() => mirrorFunc(postId)}
+            >
+              Mirror
+            </button>
           </div>
         </div>
       </div>

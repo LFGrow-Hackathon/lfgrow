@@ -33,6 +33,7 @@ const Feed = () => {
         postContent: filterdPost?.metadata?.content,
         postMedia: filterdPost?.metadata?.media,
         postTimeStamp: filterdPost?.createdAt,
+        postId: filterdPost?.id,
       }));
 
       if (isMounted.current) {
