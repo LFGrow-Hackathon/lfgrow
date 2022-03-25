@@ -1,7 +1,7 @@
 export default function Poaps() {
   const poaps = [
     {
-      name: "Jane",
+      name: "Jan",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -10,7 +10,7 @@ export default function Poaps() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "Jae",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -19,7 +19,7 @@ export default function Poaps() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "Jne",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -28,7 +28,7 @@ export default function Poaps() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "ane",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -37,7 +37,7 @@ export default function Poaps() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "Janed",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",

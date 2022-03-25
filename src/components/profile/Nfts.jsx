@@ -1,7 +1,7 @@
 export default function Nfts() {
   const poaps = [
     {
-      name: "Jane",
+      name: "Jan",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -10,7 +10,7 @@ export default function Nfts() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "Jae",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -19,7 +19,7 @@ export default function Nfts() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "Janef",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -28,7 +28,7 @@ export default function Nfts() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "Janer",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -37,7 +37,7 @@ export default function Nfts() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     },
     {
-      name: "Jane",
+      name: "Janenj",
       title: "Paradigm Representative",
       role: "Admin",
       email: "janecooper@example.com",
@@ -55,7 +55,7 @@ export default function Nfts() {
       >
         {poaps.map((person) => (
           <li
-            key={person.email}
+            key={person.name}
             className="col-span-1 flex flex-col text-center bg-white rounded-lg"
           >
             <div className="flex-1 flex flex-col">
