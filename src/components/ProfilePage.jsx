@@ -20,7 +20,6 @@ export default function ProfilePage(props) {
       const { profiles } = await getProfiles({ ownedBy: [props.address] });
       if (isMounted.current) {
         setProfile(profiles.items[0]);
-        console.log(profiles.items[0])
       }
     };
 
