@@ -1,6 +1,6 @@
 import Twitter from "@/assets/twitter_logo.png";
 import { UserIcon, BookmarkIcon } from "@heroicons/react/outline";
-import CreatePublication from "@/components/publication/CreatePublication.jsx";
+import CreatePublication from "@/components/publications/CreatePublication.jsx";
 import Poaps from "@/components/profile/Poaps";
 import Daos from "@/components/profile/Daos";
 import Nfts from "@/components/profile/Nfts";
@@ -46,7 +46,7 @@ export default function ProfilePage(props) {
               <div className="mr-4 flex">
                 <img
                   className="inline-block h-20 w-20 rounded-full"
-                  src={ profile?.picture || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                  src={profile?.picture || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
                   alt=""
                 />
               </div>
