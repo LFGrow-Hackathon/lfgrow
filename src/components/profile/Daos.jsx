@@ -67,7 +67,7 @@ export default function Daos() {
                 <UserIcon className="h-3 w-3" aria-hidden="true" />
                 4352
               </span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
                 4 votes
               </span>
             </a>
