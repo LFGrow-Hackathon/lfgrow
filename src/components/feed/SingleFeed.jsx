@@ -1,5 +1,6 @@
 import { createMirror, hasMirrored } from "@/lens/mirror.js";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const SingleFeed = ({ data }) => {
   const userProPic = data.profile.picture;
