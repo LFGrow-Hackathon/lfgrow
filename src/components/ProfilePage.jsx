@@ -138,7 +138,7 @@ export default function ProfilePage(props) {
         <div className="flex max-h-10 mt-[129px] font-medium text-lg items-center">
           Badges <BookmarkIcon className="h-5 w-5 ml-2" aria-hidden="true" />
         </div>
-        <Poaps />
+        <Poaps poaps={poap}/>
         <Nfts />
       </div>
     </div>
