@@ -52,14 +52,11 @@ export const createMirror = async (_profileId, _pubId) => {
   
   const profileId = _profileId
 
-  if (!profileId) {
+  if (!profileId && !_pubId) {
     throw new Error('Must define PROFILE_ID in the .env to run this');
   }
 
-  const address = getAddress();
-  console.log('create mirror: address', address);
-
-  await login(address);
+  await login();
 
   // hard coded to make the code example clear
   const createMirrorRequest = {
@@ -128,7 +125,3 @@ export const createMirror = async (_profileId, _pubId) => {
 
   return result.data;
 };
-
-(async () => {
-  await createMirror();
-})();
