@@ -73,6 +73,7 @@ function App() {
           <Route path="/" element={<Feed />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path=":handle" element={<ProfilePage />} />
           <Route path="/communities" element={<DiscoverCommunities />} />
         </Route>
       </Route>

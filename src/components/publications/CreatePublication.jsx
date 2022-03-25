@@ -108,7 +108,6 @@ function CreatePublication() {
         <UploadFileModal
           isModalVisible={isModalVisible}
           setIsModalVisible={setIsModalVisible}
-          file={file}
           setFile={setFile}
         />
       )}

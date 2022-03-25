@@ -59,11 +59,10 @@ function Account() {
 
   return (
     <>
-      <Menu as="div" className="flex-shrink-0 relative ml-5">
+      <Menu as="div">
         <div>
-          <Menu.Button className="bg-white rounded-full py-2 px-5 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span className="sr-only">Open user menu</span>
-            <p className="text-gray-500 text-xl font-bold rounded-full bg-white mr-4">{handle}</p>
+          <Menu.Button className="bg-white rounded-full py-1 px-1 lg:py-2 lg:px-4 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <p className="hidden lg:block text-xl text-gray-500 font-bold rounded-full bg-white lg:mr-3">{handle}</p>
             <img className="h-8 w-8 rounded-full" src={userImage} alt="" />
           </Menu.Button>
         </div>
