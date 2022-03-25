@@ -50,7 +50,10 @@ const Feed = () => {
             return <SingleFeed data={post} key={key} />;
           })
         ) : (
-          <>updating post</>
+          <div className="flex flex-col mt-20">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black m-auto" />
+            <p className="flex justify-center mt-5 text-lg text-black">Loading feed</p>
+          </div>
         )}
       </div>
     </div>

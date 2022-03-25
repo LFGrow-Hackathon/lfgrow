@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { Outlet, Routes, Route, NavLink } from "react-router-dom";
-import Account from "@/components/Connect/Account.jsx";
 import HomePage from "@/components/HomePage.jsx";
-import Welcome from "./components/Welcome/welcome";
+import Welcome from "@/components/welcome/Welcome";
+import TopBar from "@/components/navbar/TopBar";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
 import ProfileButton from "@/components/buttons/ProfileButton";
 import FeedButton from "@/components/buttons/FeedButton";
+import DiscoverCommunities from "./components/DiscoverCommunities";
 
 function App() {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading, account } =
     useMoralis();
 
   /* ------------------------------- 
@@ -47,32 +48,18 @@ function App() {
     })();
   }, []);
 
-  function TopBar() {
-    return (
-      <div>
-        <div className="flex justify-center items-center space-x-10 p-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-          <NavLink to="/" className="text-white text-xl font-bold">
-            Home
-          </NavLink>
-          <NavLink to="/feed" className="text-white text-xl font-bold">
-            Feed
-          </NavLink>
-          <Account />
-          <NavLink to="/welcome" className="text-white text-lg font-bold ">
-            Switch profile
-          </NavLink>
-        </div>
-        <Outlet />
-      </div>
-    );
-  }
-
   function SideBar() {
     return (
       <div className="flex">
         <div className="flex w-1/5 flex-col mt-10">
           <ProfileButton />
           <FeedButton />
+          <NavLink to="/home" className="inline-flex items-center w-fit mr-3 mb-2 ml-10 px-5 py-2 border border-black text-base font-medium rounded-full shadow-sm text-black bg-white hover:bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:border-white hover:text-white">
+            Home
+          </NavLink>
+          <NavLink to="/communities" className="inline-flex items-center w-fit mr-3 mb-2 ml-10 px-5 py-2 border border-black text-base font-medium rounded-full shadow-sm text-black bg-white hover:bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:border-white hover:text-white">
+            Communities
+          </NavLink>
         </div>
         <Outlet />
       </div>
@@ -83,9 +70,10 @@ function App() {
     <Routes>
       <Route element={<TopBar />}>
         <Route element={<SideBar />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/feed" element={<Feed />} />
+          <Route path="/" element={<Feed />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/communities" element={<DiscoverCommunities />} />
         </Route>
       </Route>
       <Route path="/welcome" element={<Welcome />} />
