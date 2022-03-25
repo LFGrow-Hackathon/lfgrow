@@ -2,7 +2,7 @@ import { gql } from "@apollo/client/core";
 import { apolloClient } from "../helpers/apollo-client";
 
 const GET_PUBLICATIONS = `
-query($request: ExplorePublicationRequest!) {
+query getPublications($request: ExplorePublicationRequest!) {
     explorePublications(request: $request) {
       items {
         __typename 
@@ -117,6 +117,7 @@ query($request: ExplorePublicationRequest!) {
     name
     description
     content
+    image
     media {
       original {
         ...MediaFields
@@ -317,9 +318,7 @@ query($request: ExplorePublicationRequest!) {
 export const getPublicationsRequest = (request) => {
   return apolloClient.query({
     query: gql(GET_PUBLICATIONS),
-    variables: {
-      request,
-    },
+    variables: { request },
   });
 };
 
