@@ -12,7 +12,7 @@ export default function Welcome() {
   useEffect(() => {
     async function getProfile() {
       if (account) {
-        const { profiles } = await getProfiles({ ownedBy: account });
+        const { profiles } = await getProfiles({ ownedBy: [account] });
         setProfilesLens(profiles.items);
       }
     };

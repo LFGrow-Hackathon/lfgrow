@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import createPost from "@/lens/publication/create-post.js";
 import { uploadImageIpfs, uploadMetadataIpfs } from "@/helpers/ipfs";
-import UploadFileModal from "@/components/publication/UploadFileModal";
-import { PaperClipIcon } from "@heroicons/react/solid";
+import UploadFileModal from "@/components/publications/UploadFileModal";
+import { PaperClipIcon } from '@heroicons/react/solid'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

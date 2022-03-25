@@ -19,7 +19,7 @@ export default function DisplayProfile(props) {
     isMounted.current = true;
     async function getProfile() {
       const { profiles } = await getProfiles({ ownedBy: [props.address] });
-      const resultFollow = await doesFollowFunc(profiles.items[0].id);
+      const resultFollow = await doesFollowFunc(profiles.items[0]?.id);
       if (isMounted.current) {
         setProfile(profiles.items[0]);
         setDoesFollow(resultFollow);
