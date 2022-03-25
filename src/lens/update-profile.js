@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client/core";
 import { apolloClient } from "../helpers/apollo-client";
 import { login } from "@/lens/login-users";
-import { getAddressFromSigner } from "@/helpers/ethers-service";
+import { getAddress } from "@/helpers/ethers-service";
 
 const UPDATE_PROFILE = `
   mutation($request: UpdateProfileRequest!) { 
@@ -11,7 +11,6 @@ const UPDATE_PROFILE = `
  }
 `;
 
-// TODO sort types!
 const updateProfileRequest = (profileInfo) => {
   return apolloClient.mutate({
     mutation: gql(UPDATE_PROFILE),
@@ -22,29 +21,17 @@ const updateProfileRequest = (profileInfo) => {
 };
 
 const updateProfile = async (profileNewData) => {
-  const { profileId, name, picture, bio, twitterUrl, website, location } = profileNewData;
+  const { profileId, name, picture, bio, twitterUrl, website, location, coverPicture } = profileNewData;
   if (!profileId) {
     throw new Error("Must define PROFILE_ID in the .env to run this");
   }
 
-  const address = getAddressFromSigner();
+  const address = await getAddress();
   console.log("update profile: address", address);
 
   await login(address);
 
-  await updateProfileRequest({
-    profileId,
-    name,
-    bio,
-    location,
-    website,
-    twitterUrl,
-    picture,
-  });
-
-  // await updateProfileRequest(profileNewData);
-
-  // await profiles({ profileIds: [profileId] });
+  await updateProfileRequest({...profileNewData});
 };
 
 export default updateProfile;

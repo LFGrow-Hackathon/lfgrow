@@ -17,6 +17,7 @@ function App() {
     enableWeb3,
     isAuthenticated,
     isWeb3EnableLoading,
+    account
   } = useMoralis();
 
   /* ------------------------------- 
@@ -61,8 +62,8 @@ function App() {
         <Route element={<Sidebar />}>
           <Route path="/" element={<Feed />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/edit" element={<EditProfile />} />
+          <Route path="/profile" element={<ProfilePage address={account}/>} />
+          <Route path="/edit" element={<EditProfile address={account}/>} />
           <Route path="/communities" element={<DiscoverCommunities />} />
           <Route path="/communities/:id" element={<CommunityPage />} />
         </Route>

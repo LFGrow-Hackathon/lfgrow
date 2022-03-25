@@ -47,6 +47,7 @@ export default function ProfilePage(props) {
               </div>
               <div className="">
                 <h4 className="text-lg font-bold">{profile?.name || "-"}</h4>
+                <p>{profile?.bio}</p>
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
                   target="_blank"
