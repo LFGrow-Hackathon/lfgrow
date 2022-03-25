@@ -4,15 +4,19 @@ import { Outlet, Routes, Route, NavLink } from "react-router-dom";
 import HomePage from "@/components/HomePage.jsx";
 import Welcome from "@/components/welcome/Welcome";
 import TopBar from "@/components/navbar/TopBar";
+import Sidebar from "@/components/navbar/Sidebar";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
-import ProfileButton from "@/components/buttons/ProfileButton";
-import FeedButton from "@/components/buttons/FeedButton";
 import DiscoverCommunities from "./components/DiscoverCommunities";
 
 function App() {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading, account } =
-    useMoralis();
+  const {
+    isWeb3Enabled,
+    enableWeb3,
+    isAuthenticated,
+    isWeb3EnableLoading,
+    account,
+  } = useMoralis();
 
   /* ------------------------------- 
   Enable Web3 provider if the user isn't authentificated
@@ -48,28 +52,10 @@ function App() {
     })();
   }, []);
 
-  function SideBar() {
-    return (
-      <div className="flex">
-        <div className="flex w-1/5 flex-col mt-10">
-          <ProfileButton />
-          <FeedButton />
-          <NavLink to="/home" className="inline-flex items-center w-fit mr-3 mb-2 ml-10 px-5 py-2 border border-black text-base font-medium rounded-full shadow-sm text-black bg-white hover:bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:border-white hover:text-white">
-            Home
-          </NavLink>
-          <NavLink to="/communities" className="inline-flex items-center w-fit mr-3 mb-2 ml-10 px-5 py-2 border border-black text-base font-medium rounded-full shadow-sm text-black bg-white hover:bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:border-white hover:text-white">
-            Communities
-          </NavLink>
-        </div>
-        <Outlet />
-      </div>
-    );
-  }
-
   return (
     <Routes>
       <Route element={<TopBar />}>
-        <Route element={<SideBar />}>
+        <Route element={<Sidebar />}>
           <Route path="/" element={<Feed />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />

@@ -4,42 +4,42 @@ export default function Daos() {
   const people = [
     {
       name: "DAO's name ",
-      email: "leslie.alexander@example.com",
+      email: "leslie.alexander@example.com1",
       role: "Co-Founder / CEO",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
     {
       name: "DAO's name .",
-      email: "leslie.alexander@example.com",
+      email: "leslie.alexander@example.com2",
       role: "Co-Founder / CEO",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
     {
       name: "DAO's name!",
-      email: "leslie.alexander@example.com",
+      email: "leslie.alexander@example.com3",
       role: "Co-Founder / CEO",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
     {
       name: "DAO's name$",
-      email: "leslie.alexander@example.com",
+      email: "leslie.alexander@example.com4",
       role: "Co-Founder / CEO",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
     {
       name: "DAO's name-",
-      email: "leslie.alexander@example.com",
+      email: "leslie.alexander@example.com5",
       role: "Co-Founder / CEO",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
     {
       name: "DAO's name,",
-      email: "leslie.alexander@example.com",
+      email: "leslie.alexander@example.com6",
       role: "Co-Founder / CEO",
       imageUrl:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
