@@ -60,6 +60,7 @@ function App() {
           <Route path="/" element={<Feed />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:handle" element={<ProfilePage />} />
           <Route path="/edit" element={<EditProfile />} />
           <Route path="/communities" element={<DiscoverCommunities />} />
           <Route path="/communities/:id" element={<CommunityPage />} />
