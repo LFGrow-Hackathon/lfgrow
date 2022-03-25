@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import Account from "@/components/navbar/connect/Account.jsx";
 import Search from '@/components/navbar/search/Search';
 
@@ -7,9 +7,12 @@ function TopBar() {
     <>
       <div className="relative flex grid grid-cols-12 max-w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
         <div className="hidden col-start-2 col-span-1 sm:flex 2xl:col-start-4">
-          <div className="flex items-center font-bold text-2xl text-white">
+          <NavLink
+            to="/"
+            className="flex items-center font-bold text-2xl text-white"
+          >
             Zilly
-          </div>
+          </NavLink>
         </div>
         <div className="col-start-2 col-span-8 sm:col-start-4 sm:col-span-7 lg:col-start-4 lg:col-span-6 2xl:col-start-5 2xl:col-span-3">
           <div className="flex items-center px-6 py-4 max-w-3xl mx-auto max-w-none mx-0 px-0">
