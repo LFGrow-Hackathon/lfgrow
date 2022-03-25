@@ -54,8 +54,6 @@ function App() {
     })();
   }, []);
 
-
-
   return (
     <Routes>
       <Route element={<TopBar />}>
@@ -63,6 +61,7 @@ function App() {
           <Route path="/" element={<Feed />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage address={account}/>} />
+          <Route path="/profile/:handle" element={<ProfilePage address={account}/>} />
           <Route path="/edit" element={<EditProfile address={account}/>} />
           <Route path="/communities" element={<DiscoverCommunities />} />
           <Route path="/communities/:id" element={<CommunityPage />} />

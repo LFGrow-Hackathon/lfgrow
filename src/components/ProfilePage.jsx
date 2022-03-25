@@ -7,27 +7,52 @@ import Nfts from "@/components/profile/Nfts";
 import getProfiles from "@/lens/get-profiles.js";
 import { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import getAllPoap from "@/api_call/getAllPoap";
+import getVote from "@/api_call/getVote";
+import { useNFTBalances } from "react-moralis";
+
+//@Tomas:
+//Once the props.address is connected again, should be be able to get all the poap and start displaying them (rely on already made components as much as you can using tailwind)
+//Regarding the number of transactions and age of the address, you can see how it's done in the page /home (DisplayProfile.js)
+//To display the NFT you can use the NFTbalances I've added. We want to display them in the Nfts.js but you can see a working example of how to get the nft + the metadata in Nfts_old.js,
+//For the snapshot vote, use the query getVote(address).
+
 
 export default function ProfilePage(props) {
+
   const [profile, setProfile] = useState();
   const isMounted = useRef(false);
+  const [poap, setPoap] = useState();
+  const { data: NFTBalances } = useNFTBalances({ address: props.address });
 
   useEffect(() => {
     isMounted.current = true;
+
     async function getProfile() {
       const { profiles } = await getProfiles({ ownedBy: [props.address] });
       if (isMounted.current) {
         setProfile(profiles.items[0]);
       }
     }
+    async function fetchPoap() {
+      if (props.address) {
+        const data = await getAllPoap(props.address);
+
+        if (isMounted.current) {
+          setPoap(data);
+        }
+      }
+    }
 
     if (props.address) {
       getProfile();
+      fetchPoap();
     }
     return () => {
       isMounted.current = false;
     };
   }, [props.address]);
+
 
   return (
     <div className="flex w-4/5">
@@ -50,7 +75,7 @@ export default function ProfilePage(props) {
                 <p>{profile?.bio}</p>
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
                   <img className="inline-block h-5 w-5" src={Twitter} alt="" />
                 </a>

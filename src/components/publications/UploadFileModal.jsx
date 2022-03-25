@@ -1,10 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState, useMemo, useEffect } from 'react'
+import { Fragment, useMemo } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/outline'
 import { useDropzone } from 'react-dropzone';
 
-function UploadFileModal({ isModalVisible, setIsModalVisible, file, setFile }) {
+function UploadFileModal({ isModalVisible, setIsModalVisible, setFile }) {
   const config = {
     accept: 'image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/svg+xml, image/webp',
     maxFiles: 1,

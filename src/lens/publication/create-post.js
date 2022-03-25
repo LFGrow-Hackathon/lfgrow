@@ -2,6 +2,7 @@ import { signedTypeData, splitSignature } from '@/helpers/ethers-service.js';
 import { lensHub } from '../utils/lens-hub';
 import { apolloClient } from '@/helpers/apollo-client.js';
 import { gql } from '@apollo/client'
+import { login } from '@/lens/login-users';
 /* import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed.js' */
 
 const CREATE_POST_TYPED_DATA = `
@@ -54,6 +55,8 @@ async function createPost({ ipfsCid }) {
   } else if (profileId === 'undefined') {
     throw new Error("You do not have a Lens profile");
   }
+
+  await login();
 
   const createPostRequest = {
     profileId,
