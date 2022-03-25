@@ -13,8 +13,13 @@ import CommunityPage from "./components/communities/CommunityPage";
 import { ViewPost } from "@/components/post/ViewPost";
 
 function App() {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
-    useMoralis();
+  const {
+    isWeb3Enabled,
+    enableWeb3,
+    isAuthenticated,
+    isWeb3EnableLoading,
+    account
+  } = useMoralis();
 
   /* ------------------------------- 
   Enable Web3 provider if the user isn't authentificated
@@ -56,9 +61,9 @@ function App() {
         <Route element={<Sidebar />}>
           <Route path="/" element={<Feed />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfilePage address={account}/>} />
           <Route path="/profile/:handle" element={<ProfilePage />} />
-          <Route path="/edit" element={<EditProfile />} />
+          <Route path="/edit" element={<EditProfile address={account}/>} />
           <Route path="/communities" element={<DiscoverCommunities />} />
           <Route path="/communities/:id" element={<CommunityPage />} />
           <Route path="/post/:postId" element={<ViewPost />} />
