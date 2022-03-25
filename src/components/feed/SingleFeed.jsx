@@ -24,8 +24,8 @@ const SingleFeed = ({ data }) => {
         <div className="pics">pic</div>
       </div> */}
 
-      <div className="flex justify-center">
-        <div className="p-4 my-1 border rounded border-slate-300 max-w-xl w-full">
+      <div className="flex w-full justify-center">
+        <div className="p-4 my-1 border rounded border-slate-300 max-w-3xl w-full">
           <div className="flex space-x-3">
             <img
               className="h-9 w-9 rounded-full"
