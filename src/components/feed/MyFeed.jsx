@@ -4,15 +4,22 @@ import SingleFeed from "./SingleFeed";
 ("react");
 import { getMyPosts } from "@/lens/get-my-publications";
 
-const MyFeed = () => {
+const MyFeed = ({ profileId }) => {
+  console.log("profileId: ", profileId);
   const [posts, setPosts] = useState([]);
+  const [zeroPost, setZeroPost] = useState();
   const [pageInfo, setPageInfo] = useState({});
+  const [postCount, setPostCount] = useState();
+  const [nextOffset, setNextOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
   const isMounted = useRef(false);
-  const profileId = window.localStorage.getItem("profileId");
+
+  const limit = 10;
 
   useEffect(() => {
     isMounted.current = true;
     console.log("useEffect Myfeed");
+    setPosts([]);
     if (profileId) {
       query();
     }
@@ -20,15 +27,21 @@ const MyFeed = () => {
       console.log("unmount useEffect MyFeed");
       isMounted.current = false;
     };
-  }, []);
+  }, [profileId]);
 
   const query = async (pageData) => {
-    const reqArg = { profileId, limit: 20, ...pageData };
+    const reqArg = {
+      profileId,
+      limit,
+      publicationTypes: "POST",
+      ...pageData,
+    };
     const res = await getMyPosts(reqArg);
-    console.log("res: ", res);
-    const filterdPosts = res.timeline?.items?.filter(
+    setPostCount(res.myPosts.pageInfo.totalCount);
+    const filterdPosts = res.myPosts?.items?.filter(
       (item) => item.__typename == "Post"
     );
+    setZeroPost(!res.myPosts?.items?.length);
 
     const postDataObj = filterdPosts.map((filterdPost) => ({
       profile: {
@@ -50,39 +63,58 @@ const MyFeed = () => {
     }));
     if (isMounted.current) {
       setPosts((prevPost) => [...prevPost, ...postDataObj]);
+      // setPosts([...postDataObj]);
     }
-    console.log("postDataObj: ", postDataObj);
-    setPageInfo(res.timeline.pageInfo);
+    setPageInfo(res.myPosts.pageInfo);
   };
 
+  const scrollNext = () => {
+    // console.log("fetch netx");
+    // console.log("limit: ", limit);
+    // console.log("nextOffset: ", nextOffset);
+    // console.log("postCount: ", postCount);
+    setNextOffset((prev) => {
+      limit + prev;
+    });
+    query({ cursor: pageInfo.next });
+    const val = postCount > nextOffset;
+    // console.log("val: ", val);
+    setHasMore(val);
+  };
   return (
     <>
       {posts.length ? (
         <InfiniteScroll
           dataLength={posts.length}
-          hasMore={true}
-          next={() => {
-            console.log("fetch netx");
-            query({
-              cursor: pageInfo.next,
-            });
-          }}
-          loader={<>{console.log("loadng")}</>}
+          hasMore={hasMore}
+          next={scrollNext}
+          loader={<></>}
         >
           {posts.map((post, key) => {
             return <SingleFeed data={post} key={key} />;
           })}
         </InfiniteScroll>
-      ) : (
-        <div className="flex flex-col mt-20">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black m-auto" />
-          <p className="flex justify-center mt-5 text-lg text-black">
-            Loading feed
-          </p>
+      ) : zeroPost ? (
+        <div className="flex flex-col items-center mt-10">
+          <p className="text-xl">No Posts Yet</p>
+          <p className="text-lg text-slate-500">Try Posting</p>
         </div>
+      ) : (
+        <LoadingFeed />
       )}
     </>
   );
 };
 
 export default MyFeed;
+
+const LoadingFeed = () => {
+  return (
+    <div className="flex flex-col mt-20">
+      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black m-auto" />
+      <p className="flex justify-center mt-5 text-lg text-black">
+        Loading feed
+      </p>
+    </div>
+  );
+};
