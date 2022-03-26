@@ -61,7 +61,7 @@ function UploadFileModal({ isModalVisible, setIsModalVisible, setFile }) {
               <section className="container">
                 <div {...getRootProps({ style })}>
                   <input {...getInputProps()} />
-                  <p>Drag 'n' drop a file here, or click to select one</p>
+                  <p>Drag 'n' drop a file, or click to select one</p>
                 </div>
               </section>
             </div>

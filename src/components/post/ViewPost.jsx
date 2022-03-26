@@ -45,19 +45,20 @@ export const ViewPost = () => {
 
   return (
     <>
-      <div className="border rounded-md m-1 basis-4/5 flex justify-center flex-col items-center">
-        {postIdError ? (
-          <PostIdError />
-        ) : !queryRes ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <FullPost postData={queryRes.post} />
-            <CommentList commentsData={queryRes.comments} />
-          </>
-        )}
+      <div className="flex w-full mt-10 lg:max-w-[70%] px-4">
+        <div className="rounded-md border-2 border-[#e1e8f7] m-1 w-full flex justify-center flex-col items-center">
+          {postIdError ? (
+            <PostIdError />
+          ) : !queryRes ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <FullPost postData={queryRes.post} />
+              <CommentList commentsData={queryRes.comments} />
+            </>
+          )}
+        </div>
       </div>
-      <div className="md:basis-1/4"></div>
     </>
   );
 };

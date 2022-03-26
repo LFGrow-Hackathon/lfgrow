@@ -50,10 +50,10 @@ function CreatePublication() {
                 Write your post here...
               </label>
               <textarea
-                rows={4}
+                rows={3}
                 name="comment"
                 id="comment"
-                className="block w-full pt-3 border-0 resize-none focus:ring-0 sm:text-sm"
+                className="block w-full my-2 border-0 focus:ring-0 sm:text-sm"
                 placeholder="Add your comment..."
                 onChange={(e) => {
                   setMessage(e.target.value);

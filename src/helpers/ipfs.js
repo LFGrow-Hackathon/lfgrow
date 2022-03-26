@@ -6,7 +6,7 @@ async function uploadImageIpfs(fileToUpload) {
   await file.saveIPFS();
 
   return [{
-    item: "ipfs://" + file._hash,
+    item: "https://gateway.moralisipfs.com/ipfs/" + file._hash,
     type: fileToUpload.type
   }]
 }
