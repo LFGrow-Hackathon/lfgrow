@@ -21,14 +21,14 @@ export default function CommunityPage() {
     // const query = new Moralis.Query(Community);
     // query.equalTo();
 
-    setCommunity(dataExample[2]);
+    setCommunity(dataExample[0]);
   }, []);
 
   if (community) {
     return (
       <div className="flex">
         <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
-          <div className="header flex">
+          <div className="header flex justify-between">
             <div className="left flex">
               <div className="mr-4 ">
                 <img
@@ -88,6 +88,7 @@ export default function CommunityPage() {
                 </div>
               </div>
             </div>
+            <p className="flex mr-5 w-1/2 text-ellipsis max-h-[50px] overflow-hidden mt-[15px]">{community.description}</p>
           </div>
           <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
             <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">

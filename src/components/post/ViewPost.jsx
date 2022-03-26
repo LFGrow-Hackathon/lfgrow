@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getCommentsByPost } from "@/lens/get-comments-of-post";
 import FullPost from "./FullPost";
 import CommentList from "@/components/comments/CommentList";
+import CommentPublication from "../comments/postComment";
 
 export const ViewPost = () => {
   const routeParam = useParams();
@@ -54,6 +55,7 @@ export const ViewPost = () => {
           ) : (
             <>
               <FullPost postData={queryRes.post} />
+              <CommentPublication pubId={routeParam.postId} />
               <CommentList commentsData={queryRes.comments} />
             </>
           )}
