@@ -46,6 +46,7 @@ const MyFeed = () => {
       postContent: filterdPost?.metadata?.content,
       postMedia: filterdPost?.metadata?.image,
       postTimeStamp: filterdPost?.createdAt,
+      postStats: filterdPost?.stats,
     }));
     if (isMounted.current) {
       setPosts((prevPost) => [...prevPost, ...postDataObj]);
