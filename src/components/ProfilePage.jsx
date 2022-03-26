@@ -32,7 +32,6 @@ export default function ProfilePage(props) {
       const { profiles } = await getProfiles({ ownedBy: [props.address] });
       if (isMounted.current) {
         setProfile(profiles.items[0]);
-        console.log(profiles.items[0]);
       }
     }
     async function fetchPoap() {
@@ -73,6 +72,7 @@ export default function ProfilePage(props) {
               </div>
               <div className="">
                 <h4 className="text-lg font-bold">{profile?.name || "-"}</h4>
+                <p>{profile?.bio}</p>
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
                   target="_blank" rel="noreferrer"

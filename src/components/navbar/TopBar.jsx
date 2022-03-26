@@ -37,7 +37,6 @@ function classNames(...classes) {
 export default function TopBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-
   return (
     <div>
       <div>
