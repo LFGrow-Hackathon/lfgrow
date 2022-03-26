@@ -55,7 +55,7 @@ export default function ProfilePage(props) {
 
 
   return (
-    <div className="flex w-4/5">
+    <div className="flex">
       <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
         <div className="">
           <div className="w-full flex justify-between">

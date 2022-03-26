@@ -27,7 +27,7 @@ export default function DiscoverCommunities() {
       const Community = Moralis.Object.extend("Community");
       const query = new Moralis.Query(Community);
       query.greaterThan("followersCount", 100);
-      query.limit(10);
+      query.limit(200);
       query.descending("followersCount");
       const result = await query.find();
       setCommunities(result);
@@ -52,7 +52,7 @@ export default function DiscoverCommunities() {
 
   return (
     <div className="mt-10 mx-20">
-      <p className="pb-10 text-xl  font-bold text-gray-500">Discover 4000+ web3 communities</p>
+      <p className="pb-10 text-xl font-bold text-gray-500">Discover 2700+ web3 communities</p>
       <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {communities.map((community) => (
           <li
