@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import { createMirror } from "@/lens/mirror.js";
-import { hasMirrored } from "@/lens/check-mirror.js";
 
-const FullPost = ({ postData }) => {
+const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
   // console.log("postData: ", postData);
   const userProPic = postData.profile.picture?.medium?.url.length
     ? postData.profile.picture?.medium?.url
@@ -11,25 +9,6 @@ const FullPost = ({ postData }) => {
     ? postData.profile.name
     : postData.profile.id;
   const userProDesc = postData.profile.bio;
-
-  const ActiveProfileId = window.localStorage.getItem("profileId");
-  const [mirrored, setMirrored] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const mirrorFunc = async (_postId) => {
-    await createMirror(ActiveProfileId, _postId);
-  };
-
-  const checkMirror = async (_profileId, _postId) => {
-    setLoading(true);
-    const res = await hasMirrored(_profileId, [_postId]);
-    setMirrored(res);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    checkMirror(ActiveProfileId, postData.id);
-  }, [loading]);
 
   return (
     <>
@@ -80,7 +59,7 @@ const FullPost = ({ postData }) => {
             >
               Mirrors{" "}
               <span className="inline-flex items-center ml-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {postData.stats.totalAmountOfMirrors}
+                {mirrorsCount}
               </span>
             </div>
             <div

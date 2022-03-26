@@ -79,6 +79,7 @@ const getCommets = (request) => {
   return apolloClient.query({
     query: gql(GET_COMMENTS_BY_POST),
     variables: request,
+    fetchPolicy: 'network-only'
   });
 };
 
