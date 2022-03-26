@@ -18,7 +18,7 @@ const Feed = () => {
   }, []);
 
   const query = async (pageData) => {
-    const reqData = { sortCriteria: "TOP_COMMENTED", limit: 50, ...pageData };
+    const reqData = { sortCriteria: "TOP_COMMENTED", limit: 10, ...pageData };
     const res = await getPublications(reqData);
 
     let filterdPosts = res.explorePublications.items.filter(

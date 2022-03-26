@@ -3,35 +3,7 @@ import getProfiles from "@/lens/get-profiles.js";
 import { useState, useRef, useEffect } from "react";
 
 export default function EditProfile(props) {
-  const isMounted = useRef(false);
   const [profile, setProfile] = useState();
-
-  useEffect(() => {
-    isMounted.current = true;
-    async function getProfile() {
-      const { profiles } = await getProfiles({ ownedBy: [props.address] });
-      if (isMounted.current) {
-        setProfile(profiles.items[0]);
-
-        setUserInfo({
-          name: profiles.items[0].name,
-          bio: profiles.items[0].bio || "",
-          location: profiles.items[0].location || "",
-          website: profiles.items[0].website || "",
-          twitterUrl: profiles.items[0].twitterUrl || "",
-        });
-      }
-    }
-
-    if (props.address) {
-      getProfile();
-    }
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [props.address]);
-
   const [userInfo, setUserInfo] = useState({
     name: "",
     bio: "",
@@ -39,6 +11,27 @@ export default function EditProfile(props) {
     website: "",
     twitterUrl: "",
   });
+
+
+  useEffect(() => {
+    async function getProfile() {
+      const { profiles } = await getProfiles({ ownedBy: [props.address] });
+      setProfile(profiles.items[0]);
+
+      setUserInfo({
+        name: profiles.items[0].name || "",
+        bio: profiles.items[0].bio || "",
+        location: profiles.items[0].location || "",
+        website: profiles.items[0].website || "",
+        twitterUrl: profiles.items[0].twitterUrl || "",
+      });
+    }
+
+    if (props.address) {
+      getProfile();
+    }
+
+  }, [props.address]);
 
   const inputsHandler = (e) => {
     const val = e.target.value;
@@ -257,173 +250,6 @@ export default function EditProfile(props) {
                 </div>
               </div>
             </div>
-
-            {/* <div className="divide-y divide-gray-200 pt-8 space-y-6 sm:pt-10 sm:space-y-5">
-              <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  Notifications
-                </h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                  We'll always let you know about important changes, but you
-                  pick what else you want to hear about.
-                </p>
-              </div>
-              <div className="space-y-6 sm:space-y-5 divide-y divide-gray-200">
-                <div className="pt-6 sm:pt-5">
-                  <div role="group" aria-labelledby="label-email">
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline">
-                      <div>
-                        <div
-                          className="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
-                          id="label-email"
-                        >
-                          By Email
-                        </div>
-                      </div>
-                      <div className="mt-4 sm:mt-0 sm:col-span-2">
-                        <div className="max-w-lg space-y-4">
-                          <div className="relative flex items-start">
-                            <div className="flex items-center h-5">
-                              <input
-                                id="comments"
-                                name="comments"
-                                type="checkbox"
-                                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                              />
-                            </div>
-                            <div className="ml-3 text-sm">
-                              <label
-                                htmlFor="comments"
-                                className="font-medium text-gray-700"
-                              >
-                                Comments
-                              </label>
-                              <p className="text-gray-500">
-                                Get notified when someones posts a comment on a
-                                posting.
-                              </p>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="relative flex items-start">
-                              <div className="flex items-center h-5">
-                                <input
-                                  id="candidates"
-                                  name="candidates"
-                                  type="checkbox"
-                                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                                />
-                              </div>
-                              <div className="ml-3 text-sm">
-                                <label
-                                  htmlFor="candidates"
-                                  className="font-medium text-gray-700"
-                                >
-                                  Candidates
-                                </label>
-                                <p className="text-gray-500">
-                                  Get notified when a candidate applies for a
-                                  job.
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="relative flex items-start">
-                              <div className="flex items-center h-5">
-                                <input
-                                  id="offers"
-                                  name="offers"
-                                  type="checkbox"
-                                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                                />
-                              </div>
-                              <div className="ml-3 text-sm">
-                                <label
-                                  htmlFor="offers"
-                                  className="font-medium text-gray-700"
-                                >
-                                  Offers
-                                </label>
-                                <p className="text-gray-500">
-                                  Get notified when a candidate accepts or
-                                  rejects an offer.
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="pt-6 sm:pt-5">
-                  <div role="group" aria-labelledby="label-notifications">
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline">
-                      <div>
-                        <div
-                          className="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
-                          id="label-notifications"
-                        >
-                          Push Notifications
-                        </div>
-                      </div>
-                      <div className="sm:col-span-2">
-                        <div className="max-w-lg">
-                          <p className="text-sm text-gray-500">
-                            These are delivered via SMS to your mobile phone.
-                          </p>
-                          <div className="mt-4 space-y-4">
-                            <div className="flex items-center">
-                              <input
-                                id="push-everything"
-                                name="push-notifications"
-                                type="radio"
-                                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                              />
-                              <label
-                                htmlFor="push-everything"
-                                className="ml-3 block text-sm font-medium text-gray-700"
-                              >
-                                Everything
-                              </label>
-                            </div>
-                            <div className="flex items-center">
-                              <input
-                                id="push-email"
-                                name="push-notifications"
-                                type="radio"
-                                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                              />
-                              <label
-                                htmlFor="push-email"
-                                className="ml-3 block text-sm font-medium text-gray-700"
-                              >
-                                Same as email
-                              </label>
-                            </div>
-                            <div className="flex items-center">
-                              <input
-                                id="push-nothing"
-                                name="push-notifications"
-                                type="radio"
-                                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                              />
-                              <label
-                                htmlFor="push-nothing"
-                                className="ml-3 block text-sm font-medium text-gray-700"
-                              >
-                                No push notifications
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
 
           <div className="pt-5">

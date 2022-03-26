@@ -21,8 +21,8 @@ function classNames(...classes) {
 function Search() {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('Loading search')
-  const [isError, setIsError] = useState(false)
+  const [message, setMessage] = useState('Loading search');
+  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
   async function onSubmit({ query, feature }) {
