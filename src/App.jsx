@@ -11,14 +11,13 @@ import DiscoverCommunities from "./components/communities/DiscoverCommunities";
 import CommunityPage from "./components/communities/CommunityPage";
 import { ViewPost } from "@/components/post/ViewPost";
 
-
 function App() {
   const {
     isWeb3Enabled,
     enableWeb3,
     isAuthenticated,
     isWeb3EnableLoading,
-    account
+    account,
   } = useMoralis();
 
   /* ------------------------------- 
@@ -60,7 +59,7 @@ function App() {
       <Route element={<TopBar />}>
         <Route path="/" element={<Feed />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePage address={account} />} />
         <Route path="/profile/:handle" element={<ProfilePage />} />
         <Route path="/edit" element={<EditProfile />} />
         <Route path="/communities" element={<DiscoverCommunities />} />

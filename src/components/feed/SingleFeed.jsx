@@ -27,7 +27,9 @@ const SingleFeed = ({ data }) => {
   };
 
   useEffect(() => {
-    checkMirror(profileId, postId);
+    if (profileId) {
+      checkMirror(profileId, postId); // only checks after a user logged in
+    }
   }, [loading]);
 
   return (
