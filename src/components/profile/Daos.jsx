@@ -2,6 +2,7 @@ import { UserIcon, BookmarkIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { space } from "tailwindcss/defaultTheme";
+import daoLogo from '@/assets/dao_logo.png'
 
 export default function Daos({ DAO }) {
   const navigate = useNavigate();
@@ -12,6 +13,10 @@ export default function Daos({ DAO }) {
     if (!url || !url.includes("ipfs://")) return url;
     return url.replace("ipfs://", "https://gateway.ipfs.io/ipfs/");
   };
+
+  function addDefaultLogo(ev) {
+    ev.target.src = daoLogo
+  }
 
   const organizeDAOs = () => {
     let DAOList = [];
@@ -33,6 +38,7 @@ export default function Daos({ DAO }) {
       }
 
       SetDAODisplay(DAOList);
+      console.log(DAOList)
     }
   };
 
@@ -53,6 +59,7 @@ export default function Daos({ DAO }) {
                 className="h-10 w-10 rounded-full"
                 src={resolveLink(DAO.space.avatar)}
                 alt=""
+                onError={addDefaultLogo}
               />
             </div>
             <div className="flex-1 min-w-0">
