@@ -1,10 +1,12 @@
 import updateProfile from "@/lens/update-profile";
 import getProfiles from "@/lens/get-profiles.js";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 
 export default function EditProfile(props) {
   const isMounted = useRef(false);
   const [profile, setProfile] = useState();
+  let navigate = useNavigate()
 
   useEffect(() => {
     isMounted.current = true;
@@ -61,6 +63,7 @@ export default function EditProfile(props) {
     if (!data.name) data.name = profile.name;
     data.profileId = profile.id;
     await updateProfile(data);
+    navigate("/profile")
   };
 
   return (

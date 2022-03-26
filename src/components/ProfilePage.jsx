@@ -123,7 +123,7 @@ export default function ProfilePage(props) {
                 <h4 className="text-xs text-slate-500">IN WEB3</h4>
               </div>
               <div className="block justify-center pl-2">
-                <h4 className="text-md font-bold">23</h4>
+                <h4 className="text-md font-bold">{poap?.length}</h4>
                 <h4 className="text-xs text-slate-500">POAPS RECEIVED</h4>
               </div>
               <div className="justify-center pl-2">
