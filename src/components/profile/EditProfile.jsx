@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
 import { uploadImageIpfs } from "@/helpers/ipfs";
 import updateProfile from "@/lens/update-profile";
 import getProfiles from "@/lens/get-profiles.js";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import UploadImages from "@/components/profile/UploadImages";
 
 export default function EditProfile(props) {
   const profileId = window.localStorage.getItem("profileId");
   const [profile, setProfile] = useState();
+  let navigate = useNavigate()
   const [picture, setPicture] = useState();
   const [coverPicture, setCoverPicture] = useState();
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
@@ -102,7 +104,12 @@ export default function EditProfile(props) {
       data.coverPicture = userInfo.coverPicture;
     }
     await updateProfile(data);
+    navigate("/profile")
   };
+
+  const cancel = () => {
+    navigate('/profile')
+  }
 
   return (
     <div className="flex w-4/5 max-w-[60%] px-4 justify-center">
@@ -277,6 +284,7 @@ export default function EditProfile(props) {
                     website: "",
                     twitterUrl: ""
                   })
+                  cancel()
                 }}
               >
                 Cancel

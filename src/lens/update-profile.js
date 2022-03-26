@@ -11,7 +11,10 @@ const UPDATE_PROFILE = `
  }
 `;
 
-const updateProfileRequest = (profileInfo) => {
+const updateProfileRequest = async (profileInfo) => {
+  // probably reseting the whole store isn't the way to go
+  await apolloClient.resetStore();
+  
   return apolloClient.mutate({
     mutation: gql(UPDATE_PROFILE),
     variables: {
