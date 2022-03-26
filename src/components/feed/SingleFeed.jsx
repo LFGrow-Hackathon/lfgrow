@@ -63,7 +63,9 @@ const SingleFeed = ({ data }) => {
                     <h3 className="text-sm font-medium">{userProName}</h3>
                     <p className="text-gray-500 text-sm">{userProDesc}</p>
                   </div>
-                  <p className="text-sm text-gray-500">{pubTime}</p>
+                  <p className="text-sm text-gray-500">
+                    {pubTime.slice(5, 10) + " " + pubTime.slice(12, 16)}
+                  </p>
                 </div>
                 <p className="text-base text-gray-800">
                   {pubContent?.replace(/(<([^>]+)>)/gi, "")}
