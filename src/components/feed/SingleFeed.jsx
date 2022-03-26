@@ -15,6 +15,8 @@ const SingleFeed = ({ data }) => {
   const [mirrored, setMirrored] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // const testContent = ;
+
   const mirrorFunc = async (_postId) => {
     await createMirror(profileId, _postId);
   };
@@ -70,15 +72,17 @@ const SingleFeed = ({ data }) => {
                     {pubTime.slice(5, 10) + " " + pubTime.slice(12, 16)}
                   </p>
                 </div>
-                <p className="text-base text-gray-800">
+                <p className="text-base text-gray-800 line-clamp-4">
                   {pubContent?.replace(/(<([^>]+)>)/gi, "")}
                   {/* {pubContent} */}
                 </p>
-                <img
-                  src={pubImge?.length ? pubImge : ""}
-                  alt={pubImge?.length ? "publication image" : ""}
-                  className="rounded w-96 pr-2 self-center"
-                />
+                <div className="flex mx-auto pt-5 max-h-96 overflow-hidden">
+                  <img
+                    src={pubImge?.length ? pubImge : ""}
+                    alt={pubImge?.length ? "publication image" : ""}
+                    className="rounded w-96 pr-2 self-center"
+                  />
+                </div>
               </div>
             </div>
           </Link>

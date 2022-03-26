@@ -2,13 +2,13 @@ import { uploadImageIpfs } from "@/helpers/ipfs";
 import updateProfile from "@/lens/update-profile";
 import getProfiles from "@/lens/get-profiles.js";
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import UploadImages from "@/components/profile/UploadImages";
 
 export default function EditProfile(props) {
   const profileId = window.localStorage.getItem("profileId");
   const [profile, setProfile] = useState();
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const [picture, setPicture] = useState();
   const [coverPicture, setCoverPicture] = useState();
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
@@ -44,37 +44,37 @@ export default function EditProfile(props) {
 
   useEffect(() => {
     async function uploadPhoto() {
-      setIsUploadingPhoto(true)
+      setIsUploadingPhoto(true);
       const result = await uploadImageIpfs(picture[0]);
-      setIsUploadingPhoto(false)
+      setIsUploadingPhoto(false);
 
       setUserInfo((prevState) => ({
         ...prevState,
         picture: result[0].item,
-      }))
+      }));
     }
 
     if (picture) {
       uploadPhoto();
     }
-  }, [picture])
+  }, [picture]);
 
   useEffect(() => {
     async function uploadPhoto() {
-      setIsUploadingCoverPhoto(true)
+      setIsUploadingCoverPhoto(true);
       const result = await uploadImageIpfs(coverPicture[0]);
-      setIsUploadingCoverPhoto(false)
+      setIsUploadingCoverPhoto(false);
 
       setUserInfo((prevState) => ({
         ...prevState,
         coverPicture: result[0].item,
-      }))
+      }));
     }
 
     if (coverPicture) {
       uploadPhoto();
     }
-  }, [coverPicture])
+  }, [coverPicture]);
 
   const inputsHandler = (e) => {
     const val = e.target.value;
@@ -86,7 +86,7 @@ export default function EditProfile(props) {
 
   const update = async () => {
     if (!userInfo.name) {
-      alert("You need to set a username.")
+      alert("You need to set a username.");
       return;
     }
 
@@ -104,12 +104,12 @@ export default function EditProfile(props) {
       data.coverPicture = userInfo.coverPicture;
     }
     await updateProfile(data);
-    navigate("/profile")
+    navigate("/");
   };
 
   const cancel = () => {
-    navigate('/profile')
-  }
+    navigate("/");
+  };
 
   return (
     <div className="flex w-4/5 max-w-[60%] px-4 justify-center">
@@ -283,8 +283,8 @@ export default function EditProfile(props) {
                     location: "",
                     website: "",
                     twitterUrl: ""
-                  })
-                  cancel()
+                  });
+                  cancel();
                 }}
               >
                 Cancel

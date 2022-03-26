@@ -61,7 +61,7 @@ export default function DiscoverCommunities() {
             <li
               className="col-span-1 flex flex-col text-center bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] rounded-lg shadow-lg divide-y divide-gray-200"
             >
-              <div className="flex flex-col justify-between h-full bg-white text-white rounded-lg p-4">
+              <div className="flex flex-col justify-between h-64 bg-white text-white rounded-lg p-4">
                 <div className="flex-1 flex flex-col p-5">
                   <img className="w-20 h-20 flex-shrink-0 mx-auto rounded-full" src={community.attributes.logo} alt="" />
                   <h3 className="mt-6 text-gray-900 text-sm font-medium">{community.attributes.name}</h3>
