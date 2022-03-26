@@ -26,6 +26,7 @@ export default function ProfilePage(props) {
     address: props?.address,
   });
 
+
   useEffect(() => {
     isMounted.current = true;
 
@@ -175,7 +176,7 @@ export default function ProfilePage(props) {
           Badges <BookmarkIcon className="h-5 w-5 ml-2" aria-hidden="true" />
         </div>
         <Poaps poaps={poap} />
-        <Nfts />
+        <Nfts NFTs={NFTBalances}/>
       </div>
     </div>
   );

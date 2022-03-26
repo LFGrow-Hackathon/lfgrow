@@ -66,6 +66,10 @@ export default function EditProfile(props) {
     navigate("/profile")
   };
 
+  const cancel = () => {
+    navigate('/profile')
+  }
+
   return (
     <div className="flex w-4/5 max-w-[60%] px-4 justify-center">
       <div className="w-full h-full pl-5 pr-5 mt-10 mb-10 bg-white border-2 border-[#e1e8f7] rounded-md">
@@ -434,6 +438,7 @@ export default function EditProfile(props) {
               <button
                 type="button"
                 className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={cancel}
               >
                 Cancel
               </button>
