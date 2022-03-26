@@ -13,7 +13,9 @@ const MyFeed = () => {
   useEffect(() => {
     isMounted.current = true;
     console.log("useEffect Myfeed");
-    query();
+    if (profileId) {
+      query();
+    }
     return () => {
       console.log("unmount useEffect MyFeed");
       isMounted.current = false;
