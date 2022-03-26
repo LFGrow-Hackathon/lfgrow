@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { uploadImageIpfs } from "@/helpers/ipfs";
 import updateProfile from "@/lens/update-profile";
 import getProfiles from "@/lens/get-profiles.js";
