@@ -4,13 +4,13 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "@/components/HomePage.jsx";
 import Welcome from "@/components/Welcome/welcome";
 import TopBar from "@/components/navbar/TopBar";
-import Sidebar from "@/components/navbar/Sidebar";
 import Feed from "@/components/feed/Feed";
 import ProfilePage from "@/components/ProfilePage";
 import EditProfile from "@/components/profile/EditProfile";
 import DiscoverCommunities from "./components/communities/DiscoverCommunities";
 import CommunityPage from "./components/communities/CommunityPage";
 import { ViewPost } from "@/components/post/ViewPost";
+
 
 function App() {
   const {
@@ -58,16 +58,14 @@ function App() {
   return (
     <Routes>
       <Route element={<TopBar />}>
-        <Route element={<Sidebar />}>
-          <Route path="/" element={<Feed />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/profile" element={<ProfilePage address={account}/>} />
-          <Route path="/profile/:handle" element={<ProfilePage />} />
-          <Route path="/edit" element={<EditProfile address={account}/>} />
-          <Route path="/communities" element={<DiscoverCommunities />} />
-          <Route path="/communities/:id" element={<CommunityPage />} />
-          <Route path="/post/:postId" element={<ViewPost />} />
-        </Route>
+        <Route path="/" element={<Feed />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/:handle" element={<ProfilePage />} />
+        <Route path="/edit" element={<EditProfile />} />
+        <Route path="/communities" element={<DiscoverCommunities />} />
+        <Route path="/communities/:id" element={<CommunityPage />} />
+        <Route path="/post/:postId" element={<ViewPost />} />
       </Route>
       <Route path="/welcome" element={<Welcome />} />
     </Routes>
