@@ -1,58 +1,93 @@
 import Twitter from "@/assets/twitter_logo.png";
-import { UserIcon, BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
+import { BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
 import CreatePublication from "@/components/publications/CreatePublication.jsx";
 import Poaps from "@/components/profile/Poaps";
 import Daos from "@/components/profile/Daos";
-import Nfts from "@/components/profile/Nfts";
+import DisplayNFT from "@/components/profile/DisplayNFT";
 import getProfiles from "@/lens/get-profiles.js";
-import { useEffect, useState, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import getAllPoap from "@/api_call/getAllPoap";
 import getVote from "@/api_call/getVote";
-import { useNFTBalances } from "react-moralis";
-
-//@Tomas:
-//Once the props.address is connected again, should be be able to get all the poap and start displaying them (rely on already made components as much as you can using tailwind)
-//Regarding the number of transactions and age of the address, you can see how it's done in the page /home (DisplayProfile.js)
-//To display the NFT you can use the NFTbalances I've added. We want to display them in the Nfts.js but you can see a working example of how to get the nft + the metadata in Nfts_old.js,
-//For the snapshot vote, use the query getVote(address).
+import { useMoralis, useMoralisWeb3Api } from "react-moralis";
 
 
-export default function ProfilePage(props) {
+export default function ProfilePage() {
 
+  const idURL = useParams();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState();
-  const isMounted = useRef(false);
+  const [address, setAddress] = useState();
+  const [pageDoesntExist, setPageDoesntExist] = useState(false);
+  const [isPageOwner, setIsPageOwner] = useState(false);
   const [poap, setPoap] = useState();
-  const { data: NFTBalances } = useNFTBalances({ address: props.address });
+  const [vote, setVote] = useState();
+  const [NFT, setNFT] = useState();
+  const { isInitialized, isAuthenticated } = useMoralis();
+  const profileId = window.localStorage.getItem("profileId");
+
+  const Web3Api = useMoralisWeb3Api();
+
+  const fetchNFTs = async () => {
+    // get polygon NFTs for address
+    const options = {
+      chain: "eth",
+      address: address,
+    };
+    const NFTs = await Web3Api.account.getNFTs(options);
+    setNFT(NFTs);
+  };
 
   useEffect(() => {
-    isMounted.current = true;
+    async function fetchProfileInfo() {
 
-    async function getProfile() {
-      const { profiles } = await getProfiles({ ownedBy: [props.address] });
-      if (isMounted.current) {
+      //Check if it's an address
+      if (idURL.handle.startsWith("0x") && idURL.handle.length === 42) {
+        setAddress(idURL.handle);
+        const { profiles } = await getProfiles({ ownedBy: [idURL.handle] });
         setProfile(profiles.items[0]);
       }
-    }
-    async function fetchPoap() {
-      if (props.address) {
-        const data = await getAllPoap(props.address);
-
-        if (isMounted.current) {
-          setPoap(data);
+      //Handle must be less than 32 characters
+      else if (idURL.handle.length < 32) {
+        const { profiles } = await getProfiles({ handles: [idURL.handle] });
+        if (profiles.items.length !== 0) {
+          setProfile(profiles.items[0]);
+          setAddress(profiles.items[0].ownedBy);
+        } else {
+          setPageDoesntExist(true);
         }
+      } else {
+        setPageDoesntExist(true);
       }
     }
 
-    if (props.address) {
-      getProfile();
-      fetchPoap();
-    }
-    return () => {
-      isMounted.current = false;
-    };
-  }, [props.address]);
+    fetchProfileInfo();
+  }, []);
 
+  useEffect(() => {
+    async function fetchPoap() {
+      if (address) {
+        const dataPoap = await getAllPoap(address);
+        const dataVote = await getVote(address);
+        console.log("vote", dataVote);
+        setPoap(dataPoap);
+        setVote(dataVote);
+      }
+    }
+    fetchPoap();
+    if (isInitialized) {
+      fetchNFTs();
+    }
+    if (profile?.id === profileId && isAuthenticated) {
+      setIsPageOwner(true);
+    }
+  }, [address, isInitialized, profile, isAuthenticated]);
+
+  if (pageDoesntExist) {
+    return (
+      <p>This profile doesn't exist</p>
+    );
+  }
 
   return (
     <div className="flex">
@@ -71,7 +106,7 @@ export default function ProfilePage(props) {
                 />
               </div>
               <div className="">
-                <h4 className="text-lg font-bold">{profile?.name || "-"}</h4>
+                {(profile || address) && (<h4 className="text-lg font-bold">{profile?.name ? profile.name : (profile?.handle ? profile.handle : `${address.substring(0, 5)}...${address.substring(38, 42)}`)}</h4>)}
                 <p>{profile?.bio}</p>
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
@@ -87,7 +122,7 @@ export default function ProfilePage(props) {
                 <h4 className="text-xs text-slate-500">IN WEB3</h4>
               </div>
               <div className="block justify-center pl-2">
-                <h4 className="text-md font-bold">23</h4>
+                <h4 className="text-md font-bold">{poap?.length}</h4>
                 <h4 className="text-xs text-slate-500">POAPS RECEIVED</h4>
               </div>
               <div className="justify-center pl-2">
@@ -104,7 +139,7 @@ export default function ProfilePage(props) {
               </div>
             </div>
           </div>
-          <div className="flex justify-end">
+          {isPageOwner && <div className="flex justify-end">
             <NavLink
               to="/edit"
               className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -112,20 +147,20 @@ export default function ProfilePage(props) {
               <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit
               profile
             </NavLink>
-          </div>
+          </div>}
         </div>
         <div className="w-full h-full pl-5 pr-5 mt-5 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
-          <div className="mt-5 p-3 border rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
+          <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Communities
-            <span className="inline-flex items-center mr-1 ml-3 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
+            {/* <span className="inline-flex items-center mr-1 ml-3 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
               24 votes
             </span>
             <span className="inline-flex items-center mr-1 ml-1 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
               11 DAOS
-            </span>
+            </span> */}
           </div>
-          <Daos />
-          <div className="mt-5 p-3 border rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
+          <Daos DAO={vote} />
+          <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Posts{" "}
             <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               {profile?.stats.totalPosts}
@@ -138,8 +173,8 @@ export default function ProfilePage(props) {
         <div className="flex max-h-10 mt-[129px] font-medium text-lg items-center">
           Badges <BookmarkIcon className="h-5 w-5 ml-2" aria-hidden="true" />
         </div>
-        <Poaps />
-        <Nfts />
+        <Poaps poaps={poap} />
+        <DisplayNFT NFT={NFT} />
       </div>
     </div>
   );
