@@ -28,9 +28,10 @@ const SingleFeed = ({ data }) => {
 
   useEffect(() => {
     if (profileId) {
+      console.log("check mirror");
       checkMirror(profileId, postId); // only checks after a user logged in
     }
-  }, [loading]);
+  }, []);
 
   return (
     <>
