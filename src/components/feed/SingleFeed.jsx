@@ -1,5 +1,7 @@
 import { createMirror } from "@/lens/mirror.js";
+import { hasMirrored } from "@/lens/check-mirror.js";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const SingleFeed = ({ data }) => {
   const userProPic = data.profile.picture;
@@ -10,10 +12,25 @@ const SingleFeed = ({ data }) => {
   const pubImge = data.postMedia;
   const postId = data.postId;
   const profileId = window.localStorage.getItem("profileId");
+  const [mirrored, setMirrored] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const mirrorFunc = async (_postId) => {
     await createMirror(profileId, _postId);
   };
+
+  const checkMirror = async (_profileId, _postId) => {
+    setLoading(true);
+    const res = await hasMirrored(_profileId, [_postId]);
+    setMirrored(res);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (profileId) {
+      checkMirror(profileId, postId); // only checks after a user logged in
+    }
+  }, [loading]);
 
   return (
     <>
@@ -42,13 +59,15 @@ const SingleFeed = ({ data }) => {
                 src={userProPic}
                 alt="profile picture"
               />
-              <div className="flex-1 space-y-1 flex flex-col items-center">
+              <div className="flex-1 space-y-1 flex flex-col">
                 <div className="flex items-center justify-between">
                   <div className="">
                     <h3 className="text-sm font-medium">{userProName}</h3>
                     <p className="text-gray-500 text-sm">{userProDesc}</p>
                   </div>
-                  <p className="text-sm text-gray-500">{pubTime}</p>
+                  <p className="text-sm text-gray-500">
+                    {pubTime.slice(5, 10) + " " + pubTime.slice(12, 16)}
+                  </p>
                 </div>
                 <p className="text-base text-gray-800">
                   {pubContent?.replace(/(<([^>]+)>)/gi, "")}
@@ -57,19 +76,25 @@ const SingleFeed = ({ data }) => {
                 <img
                   src={pubImge?.length ? pubImge : ""}
                   alt={pubImge?.length ? "publication image" : ""}
-                  className="rounded w-96 pr-2"
+                  className="rounded w-96 pr-2 self-center"
                 />
               </div>
             </div>
           </Link>
           <div className="flex justify-end">
-            <button
-              type="button"
-              className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={() => mirrorFunc(postId)}
-            >
-              Mirror
-            </button>
+            {mirrored ? (
+              <div className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Mirrored
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => mirrorFunc(postId)}
+              >
+                Mirror
+              </button>
+            )}
           </div>
         </div>
       </div>

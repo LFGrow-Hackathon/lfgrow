@@ -21,7 +21,7 @@ export default function ProfileCreation() {
     if (result === false) {
       setIsLoading(false);
     } else {
-      navigate("/");
+      navigate("/profile");
     }
     console.log("create profile: profile has been indexed", result);
     return true;

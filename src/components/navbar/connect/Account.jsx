@@ -28,6 +28,7 @@ function Account() {
 
         setHandle(profiles.items[0].handle);
         if (profiles.items[0].picture) {
+          console.log(profiles.items[0].picture)
           setUserImage(profiles.items[0].picture.original?.url)
         }
       } else {
@@ -61,8 +62,8 @@ function Account() {
     <>
       <Menu as="div">
         <div>
-          <Menu.Button className="bg-white rounded-full py-1 px-1 lg:py-2 lg:px-4 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <p className="hidden lg:block text-xl truncate text-gray-500 font-bold">{handle}</p>
+          <Menu.Button className="bg-white rounded-full py-1 px-1 lg:py-1 lg:px-2 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <p className="hidden lg:block text-lg truncate text-gray-500 font-bold mr-2">{handle}</p>
             <img className="h-8 w-8 rounded-full" src={userImage} alt="" />
           </Menu.Button>
         </div>

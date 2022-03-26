@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 import getAllPoap from "@/api_call/getAllPoap";
 import getVote from "@/api_call/getVote";
 import { useNFTBalances, useNativeTransactions } from "react-moralis";
+import MyFeed from "./feed/MyFeed";
 
 //@Tomas:
 //Once the props.address is connected again, should be be able to get all the poap and start displaying them (rely on already made components as much as you can using tailwind)
@@ -19,6 +20,7 @@ import { useNFTBalances, useNativeTransactions } from "react-moralis";
 
 export default function ProfilePage(props) {
   const [profile, setProfile] = useState();
+  const profileId = window.localStorage.getItem("profileId");
   const isMounted = useRef(false);
   const [poap, setPoap] = useState();
   const { data: NFTBalances } = useNFTBalances({ address: props.address });
@@ -31,7 +33,7 @@ export default function ProfilePage(props) {
     isMounted.current = true;
 
     async function getProfile() {
-      const { profiles } = await getProfiles({ ownedBy: [props.address] });
+      const { profiles } = await getProfiles({ profileIds: [profileId] });
       if (isMounted.current) {
         setProfile(profiles.items[0]);
       }
@@ -80,19 +82,19 @@ export default function ProfilePage(props) {
   getAccoutAge();
 
   return (
-    <div className="flex w-4/5">
+    <div className="flex">
       <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
         <div className="">
-          <div className="w-full flex justify-between">
-            <div className="flex">
-              <div className="mr-4 flex">
+          <div className="w-full flex justify-between flex-col">
+            <div className="flex mx-3 p-2">
+              <div className="mr-4 w-36">
                 <img
                   className="inline-block h-20 w-20 rounded-full"
                   src={
-                    profile?.picture ||
+                    profile?.picture?.original?.url ||
                     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   }
-                  alt=""
+                  alt="profile picture"
                 />
               </div>
               <div className="">
@@ -169,6 +171,8 @@ export default function ProfilePage(props) {
             </span>
           </div>
           <CreatePublication />
+
+          <MyFeed />
         </div>
       </div>
       <div className="w-2/5 mr-5">
