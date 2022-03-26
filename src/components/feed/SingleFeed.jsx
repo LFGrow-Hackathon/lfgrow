@@ -1,6 +1,7 @@
-import { createMirror, hasMirrored } from "@/lens/mirror.js";
+import { createMirror } from "@/lens/mirror.js";
+import { hasMirrored } from "@/lens/check-mirror.js";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SingleFeed = ({ data }) => {
   const userProPic = data.profile.picture;
@@ -12,17 +13,22 @@ const SingleFeed = ({ data }) => {
   const postId = data.postId;
   const profileId = window.localStorage.getItem("profileId");
   const [mirrored, setMirrored] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const mirrorFunc = async (_postId) => {
     await createMirror(profileId, _postId);
   };
 
   const checkMirror = async (_profileId, _postId) => {
+    setLoading(true);
     const res = await hasMirrored(_profileId, [_postId]);
     setMirrored(res);
+    setLoading(false);
   };
 
-  checkMirror(profileId, postId);
+  useEffect(() => {
+    checkMirror(profileId, postId);
+  }, [loading]);
 
   return (
     <>
