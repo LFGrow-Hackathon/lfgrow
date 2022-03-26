@@ -19,7 +19,7 @@ export default function CommunityPage() {
   }, []);
 
   return (
-    <div className="flex w-4/5 lg:w-3/5">
+    <div className="flex w-4/5">
       <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
         <div className="w-full flex mr-4 justify-between">
           <img

@@ -49,7 +49,7 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="flex w-4/5 max-w-[60%] px-4">
+    <div className="flex w-full lg:max-w-[70%] px-4">
       <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
         <CreatePublication />
         {posts.length ? (
