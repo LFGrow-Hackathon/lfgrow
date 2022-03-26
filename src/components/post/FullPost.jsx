@@ -9,7 +9,10 @@ const FullPost = ({ postData }) => {
   const userProDesc = postData.profile.bio;
   return (
     <>
-      <div className="flex flex-col w-full items-center self-start justify-center ">
+      <div
+        className="flex flex-col w-full items-center self-start justify-center"
+        id={postData.profile.id}
+      >
         <div className="flex self-start space-x-3 space-y-3">
           <div className="my-2 mx-5">
             <img

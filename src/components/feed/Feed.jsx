@@ -29,6 +29,8 @@ const Feed = () => {
       profile: {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
+          : filterdPost?.profile?.handle?.length
+          ? filterdPost?.profile?.handle
           : filterdPost?.profile?.id,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url

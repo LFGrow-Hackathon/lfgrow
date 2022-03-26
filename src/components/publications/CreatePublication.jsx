@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import createPost from "@/lens/publication/create-post.js";
 import { uploadImageIpfs, uploadMetadataIpfs } from "@/helpers/ipfs";
 import UploadFileModal from "@/components/publications/UploadFileModal";
-import { PaperClipIcon } from '@heroicons/react/solid'
+import { PaperClipIcon } from "@heroicons/react/solid";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -47,7 +47,7 @@ function CreatePublication() {
           <form action="#" className="relative">
             <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
               <label htmlFor="comment" className="sr-only">
-                Add your comment
+                Write your post here...
               </label>
               <textarea
                 rows={4}

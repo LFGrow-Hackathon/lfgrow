@@ -22,7 +22,9 @@ const SingleFeed = ({ data }) => {
     setMirrored(res);
   };
 
-  checkMirror(profileId, postId);
+  if (profileId) {
+    checkMirror(profileId, postId); // only checks after a user logged in
+  }
 
   return (
     <>
