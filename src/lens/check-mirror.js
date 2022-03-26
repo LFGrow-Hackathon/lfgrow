@@ -24,6 +24,7 @@ const hasMirroredRequest = (
         profilesRequest,
       },
     },
+    fetchPolicy: 'network-only',
   });
 };
 
