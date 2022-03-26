@@ -1,61 +1,91 @@
 import Twitter from "@/assets/twitter_logo.png";
-import { UserIcon, BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
+import { BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
 import CreatePublication from "@/components/publications/CreatePublication.jsx";
 import Poaps from "@/components/profile/Poaps";
 import Daos from "@/components/profile/Daos";
-import Nfts from "@/components/profile/Nfts";
+import DisplayNFT from "@/components/profile/DisplayNFT";
 import getProfiles from "@/lens/get-profiles.js";
-import { useEffect, useState, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import getAllPoap from "@/api_call/getAllPoap";
 import getVote from "@/api_call/getVote";
-import { useNFTBalances, useNativeTransactions } from "react-moralis";
 import MyFeed from "./feed/MyFeed";
+import { useMoralis, useMoralisWeb3Api, useNativeTransactions } from "react-moralis";
 
-//@Tomas:
-//Once the props.address is connected again, should be be able to get all the poap and start displaying them (rely on already made components as much as you can using tailwind)
-//Regarding the number of transactions and age of the address, you can see how it's done in the page /home (DisplayProfile.js)
-//To display the NFT you can use the NFTbalances I've added. We want to display them in the Nfts.js but you can see a working example of how to get the nft + the metadata in Nfts_old.js,
-//For the snapshot vote, use the query getVote(address).
 
-export default function ProfilePage(props) {
+export default function ProfilePage() {
+
+  const idURL = useParams();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState();
-  const profileId = window.localStorage.getItem("profileId");
-  const isMounted = useRef(false);
+  const [address, setAddress] = useState();
+  const [pageDoesntExist, setPageDoesntExist] = useState(false);
+  const [isPageOwner, setIsPageOwner] = useState(false);
   const [poap, setPoap] = useState();
-  const { data: NFTBalances } = useNFTBalances({ address: props.address });
+  const [vote, setVote] = useState();
+  const [NFT, setNFT] = useState();
+  const { isInitialized, isAuthenticated } = useMoralis();
+  const profileId = window.localStorage.getItem("profileId");
+
   const { data: Transactions, error } = useNativeTransactions({
-    address: props?.address,
+    address: address,
   });
 
+  const Web3Api = useMoralisWeb3Api();
+
+  const fetchNFTs = async () => {
+    const options = {
+      chain: "eth",
+      address: address,
+    };
+    const NFTs = await Web3Api.account.getNFTs(options);
+    setNFT(NFTs);
+  };
 
   useEffect(() => {
-    isMounted.current = true;
+    async function fetchProfileInfo() {
 
-    async function getProfile() {
-      const { profiles } = await getProfiles({ profileIds: [profileId] });
-      if (isMounted.current) {
+      //Check if it's an address
+      if (idURL.handle.startsWith("0x") && idURL.handle.length === 42) {
+        setAddress(idURL.handle);
+        const { profiles } = await getProfiles({ ownedBy: [idURL.handle] });
         setProfile(profiles.items[0]);
       }
-    }
-    async function fetchPoap() {
-      if (props.address) {
-        const data = await getAllPoap(props.address);
-
-        if (isMounted.current) {
-          setPoap(data);
+      //Handle must be less than 32 characters
+      else if (idURL.handle.length < 32) {
+        const { profiles } = await getProfiles({ handles: [idURL.handle] });
+        if (profiles.items.length !== 0) {
+          setProfile(profiles.items[0]);
+          setAddress(profiles.items[0].ownedBy);
+        } else {
+          setPageDoesntExist(true);
         }
+      } else {
+        setPageDoesntExist(true);
       }
     }
 
-    if (props.address) {
-      getProfile();
-      fetchPoap();
+    fetchProfileInfo();
+  }, []);
+
+  useEffect(() => {
+    async function fetchPoap() {
+      if (address) {
+        const dataPoap = await getAllPoap(address);
+        const dataVote = await getVote(address);
+        console.log("vote", dataVote);
+        setPoap(dataPoap);
+        setVote(dataVote);
+      }
     }
-    return () => {
-      isMounted.current = false;
-    };
-  }, [props.address]);
+    fetchPoap();
+    if (isInitialized) {
+      fetchNFTs();
+    }
+    if (profile?.id === profileId && isAuthenticated) {
+      setIsPageOwner(true);
+    }
+  }, [address, isInitialized, profile, isAuthenticated]);
 
   let monthsDisplay;
   let yearsDisplay;
@@ -64,6 +94,7 @@ export default function ProfilePage(props) {
     const firstTx =
       Transactions?.result[Transactions.result.length - 1].block_timestamp;
     if (firstTx) {
+      console.log("first", firstTx);
       const firstTxDate = new Date(
         `${firstTx?.substring(5, 7)}/${firstTx.substring(
           8,
@@ -80,6 +111,12 @@ export default function ProfilePage(props) {
     }
   };
   getAccoutAge();
+
+  if (pageDoesntExist) {
+    return (
+      <p>This profile doesn't exist</p>
+    );
+  }
 
   return (
     <div className="flex">
@@ -98,7 +135,7 @@ export default function ProfilePage(props) {
                 />
               </div>
               <div className="">
-                <h4 className="text-lg font-bold">{profile?.name || "-"}</h4>
+                {(profile || address) && (<h4 className="text-lg font-bold">{profile?.name ? profile.name : (profile?.handle ? profile.handle : `${address.substring(0, 5)}...${address.substring(38, 42)}`)}</h4>)}
                 <p>{profile?.bio}</p>
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
@@ -143,7 +180,7 @@ export default function ProfilePage(props) {
               </div>
             </div>
           </div>
-          <div className="flex justify-end">
+          {isPageOwner && <div className="flex justify-end">
             <NavLink
               to="/edit"
               className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -151,20 +188,20 @@ export default function ProfilePage(props) {
               <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit
               profile
             </NavLink>
-          </div>
+          </div>}
         </div>
         <div className="w-full h-full pl-5 pr-5 mt-5 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
-          <div className="mt-5 p-3 border rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
+          <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Communities
-            <span className="inline-flex items-center mr-1 ml-3 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
+            {/* <span className="inline-flex items-center mr-1 ml-3 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
               24 votes
             </span>
             <span className="inline-flex items-center mr-1 ml-1 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
               11 DAOS
-            </span>
+            </span> */}
           </div>
-          <Daos />
-          <div className="mt-5 p-3 border rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
+          <Daos DAO={vote} />
+          <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Posts{" "}
             <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               {profile?.stats.totalPosts}
@@ -180,7 +217,7 @@ export default function ProfilePage(props) {
           Badges <BookmarkIcon className="h-5 w-5 ml-2" aria-hidden="true" />
         </div>
         <Poaps poaps={poap} />
-        <Nfts NFTs={NFTBalances}/>
+        <DisplayNFT NFT={NFT} />
       </div>
     </div>
   );

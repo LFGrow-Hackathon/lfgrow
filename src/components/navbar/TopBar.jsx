@@ -1,20 +1,5 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
+import { useMoralis } from "react-moralis";
 import { Outlet, NavLink } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -28,7 +13,8 @@ import {
 } from "@heroicons/react/outline";
 import Account from "./connect/Account";
 import Search from "./search/Search";
-
+import getProfiles from "@/lens/get-profiles";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -36,6 +22,28 @@ function classNames(...classes) {
 
 export default function TopBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { isAuthenticated, account } = useMoralis();
+  const [handle, setHandle] = useState();
+  const [userImage, setUserImage] = useState();
+  const profileId = window.localStorage.getItem("profileId");
+  const navigate = useNavigate();
+
+  useEffect(async () => {
+    if (isAuthenticated) {
+      if (profileId && profileId !== "undefined") {
+        const { profiles } = await getProfiles({ profileIds: [profileId] });
+
+        setHandle(profiles.items[0]?.handle);
+        if (profiles.items[0].picture) {
+          setUserImage(profiles.items[0].picture.original?.url);
+        }
+      } else {
+        navigate("/welcome");
+      }
+    }
+
+  }, [isAuthenticated, profileId]);
+
 
   return (
     <div>
@@ -89,13 +97,19 @@ export default function TopBar() {
                 <div className="mt-5 flex-1 h-0 overflow-y-auto">
 
                   <div className="flex w-1/5 flex-col pt-10 pr-5">
-                    <NavLink
-                      to="/profile"
+                    <button
+                      onClick={() => {
+                        if (isAuthenticated && handle) {
+                          navigate(`/profile/${handle}`);
+                        } else {
+                          alert("You need to be connected to access you profile page");
+                        }
+                      }}
                       className="inline-flex items-center w-36 mr-3 ml-10 px-5 py-2  text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100"
                     >
                       <UserIcon className="mr-2 h-5 w-5" aria-hidden="true" />
                       <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">My profile</p>
-                    </NavLink>
+                    </button>
                     <NavLink
                       to="/"
                       className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
@@ -134,13 +148,19 @@ export default function TopBar() {
             </div>
             <div className="mt-5 flex-grow flex flex-col">
               <div className="flex w-1/5 flex-col pt-10">
-                <NavLink
-                  to="/profile"
+                <button
+                  onClick={() => {
+                    if (isAuthenticated && handle) {
+                      navigate(`/profile/${handle}`);
+                    } else {
+                      alert("You need to be connected to access you profile page");
+                    }
+                  }}
                   className="inline-flex items-center w-36 mr-3 ml-10 px-5 py-2  text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100"
                 >
                   <UserIcon className="mr-2 h-5 w-5" aria-hidden="true" />
                   <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">My profile</p>
-                </NavLink>
+                </button>
                 <NavLink
                   to="/"
                   className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
@@ -188,7 +208,7 @@ export default function TopBar() {
                 </button>
 
                 {/* Profile dropdown */}
-                <Account />
+                <Account handle={handle} userImage={userImage} />
               </div>
             </div>
           </div>
