@@ -9,6 +9,8 @@ export default function EditProfile(props) {
   const [profile, setProfile] = useState();
   const [picture, setPicture] = useState();
   const [coverPicture, setCoverPicture] = useState();
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [isUploadingCoverPhoto, setIsUploadingCoverPhoto] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: "",
     bio: "",
@@ -30,8 +32,8 @@ export default function EditProfile(props) {
         location: profiles.items[0].location || "",
         website: profiles.items[0].website || "",
         twitterUrl: profiles.items[0].twitterUrl || "",
-        picture: profiles.items[0].picture,
-        coverPicture: profiles.items[0].coverPicture
+        picture: null,
+        coverPicture: null
       });
     }
 
@@ -40,7 +42,9 @@ export default function EditProfile(props) {
 
   useEffect(() => {
     async function uploadPhoto() {
+      setIsUploadingPhoto(true)
       const result = await uploadImageIpfs(picture[0]);
+      setIsUploadingPhoto(false)
 
       setUserInfo((prevState) => ({
         ...prevState,
@@ -55,7 +59,9 @@ export default function EditProfile(props) {
 
   useEffect(() => {
     async function uploadPhoto() {
+      setIsUploadingCoverPhoto(true)
       const result = await uploadImageIpfs(coverPicture[0]);
+      setIsUploadingCoverPhoto(false)
 
       setUserInfo((prevState) => ({
         ...prevState,
@@ -70,7 +76,6 @@ export default function EditProfile(props) {
 
   const inputsHandler = (e) => {
     const val = e.target.value;
-
     setUserInfo((prevState) => ({
       ...prevState,
       [e.target.name]: val,
@@ -83,10 +88,20 @@ export default function EditProfile(props) {
       return;
     }
 
-    await updateProfile({
-      profileId: profile.id,
-      ...userInfo
-    });
+    let data = {};
+    data.profileId = profileId;
+    userInfo.name ? (data.name = userInfo.name) : profile.name;
+    userInfo.website ? (data.website = userInfo.website) : null;
+    userInfo.bio ? (data.bio = userInfo.bio) : profile.bio;
+    userInfo.location ? (data.location = userInfo.location) : null;
+    userInfo.twitterUrl ? (data.twitterUrl = userInfo.twitterUrl) : null;
+    userInfo.picture ? (data.picture = userInfo.picture) : null;
+
+    if (userInfo.coverPicture) {
+      // we don't want the coverPicture field at all if nothing was added, otherwise it'll erase the previous one
+      data.coverPicture = userInfo.coverPicture;
+    }
+    await updateProfile(data);
   };
 
   return (
@@ -150,6 +165,7 @@ export default function EditProfile(props) {
                   </div>
                 </div>
 
+
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
                     htmlFor="picture"
@@ -157,9 +173,15 @@ export default function EditProfile(props) {
                   >
                     Picture
                   </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
+                  {!isUploadingPhoto && <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <UploadImages picture={picture} setPicture={setPicture} />
-                  </div>
+                  </div>}
+                  {isUploadingPhoto && <div className="flex flex-col">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black m-auto" />
+                    <p className="flex justify-center mt-4 text-sm text-black">
+                      Uploading picture to IPFS
+                    </p>
+                  </div>}
                 </div>
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -169,9 +191,15 @@ export default function EditProfile(props) {
                   >
                     Cover picture
                   </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
+                  {!isUploadingCoverPhoto && <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <UploadImages picture={coverPicture} setPicture={setCoverPicture} />
-                  </div>
+                  </div>}
+                  {isUploadingCoverPhoto && <div className="flex flex-col">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black m-auto" />
+                    <p className="flex justify-center mt-4 text-sm text-black">
+                      Uploading cover picture to IPFS
+                    </p>
+                  </div>}
                 </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label

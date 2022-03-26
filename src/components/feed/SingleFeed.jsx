@@ -13,6 +13,7 @@ const SingleFeed = ({ data }) => {
   const profileId = window.localStorage.getItem("profileId");
   const [mirrored, setMirrored] = useState("");
 
+  console.log(userProPic);
   const mirrorFunc = async (_postId) => {
     await createMirror(profileId, _postId);
   };
