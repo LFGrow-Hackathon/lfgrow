@@ -74,7 +74,7 @@ const SingleFeed = ({ data }) => {
                     {pubTime.slice(5, 10) + " " + pubTime.slice(12, 16)}
                   </p>
                 </div>
-                <p className="text-base text-gray-800 line-clamp-4">
+                <p className="text-base text-gray-800 line-clamp-4 break-all">
                   {pubContent?.replace(/(<([^>]+)>)/gi, "")}
                   {/* {pubContent} */}
                 </p>
