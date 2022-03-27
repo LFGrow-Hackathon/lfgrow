@@ -15,6 +15,7 @@ export const ViewPost = () => {
   const ActiveProfileId = window.localStorage.getItem("profileId");
   const [loading, setLoading] = useState(false);
   const [mirrored, setMirrored] = useState("");
+  const profileId = window.localStorage.getItem("profileId");
   const [mirrorsCount, setMirrorsCount] = useState("");
 
   const mirrorFunc = async (_postId) => {
@@ -29,7 +30,9 @@ export const ViewPost = () => {
   };
 
   useEffect(() => {
-    checkMirror(ActiveProfileId, routeParam.postId);
+    if (profileId) {
+      checkMirror(ActiveProfileId, routeParam.postId);
+    }
   }, [loading]);
 
   useEffect(() => {

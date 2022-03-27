@@ -1,7 +1,6 @@
 import { gql } from "@apollo/client/core";
 import { apolloClient } from "../helpers/apollo-client";
 
-
 const HAS_MIRRORED = `
   query($request: HasMirroredRequest!) {
     hasMirrored(request: $request) {
@@ -14,9 +13,7 @@ const HAS_MIRRORED = `
   }
 `;
 
-const hasMirroredRequest = (
-  profilesRequest
-) => {
+const hasMirroredRequest = (profilesRequest) => {
   return apolloClient.query({
     query: gql(HAS_MIRRORED),
     variables: {

@@ -76,7 +76,6 @@ export default function ProfilePage() {
   }, [idURL.handle]);
 
   useEffect(() => {
-
     async function fetchData() {
       if (address) {
         const dataPoap = await getAllPoap(address);
@@ -84,7 +83,7 @@ export default function ProfilePage() {
         setPoap(dataPoap);
         setVote(dataVote);
       }
-      if (profile) {
+      if (profile && profileId) {
         const resultFollow = await doesFollowFunc(profile.id);
         setDoesFollow(resultFollow);
       }
@@ -103,7 +102,6 @@ export default function ProfilePage() {
       setDoesFollow(!doesFollow);
     }
   }, [loading]);
-
 
   let monthsDisplay;
   let yearsDisplay;
@@ -136,8 +134,8 @@ export default function ProfilePage() {
   const profileName = profile?.name
     ? profile.name
     : profile?.handle
-      ? profile.handle
-      : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+    ? profile.handle
+    : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
 
   return (
     <div className="flex">
@@ -148,24 +146,13 @@ export default function ProfilePage() {
               <div className="mr-4 w-20">
                 <img
                   className="inline-block h-20 w-20 rounded-full ring-2 ring-blue-100"
-                  src={
-                    profile?.picture?.original?.url || defaultUserIcon
-                  }
+                  src={profile?.picture?.original?.url || defaultUserIcon}
                   alt="profile picture"
                 />
               </div>
               <div className="">
                 {(profile || address) && (
-                  <h4 className="text-lg font-bold">
-                    {profile?.name
-                      ? profile.name
-                      : profile?.handle
-                        ? profile.handle
-                        : `${address.substring(0, 5)}...${address.substring(
-                          38,
-                          42
-                        )}`}
-                  </h4>
+                  <h4 className="text-lg font-bold">{profileName}</h4>
                 )}
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
@@ -215,17 +202,20 @@ export default function ProfilePage() {
               <p>{profile?.bio}</p>
             </div>
             {isPageOwner ? (
-              <div className="flex justify-end">
-                <NavLink
-                  to="/edit"
-                  className="inline-flex items-center max-h-10 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" />{" "}
-                  Edit profile
-                </NavLink>
-              </div>
+              <ProfileEditButton />
+            ) : !profileId ? (
+              <></>
+            ) : doesFollow ? (
+              <UnfollowBtn
+                profileId={profile?.id}
+                hasClickFollow={hasClickFollow}
+              />
             ) : (
-              doesFollow ? (<UnfollowBtn profileId={profile?.id} hasClickFollow={hasClickFollow} />) : (<FollowBtn profileId={profile?.id} setLoading={setLoading} hasClickFollow={hasClickFollow} />)
+              <FollowBtn
+                profileId={profile?.id}
+                setLoading={setLoading}
+                hasClickFollow={hasClickFollow}
+              />
             )}
           </div>
         </div>
@@ -255,3 +245,16 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+const ProfileEditButton = () => {
+  return (
+    <div className="flex justify-end">
+      <NavLink
+        to="/edit"
+        className="inline-flex items-center max-h-10 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit profile
+      </NavLink>
+    </div>
+  );
+};
