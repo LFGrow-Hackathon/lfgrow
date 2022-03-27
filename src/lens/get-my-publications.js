@@ -2,8 +2,8 @@ import { gql } from "@apollo/client/core";
 import { apolloClient } from "../helpers/apollo-client";
 
 const GET_MY_POSTS = `
-query GetMyPosts($request: TimelineRequest!) {
-  timeline(request: $request) {
+query getMyPublications($request: PublicationsQueryRequest!) {
+  myPosts: publications(request: $request) {
     items {
       __typename
       ... on Post {
@@ -195,16 +195,6 @@ fragment PostFields on Post {
     }
   }
   appId
-  collectedBy {
-    ...WalletFields
-  }
-}
-
-fragment WalletFields on Wallet {
-  address
-  defaultProfile {
-    ...ProfileFields
-  }
 }
 
 `;
