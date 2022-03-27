@@ -32,15 +32,29 @@ const PostStatus = ({ postData, id, fnc }) => {
             </span>
           </div>
         </span>
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2 mt-2">
+          <button
+            type="button"
+            className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+            onClick={() => mirrorFunc(postId)}
+          >
+            Comment
+          </button>
+          <button
+            type="button"
+            className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+            onClick={() => mirrorFunc(postId)}
+          >
+            Collect
+          </button>
           {mirrored ? (
-            <div className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <div className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-gray-50 focus:outline-none">
               Mirrored
             </div>
           ) : (
             <button
               type="button"
-              className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:text-white focus:outline-none"
               onClick={() => mirrorFunc(id)}
             >
               Mirror

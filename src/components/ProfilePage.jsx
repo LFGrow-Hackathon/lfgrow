@@ -197,7 +197,7 @@ export default function ProfilePage() {
             <div className="flex justify-start w-3/4">
               <p>{profile?.bio}</p>
             </div>
-            {isPageOwner && (
+            {isPageOwner ? (
               <div className="flex justify-end">
                 <NavLink
                   to="/edit"
@@ -206,6 +206,12 @@ export default function ProfilePage() {
                   <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" />{" "}
                   Edit profile
                 </NavLink>
+              </div>
+            ) : (
+              <div className="flex justify-end">
+                <button className="inline-flex items-center max-h-10 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:border-blue-400 hover:border-1">
+                  FOLLOW
+                </button>
               </div>
             )}
           </div>

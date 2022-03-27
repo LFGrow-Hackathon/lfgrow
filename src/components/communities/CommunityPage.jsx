@@ -130,14 +130,15 @@ export default function CommunityPage() {
           <div className="flex max-h-10 mt-[112px] font-lg text-xl items-center">
             Categories
           </div>
-
-          {community?.categories.map((category) => {
-            return (
-              <div className="mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500 shadow-sm">
-                {category}
-              </div>
-            );
-          })}
+          <div className="mt-5">
+            {community?.categories.map((category) => {
+              return (
+                <div className="mt-2 p-2 bg-white border-2 border-blue-200 rounded-md text-md text-slate-900 shadow-sm">
+                  {category}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
