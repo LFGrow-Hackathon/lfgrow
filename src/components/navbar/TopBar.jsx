@@ -123,6 +123,19 @@ export default function TopBar() {
                         My profile
                       </p>
                     </button>
+
+                    {profileId ? (
+                      <NavLink
+                        to="/home"
+                        className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
+                      >
+                        <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" />{" "}
+                        Home
+                      </NavLink>
+                    ) : (
+                      <></>
+                    )}
+
                     <NavLink
                       to="/"
                       className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
@@ -130,15 +143,8 @@ export default function TopBar() {
                       <LightningBoltIcon
                         className="mr-2 h-5 w-5"
                         aria-hidden="true"
-                      />{" "}
-                      Feed
-                    </NavLink>
-                    <NavLink
-                      to="/home"
-                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
-                    >
-                      <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" />{" "}
-                      Home
+                      />
+                      Explore
                     </NavLink>
                     <NavLink
                       to="/communities"
@@ -191,6 +197,20 @@ export default function TopBar() {
                     My profile
                   </p>
                 </button>
+                {profileId ? (
+                  <>
+                    <NavLink
+                      to="/home"
+                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
+                    >
+                      <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" />{" "}
+                      Home
+                    </NavLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <NavLink
                   to="/"
                   className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
@@ -198,14 +218,8 @@ export default function TopBar() {
                   <LightningBoltIcon
                     className="mr-2 h-5 w-5"
                     aria-hidden="true"
-                  />{" "}
-                  Feed
-                </NavLink>
-                <NavLink
-                  to="/home"
-                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
-                >
-                  <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" /> Home
+                  />
+                  Explore
                 </NavLink>
                 <NavLink
                   to="/communities"

@@ -54,7 +54,7 @@ function CreatePublication() {
                 name="comment"
                 id="comment"
                 className="block w-full my-2 border-0 focus:ring-0 sm:text-sm"
-                placeholder="Add your comment..."
+                placeholder="Write your post here..."
                 onChange={(e) => {
                   setMessage(e.target.value);
                 }}
