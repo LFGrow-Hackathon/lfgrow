@@ -77,6 +77,9 @@ async function createPost({ ipfsCid }) {
 
   const { v, r, s } = splitSignature(signature);
 
+  const res = await helloWorld();
+  console.log(res);
+
   const tx = await lensHub.postWithSig({
     profileId: value.profileId,
     contentURI: value.contentURI,

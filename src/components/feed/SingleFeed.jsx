@@ -15,7 +15,6 @@ const SingleFeed = ({ data }) => {
   const [mirrored, setMirrored] = useState("");
   const [loading, setLoading] = useState(false);
 
-  console.log(userProPic);
   const mirrorFunc = async (_postId) => {
     await createMirror(profileId, _postId);
   };

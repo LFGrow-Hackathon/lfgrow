@@ -28,6 +28,7 @@ import {
 } from "@heroicons/react/outline";
 import Account from "./connect/Account";
 import Search from "./search/Search";
+import { setDispatcher } from "@/lens/set-dispatcher"
 
 
 function classNames(...classes) {
@@ -36,6 +37,10 @@ function classNames(...classes) {
 
 export default function TopBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  async function testDispatcher() {
+    await setDispatcher();
+  }
 
   return (
     <div>
@@ -160,6 +165,7 @@ export default function TopBar() {
                   <UserGroupIcon className="mr-2 h-5 w-5" aria-hidden="true" />
                   Communities
                 </NavLink>
+                <button onClick={testDispatcher} >CLick me</button>
               </div>
             </div>
           </div>

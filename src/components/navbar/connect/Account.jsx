@@ -28,7 +28,6 @@ function Account() {
 
         setHandle(profiles.items[0].handle);
         if (profiles.items[0].picture) {
-          console.log(profiles.items[0].picture)
           setUserImage(profiles.items[0].picture.original?.url)
         }
       } else {
