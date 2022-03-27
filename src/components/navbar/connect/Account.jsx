@@ -1,41 +1,38 @@
 import { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 import ConnectModal from "@/components/navbar/connect/ConnectModal.jsx";
-import getProfiles from "@/lens/get-profiles";
-import { useNavigate } from "react-router-dom";
 
-const defaultImage = "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg"
+const defaultImage = "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-function Account() {
+function Account(props) {
   const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
-  const [handle, setHandle] = useState();
-  const [userImage, setUserImage] = useState(defaultImage);
+  // const [handle, setHandle] = useState();
+  // const [userImage, setUserImage] = useState(defaultImage);
   const { authenticate, isAuthenticated, account, logout } = useMoralis();
-  const navigate = useNavigate();
-  const profileId = window.localStorage.getItem("profileId");
+  // const profileId = window.localStorage.getItem("profileId");
 
-  useEffect(async () => {
-    if (isAuthenticated) {
-      if (profileId && profileId !== "undefined") {
-        const { profiles } = await getProfiles({ profileIds: [profileId] });
+  // useEffect(async () => {
+  //   if (isAuthenticated) {
+  //     if (profileId && profileId !== "undefined") {
+  //       const { profiles } = await getProfiles({ profileIds: [profileId] });
 
-        setHandle(profiles.items[0].handle);
-        if (profiles.items[0].picture) {
-          setUserImage(profiles.items[0].picture.original?.url)
-        }
-      } else {
-        navigate("/welcome");
-      }
-    }
+  //       setHandle(profiles.items[0].handle);
+  //       if (profiles.items[0].picture) {
+  //         setUserImage(profiles.items[0].picture.original?.url);
+  //       }
+  //     } else {
+  //       navigate("/welcome");
+  //     }
+  //   }
 
-  }, [isAuthenticated, profileId]);
+  // }, [isAuthenticated, profileId]);
 
   if (!isAuthenticated || !account) {
     return (
@@ -62,8 +59,8 @@ function Account() {
       <Menu as="div">
         <div>
           <Menu.Button className="bg-white rounded-full py-1 px-1 lg:py-1 lg:px-2 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <p className="hidden lg:block text-lg truncate text-gray-500 font-bold mr-2">{handle}</p>
-            <img className="h-8 w-8 rounded-full" src={userImage} alt="" />
+            <p className="hidden lg:block text-lg truncate text-gray-500 font-bold mr-2">{props.handle}</p>
+            <img className="h-8 w-8 rounded-full" src={props.userImage ? props.userImage : defaultImage} alt="" />
           </Menu.Button>
         </div>
         <Transition
@@ -81,8 +78,8 @@ function Account() {
                 <NavLink
                   to="/welcome"
                   className={classNames(
-                    active ? 'bg-gray-100' : '',
-                    'block py-2 px-4 text-sm text-gray-700'
+                    active ? "bg-gray-100" : "",
+                    "block py-2 px-4 text-sm text-gray-700"
                   )}
                 >
                   Switch profile
@@ -93,8 +90,8 @@ function Account() {
               {({ active }) => (
                 <a
                   className={classNames(
-                    active ? 'bg-gray-100' : '',
-                    'block py-2 px-4 text-sm text-gray-700'
+                    active ? "bg-gray-100" : "",
+                    "block py-2 px-4 text-sm text-gray-700"
                   )}
                   onClick={async () => {
                     await logout();

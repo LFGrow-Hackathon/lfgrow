@@ -4,7 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SingleFeed from "./SingleFeed";
 import CreatePublication from "../publications/CreatePublication";
 
-const Feed = () => {
+const Feed = ({ size }) => {
   const [posts, setPosts] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const isMounted = useRef(false);
@@ -29,6 +29,8 @@ const Feed = () => {
       profile: {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
+          : filterdPost?.profile?.handle?.length
+          ? filterdPost?.profile?.handle
           : filterdPost?.profile?.id,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
@@ -39,6 +41,7 @@ const Feed = () => {
       postContent: filterdPost?.metadata?.content,
       postMedia: filterdPost?.metadata?.image,
       postTimeStamp: filterdPost?.createdAt,
+      postStats: filterdPost.stats,
     }));
 
     if (isMounted.current) {
@@ -46,13 +49,12 @@ const Feed = () => {
         return [...prevState, ...postDataObj];
       });
       setPageInfo(res.explorePublications.pageInfo);
-      // console.log("postDataObj: ", postDataObj);
     }
   };
 
   return (
-    <div className="flex w-full lg:max-w-[70%] px-4">
-      <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
+    <div className={`flex w-full lg:${size} px-4`}>
+      <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center shadow-md">
         <CreatePublication />
         {posts.length ? (
           <InfiniteScroll

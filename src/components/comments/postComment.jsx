@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import createPost from "@/lens/publication/create-post.js";
+import createComment from "@/lens/publication/create-comment.js";
 import { uploadImageIpfs, uploadMetadataIpfs } from "@/helpers/ipfs";
 import UploadFileModal from "@/components/publications/UploadFileModal";
 import { PaperClipIcon } from "@heroicons/react/solid";
@@ -8,19 +8,19 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function CreatePublication() {
+function CommentPublication(props) {
   const [file, setFile] = useState([]);
   const [message, setMessage] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  async function createPublication(event) {
+  async function CommentPublication(event) {
     event.preventDefault();
 
     const media = file.length > 0 ? await uploadImageIpfs(file[0]) : [];
 
     const ipfsCid = await uploadMetadataIpfs({ message, media });
 
-    const tx = await createPost({ ipfsCid });
+    const tx = await createComment(ipfsCid, props.pubId);
 
     if (tx) {
       alert("Post has been successfully created :)");
@@ -42,12 +42,12 @@ function CreatePublication() {
 
   return (
     <>
-      <div className="flex items-start max-w-7xl mx-auto mt-5">
+      <div className="flex items-start w-full  max-w-7xl mx-auto mt-5">
         <div className="max-w-3xl mx-auto flex-1">
           <form action="#" className="relative">
             <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
               <label htmlFor="comment" className="sr-only">
-                Write your post here...
+                Add your comment
               </label>
               <textarea
                 rows={3}
@@ -88,7 +88,7 @@ function CreatePublication() {
               <div className="flex-shrink-0">
                 <button
                   type="submit"
-                  onClick={createPublication}
+                  onClick={CommentPublication}
                   className={classNames(
                     message || file.length > 0
                       ? "bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -115,7 +115,7 @@ function CreatePublication() {
   );
 }
 
-export default CreatePublication;
+export default CommentPublication;
 
 const thumbsContainer = {
   display: "flex",
