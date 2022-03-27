@@ -3,7 +3,8 @@ import { createMirror } from "@/lens/mirror.js";
 import { hasMirrored } from "@/lens/check-mirror.js";
 import PostStatus from "./PostStatus";
 
-const FullPost = ({ postData }) => {
+const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
+  // console.log("postData: ", postData);
   const userProPic = postData.profile.picture?.medium?.url.length
     ? postData.profile.picture?.medium?.url
     : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg";
@@ -13,25 +14,25 @@ const FullPost = ({ postData }) => {
   const userProDesc = postData.profile.bio;
 
   const ActiveProfileId = window.localStorage.getItem("profileId");
-  const [mirrored, setMirrored] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  const mirrorFunc = async (_postId) => {
-    setLoading(true);
-    await createMirror(ActiveProfileId, _postId);
-    setLoading(false);
-  };
+  // const mirrorFunc = async (_postId) => {
+  //   setLoading(true);
+  //   await createMirror(ActiveProfileId, _postId);
+  //   setLoading(false);
+  // };
 
-  const checkMirror = async (_profileId, _postId) => {
-    const res = await hasMirrored(_profileId, [_postId]);
-    setMirrored(res);
-  };
+  // const checkMirror = async (_profileId, _postId) => {
+  //   const res = await hasMirrored(_profileId, [_postId]);
+  //   setMirrored(res);
+  // };
 
   useEffect(() => {
     if (ActiveProfileId) {
-      checkMirror(ActiveProfileId, postData.id);
+      console.log("check mirror commented");
+      // checkMirror(ActiveProfileId, postData.id);
     }
-  }, [loading]);
+  }, []);
 
   return (
     <>

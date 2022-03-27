@@ -4,7 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SingleFeed from "./SingleFeed";
 import CreatePublication from "../publications/CreatePublication";
 
-const Feed = () => {
+const Feed = ({ size }) => {
   const [posts, setPosts] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const isMounted = useRef(false);
@@ -30,8 +30,8 @@ const Feed = () => {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
           : filterdPost?.profile?.handle?.length
-          ? filterdPost?.profile?.handle
-          : filterdPost?.profile?.id,
+            ? filterdPost?.profile?.handle
+            : filterdPost?.profile?.id,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
           : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg",
@@ -53,7 +53,7 @@ const Feed = () => {
   };
 
   return (
-    <div className="flex w-full lg:max-w-[70%] px-4">
+    <div className={`flex w-full lg:${size} px-4`}>
       <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
         <CreatePublication />
         {posts.length ? (
