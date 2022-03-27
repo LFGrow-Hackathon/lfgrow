@@ -41,15 +41,17 @@ export default function TopBar() {
         navigate("/welcome");
       }
     }
-
   }, [isAuthenticated, profileId]);
-
 
   return (
     <div>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={setSidebarOpen}>
+          <Dialog
+            as="div"
+            className="fixed inset-0 flex z-40 md:hidden"
+            onClose={setSidebarOpen}
+          >
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -87,46 +89,65 @@ export default function TopBar() {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                      <XIcon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
                     </button>
                   </div>
                 </Transition.Child>
                 <div className="flex-shrink-0 flex items-center justify-center px-4">
-                  <NavLink to="/" className="text-2xl font-bold bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">Zilly</NavLink>
+                  <NavLink
+                    to="/"
+                    className="text-2xl font-bold bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]"
+                  >
+                    Zilly
+                  </NavLink>
                 </div>
                 <div className="mt-5 flex-1 h-0 overflow-y-auto">
-
                   <div className="flex w-1/5 flex-col pt-10 pr-5">
                     <button
                       onClick={() => {
                         if (isAuthenticated && handle) {
                           navigate(`/profile/${handle}`);
                         } else {
-                          alert("You need to be connected to access you profile page");
+                          alert(
+                            "You need to be connected to access you profile page"
+                          );
                         }
                       }}
                       className="inline-flex items-center w-36 mr-3 ml-10 px-5 py-2  text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100"
                     >
                       <UserIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-                      <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">My profile</p>
+                      <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">
+                        My profile
+                      </p>
                     </button>
                     <NavLink
                       to="/"
-                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
+                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
                     >
-                      <LightningBoltIcon className="mr-2 h-5 w-5" aria-hidden="true" /> Feed
+                      <LightningBoltIcon
+                        className="mr-2 h-5 w-5"
+                        aria-hidden="true"
+                      />{" "}
+                      Feed
                     </NavLink>
                     <NavLink
                       to="/home"
-                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
+                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
                     >
-                      <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" /> Home
+                      <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" />{" "}
+                      Home
                     </NavLink>
                     <NavLink
                       to="/communities"
-                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
+                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
                     >
-                      <UserGroupIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+                      <UserGroupIcon
+                        className="mr-2 h-5 w-5"
+                        aria-hidden="true"
+                      />
                       Communities
                     </NavLink>
                   </div>
@@ -142,40 +163,53 @@ export default function TopBar() {
         {/* Static sidebar for desktop */}
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-col flex-grow bg-white overflow-y-auto">
+          <div className="flex flex-col flex-grow bg-[#fcfcfc] overflow-y-auto">
             <div className="flex items-center py-3 flex-shrink-0 bg-gradient-to-r from-[#13C2E9] to-[#609EEB] px-4">
-              <NavLink to="/" className="text-white font-bold pl-10 text-4xl">Zilly</NavLink>
+              <NavLink to="/" className="text-white font-bold pl-10 text-4xl">
+                Zilly
+              </NavLink>
             </div>
             <div className="mt-5 flex-grow flex flex-col">
-              <div className="flex w-1/5 flex-col pt-10">
+              <div className="flex w-1/5 flex-col pt-10 gap-1">
                 <button
                   onClick={() => {
                     if (isAuthenticated && handle) {
                       navigate(`/profile/${handle}`);
                     } else {
-                      alert("You need to be connected to access you profile page");
+                      alert(
+                        "You need to be connected to access you profile page"
+                      );
                     }
                   }}
-                  className="inline-flex items-center w-36 mr-3 ml-10 px-5 py-2  text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100"
+                  className="inline-flex items-center w-36 mr-3 ml-10 px-5 py-2  text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
                 >
-                  <UserIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-                  <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">My profile</p>
+                  <UserIcon
+                    className="mr-2 h-5 w-5 text-blue-400"
+                    aria-hidden="true"
+                  />
+                  <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">
+                    My profile
+                  </p>
                 </button>
                 <NavLink
                   to="/"
-                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
+                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
                 >
-                  <LightningBoltIcon className="mr-2 h-5 w-5" aria-hidden="true" /> Feed
+                  <LightningBoltIcon
+                    className="mr-2 h-5 w-5"
+                    aria-hidden="true"
+                  />{" "}
+                  Feed
                 </NavLink>
                 <NavLink
                   to="/home"
-                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
+                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
                 >
                   <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" /> Home
                 </NavLink>
                 <NavLink
                   to="/communities"
-                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
+                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
                 >
                   <UserGroupIcon className="mr-2 h-5 w-5" aria-hidden="true" />
                   Communities
@@ -218,7 +252,6 @@ export default function TopBar() {
           </main>
         </div>
       </div>
-
     </div>
   );
 }

@@ -1,15 +1,15 @@
 export default function Poaps({ poaps }) {
-
   if (poaps?.length === 0) {
-    return (<div className="w-full mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500">
-      POAPS
-      <p className="py-5 italic">This user doesn't have any poap</p>
-    </div>
+    return (
+      <div className="w-full mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500 shadow-md">
+        POAPS
+        <p className="py-5 italic">This user doesn't have any poap</p>
+      </div>
     );
   }
 
   return (
-    <div className="w-full mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500">
+    <div className="w-full mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500 shadow-md">
       POAPS
       <ul
         role="list"
@@ -22,7 +22,12 @@ export default function Poaps({ poaps }) {
               className="col-span-1 flex flex-col text-center bg-white rounded-lg"
             >
               <div className="flex-1 flex flex-col">
-                <a style={{ display: "table-cell" }} href={`https://poap.gallery/event/${poap.event.id}`} target="_blank" rel="noreferrer" >
+                <a
+                  style={{ display: "table-cell" }}
+                  href={`https://poap.gallery/event/${poap.event.id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img
                     className="w-12 h-12 flex-shrink-0 mx-auto rounded-full"
                     src={poap.event.image_url}

@@ -20,7 +20,7 @@ export default function EditProfile(props) {
     website: "",
     twitterUrl: "",
     picture: "",
-    coverPicture: ""
+    coverPicture: "",
   });
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function EditProfile(props) {
         website: profiles.items[0].website || "",
         twitterUrl: profiles.items[0].twitterUrl || "",
         picture: null,
-        coverPicture: null
+        coverPicture: null,
       });
     }
 
@@ -113,7 +113,7 @@ export default function EditProfile(props) {
 
   return (
     <div className="flex w-4/5 max-w-[60%] px-4 justify-center">
-      <div className="w-full h-full pl-5 pr-5 mt-10 mb-10 bg-white border-2 border-[#e1e8f7] rounded-md">
+      <div className="w-full h-full pl-5 pr-5 mt-10 mb-10 bg-white border-2 border-[#e1e8f7] rounded-md shadow-md">
         <form className="space-y-8 divide-y divide-gray-200">
           <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
             <div>
@@ -172,7 +172,6 @@ export default function EditProfile(props) {
                   </div>
                 </div>
 
-
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
                     htmlFor="picture"
@@ -180,15 +179,19 @@ export default function EditProfile(props) {
                   >
                     Picture
                   </label>
-                  {!isUploadingPhoto && <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <UploadImages picture={picture} setPicture={setPicture} />
-                  </div>}
-                  {isUploadingPhoto && <div className="flex flex-col">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black m-auto" />
-                    <p className="flex justify-center mt-4 text-sm text-black">
-                      Uploading picture to IPFS
-                    </p>
-                  </div>}
+                  {!isUploadingPhoto && (
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <UploadImages picture={picture} setPicture={setPicture} />
+                    </div>
+                  )}
+                  {isUploadingPhoto && (
+                    <div className="flex flex-col">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black m-auto" />
+                      <p className="flex justify-center mt-4 text-sm text-black">
+                        Uploading picture to IPFS
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -198,15 +201,22 @@ export default function EditProfile(props) {
                   >
                     Cover picture
                   </label>
-                  {!isUploadingCoverPhoto && <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <UploadImages picture={coverPicture} setPicture={setCoverPicture} />
-                  </div>}
-                  {isUploadingCoverPhoto && <div className="flex flex-col">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black m-auto" />
-                    <p className="flex justify-center mt-4 text-sm text-black">
-                      Uploading cover picture to IPFS
-                    </p>
-                  </div>}
+                  {!isUploadingCoverPhoto && (
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <UploadImages
+                        picture={coverPicture}
+                        setPicture={setCoverPicture}
+                      />
+                    </div>
+                  )}
+                  {isUploadingCoverPhoto && (
+                    <div className="flex flex-col">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black m-auto" />
+                      <p className="flex justify-center mt-4 text-sm text-black">
+                        Uploading cover picture to IPFS
+                      </p>
+                    </div>
+                  )}
                 </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
@@ -270,7 +280,7 @@ export default function EditProfile(props) {
           </div>
 
           <div className="pt-5">
-            <div className="flex justify-end">
+            <div className="flex justify-end mb-5">
               <button
                 type="button"
                 className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -282,7 +292,7 @@ export default function EditProfile(props) {
                     bio: "",
                     location: "",
                     website: "",
-                    twitterUrl: ""
+                    twitterUrl: "",
                   });
                   cancel();
                 }}

@@ -23,8 +23,7 @@ export default function CommunityPage() {
 
       if (result.length !== 0) {
         setCommunity(result[0].attributes);
-      }
-      else {
+      } else {
         const query2 = new Moralis.Query(Community);
         console.log(`${id}.eth`);
         query2.equalTo("space_id", `${id}.eth`);
@@ -116,9 +115,11 @@ export default function CommunityPage() {
                 </div>
               </div>
             </div>
-            <p className="flex mr-5 w-1/2 text-ellipsis max-h-[50px] overflow-hidden mt-[15px]">{community.description}</p>
+            <p className="flex mr-5 w-1/2 text-ellipsis max-h-[50px] overflow-hidden mt-[15px]">
+              {community.description}
+            </p>
           </div>
-          <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center">
+          <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center shadow-md">
             <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
               Communities
             </div>
@@ -132,7 +133,7 @@ export default function CommunityPage() {
 
           {community?.categories.map((category) => {
             return (
-              <div className="mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500">
+              <div className="mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500 shadow-sm">
                 {category}
               </div>
             );
@@ -145,14 +146,18 @@ export default function CommunityPage() {
       <div className="flex items-center justify-center w-full h-[80vh]">
         <div className="w-4/5 ounded-md p-6 text-center mr-10 mb-10 text-xl text-white font-black">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black m-auto" />
-          <p className="flex justify-center mt-5 text-lg text-black">Loading...</p>
+          <p className="flex justify-center mt-5 text-lg text-black">
+            Loading...
+          </p>
         </div>
-      </div >
+      </div>
     );
   }
 }
 
-{/* <div className="flex flex-col mt-20">
+{
+  /* <div className="flex flex-col mt-20">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white m-auto" />
           <p className="flex justify-center mt-5 text-lg text-white">Loading your profiles</p>
-        </div> */}
+        </div> */
+}

@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client/core';
 import { apolloClient } from '@/helpers/apollo-client';
+import { utils } from 'ethers';
 import { login } from '@/lens/login-users';
 import { signedTypeData, splitSignature } from '@/helpers/ethers-service.js';
 import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed';
@@ -123,15 +124,6 @@ const createComment = async (ipfsCid, _publicationId) => {
   console.log('create comment: created event logs', profileCreatedEventLog);
 
   const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0];
-
-  console.log(
-    'create comment: contract publication id',
-    BigNumber.from(publicationId).toHexString()
-  );
-  console.log(
-    'create comment: internal publication id',
-    profileId + '-' + BigNumber.from(publicationId).toHexString()
-  );
 
   return result.data;
 };

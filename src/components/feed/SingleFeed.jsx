@@ -54,18 +54,18 @@ const SingleFeed = ({ data }) => {
       </div> */}
 
       <div className="flex w-full justify-center">
-        <div className="p-4 my-1 border rounded border-slate-300 max-w-3xl w-full ">
+        <div className="p-4 my-1 border-t-1 border-b-2 border-slate-300 max-w-3xl w-full hover:bg-gray-50 hover:shadow-sm">
           <Link to={`/post/${postId}`}>
             <div className="flex space-x-3">
               <img
-                className="h-9 w-9 rounded-full"
+                className="h-9 w-9 rounded-full ring-2 ring-blue-100"
                 src={userProPic}
                 alt="profile picture"
               />
               <div className="flex-1 space-y-1 flex flex-col">
                 <div className="flex items-center justify-between">
                   <div className="">
-                    <h3 className="text-sm font-medium">{userProName}</h3>
+                    <h3 className="text-sm font-bold">{userProName}</h3>
                     <p className="text-gray-500 text-sm">{userProDesc}</p>
                   </div>
                   <p className="text-sm text-gray-500">
@@ -86,7 +86,21 @@ const SingleFeed = ({ data }) => {
               </div>
             </div>
           </Link>
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              type="button"
+              className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={() => mirrorFunc(postId)}
+            >
+              Comment
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={() => mirrorFunc(postId)}
+            >
+              Collect
+            </button>
             {mirrored ? (
               <div className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Mirrored
