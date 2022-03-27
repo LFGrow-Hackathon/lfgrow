@@ -2,7 +2,7 @@ import { UserIcon, BookmarkIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { space } from "tailwindcss/defaultTheme";
-import daoLogo from '@/assets/dao_logo.png'
+import daoLogo from "@/assets/dao_logo.png";
 
 export default function Daos({ DAO }) {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function Daos({ DAO }) {
   };
 
   function addDefaultLogo(ev) {
-    ev.target.src = daoLogo
+    ev.target.src = daoLogo;
   }
 
   const organizeDAOs = () => {
@@ -38,7 +38,7 @@ export default function Daos({ DAO }) {
       }
 
       SetDAODisplay(DAOList);
-      console.log(DAOList)
+      console.log(DAOList);
     }
   };
 
@@ -52,7 +52,7 @@ export default function Daos({ DAO }) {
         DAODisplay.map((DAO, index) => (
           <div
             key={index}
-            className="relative rounded-lg border border-gray-300 bg-white px-2 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+            className="relative rounded-lg border bg-slate-50 px-2 py-5 shadow-sm flex items-center space-x-3 hover:shadow-md focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
           >
             <div className="flex-shrink-0">
               <img
@@ -73,7 +73,7 @@ export default function Daos({ DAO }) {
                 <p className="text-sm font-medium text-gray-900">
                   {DAO.space.name}
                 </p>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-200 text-gray-800">
                   {DAO?.votes} votes
                 </span>
               </button>
