@@ -6,7 +6,8 @@ import {
   signedTypeData,
   splitSignature,
 } from '@/helpers/ethers-service';
-import { relayTransaction } from "@/api_call/relayTransactions"
+import { setDispatcher } from "@/api_call/relayTransactions"
+import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed.js'
 
 const profileId = localStorage.getItem('profileId');
 
@@ -93,27 +94,30 @@ export const setDispatcher = async () => {
 
   const { v, r, s } = splitSignature(signature);
 
-  const res = await relayTransaction({
-    profileId: typedData.value.profileId,
-    dispatcher: typedData.value.dispatcher,
-    sig: {
-      v,
-      r,
-      s,
-      deadline: typedData.value.deadline,
-    },
-  });
-  console.log("res ", res)
-
-  // const tx = await lensHub.setDispatcherWithSig({
-  //   profileId: typedData.value.profileId,
-  //   dispatcher: typedData.value.dispatcher,
-  //   sig: {
-  //     v,
-  //     r,
-  //     s,
-  //     deadline: typedData.value.deadline,
-  //   },
-  // });
-  // console.log('set dispatcher: tx hash', tx.hash);
+  try {
+    const res = await setDispatcher({
+      profileId: typedData.value.profileId,
+      dispatcher: typedData.value.dispatcher,
+      sig: {
+        v,
+        r,
+        s,
+        deadline: typedData.value.deadline,
+      },
+    });
+    console.log("res ", res)
+  } catch (error) {
+    // if dispatcher fail, go back to classic
+    const tx = await lensHub.setDispatcherWithSig({
+      profileId: typedData.value.profileId,
+      dispatcher: typedData.value.dispatcher,
+      sig: {
+        v,
+        r,
+        s,
+        deadline: typedData.value.deadline,
+      },
+    });
+    return tx;
+  }
 };

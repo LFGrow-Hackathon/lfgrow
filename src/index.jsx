@@ -12,7 +12,6 @@ const APP_ID = import.meta.env.VITE_APP_MORALIS_APPLICATION_ID;
 const SERVER_URL = import.meta.env.VITE_APP_MORALIS_SERVER_URL;
 
 const Application = () => {
-  console.log(APP_ID)
   if (!APP_ID || !SERVER_URL) {
     throw new Error(
       "Missing Moralis Application ID or Server URL. Make sure to set your .env file."

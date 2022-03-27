@@ -7,6 +7,7 @@ import {
   splitSignature,
 } from '@/helpers/ethers-service';
 import { lensHub } from '@/lens/utils/lens-hub';
+import { updateProfilPicture } from "@/api_call/relayTransactions"
 
 const CREATE_SET_PROFILE_IMAGE_URI_TYPED_DATA = `
   mutation($request: UpdateProfileImageRequest!) { 
@@ -58,30 +59,33 @@ export const setProfileImageUriNormal = async ({ profileId, url }) => {
     url,
   };
 
-  const result = await createSetProfileImageUriTypedData(
-    setProfileImageUriRequest
-  );
+  const res = await updateProfilPicture({ function: "setProfileImageURI", profileId, url });
+  console.log(res)
 
-  const typedData = result.data.createSetProfileImageURITypedData.typedData;
+  // const result = await createSetProfileImageUriTypedData(
+  //   setProfileImageUriRequest
+  // );
 
-  const signature = await signedTypeData(
-    typedData.domain,
-    typedData.types,
-    typedData.value
-  );
+  // const typedData = result.data.createSetProfileImageURITypedData.typedData;
 
-  const { v, r, s } = splitSignature(signature);
+  // const signature = await signedTypeData(
+  //   typedData.domain,
+  //   typedData.types,
+  //   typedData.value
+  // );
 
-  const tx = await lensHub.setProfileImageURIWithSig({
-    profileId: typedData.value.profileId,
-    imageURI: typedData.value.imageURI,
-    sig: {
-      v,
-      r,
-      s,
-      deadline: typedData.value.deadline,
-    },
-  });
+  // const { v, r, s } = splitSignature(signature);
+
+  // const tx = await lensHub.setProfileImageURIWithSig({
+  //   profileId: typedData.value.profileId,
+  //   imageURI: typedData.value.imageURI,
+  //   sig: {
+  //     v,
+  //     r,
+  //     s,
+  //     deadline: typedData.value.deadline,
+  //   },
+  // });
 };
 
 export default createSetProfileImageUriTypedData;
