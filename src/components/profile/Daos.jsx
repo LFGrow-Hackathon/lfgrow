@@ -38,7 +38,6 @@ export default function Daos({ DAO }) {
       }
 
       SetDAODisplay(DAOList);
-      console.log(DAOList);
     }
   };
 

@@ -15,6 +15,7 @@ import Account from "./connect/Account";
 import Search from "./search/Search";
 import getProfiles from "@/lens/get-profiles";
 import { useNavigate } from "react-router-dom";
+import { getNotifications } from "@/lens/notifications.js";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -235,6 +236,10 @@ export default function TopBar() {
               <div className="ml-4 flex items-center md:ml-6">
                 <button
                   type="button"
+                  // onClick={async () => {
+                  //   const result = await getNotifications("0x018e");
+                  //   console.log("NOTIF", result);
+                  // }}
                   className="bg-white p-1 mr-2 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <span className="sr-only">View notifications</span>

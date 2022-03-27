@@ -12,7 +12,6 @@ export default function CommunityPage() {
 
   let { id } = useParams();
   const { Moralis, isInitialized } = useMoralis();
-  console.log(id);
 
   useEffect(() => {
     async function getInfoDB() {
@@ -25,10 +24,8 @@ export default function CommunityPage() {
         setCommunity(result[0].attributes);
       } else {
         const query2 = new Moralis.Query(Community);
-        console.log(`${id}.eth`);
         query2.equalTo("space_id", `${id}.eth`);
         const result2 = await query2.find();
-        console.log("RESU", result2);
         if (result2.length !== 0) {
           setCommunity(result2[0].attributes);
         } else {

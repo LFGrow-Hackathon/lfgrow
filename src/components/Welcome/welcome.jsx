@@ -13,7 +13,6 @@ export default function Welcome() {
     async function getProfile() {
       if (account) {
         const { profiles } = await getProfiles({ ownedBy: [account] });
-        console.log("porrr", profiles);
         setProfilesLens(profiles.items);
       }
     };

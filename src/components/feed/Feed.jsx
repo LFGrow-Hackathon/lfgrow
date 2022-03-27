@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SingleFeed from "./SingleFeed";
 import CreatePublication from "../publications/CreatePublication";
+import iconUser from "@/assets/iconUser.png";
+import defaultUserIcon from "@/assets/defaultUserIcon.svg";
 
 const Feed = ({ size }) => {
   const [posts, setPosts] = useState([]);
@@ -30,12 +32,12 @@ const Feed = ({ size }) => {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
           : filterdPost?.profile?.handle?.length
-          ? filterdPost?.profile?.handle
-          : filterdPost?.profile?.id,
+            ? filterdPost?.profile?.handle
+            : filterdPost?.profile?.id,
         handle: filterdPost?.profile?.handle,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
-          : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg",
+          : defaultUserIcon,
         description: filterdPost?.profile?.bio ? filterdPost?.profile?.bio : "",
       },
       postId: filterdPost?.id,

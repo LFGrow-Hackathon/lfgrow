@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client/core';
-import { apolloClient } from '../helpers/apollo-client';
+import { gql } from "@apollo/client/core";
+import { apolloClient } from "../helpers/apollo-client";
 
 
 const HAS_MIRRORED = `
@@ -24,7 +24,7 @@ const hasMirroredRequest = (
         profilesRequest,
       },
     },
-    fetchPolicy: 'network-only',
+    fetchPolicy: "network-only",
   });
 };
 
@@ -35,6 +35,6 @@ export const hasMirrored = async (_profileId, _publicationIds) => {
       publicationIds: _publicationIds,
     },
   ]);
-  const mirrored = result.data.hasMirrored[0].results[0].mirrored
+  const mirrored = result.data.hasMirrored[0].results[0].mirrored;
   return mirrored;
 };
