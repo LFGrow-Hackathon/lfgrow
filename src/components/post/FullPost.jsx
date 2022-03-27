@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { createMirror } from "@/lens/mirror.js";
 import { hasMirrored } from "@/lens/check-mirror.js";
 import PostStatus from "./PostStatus";
+import { NavLink } from "react-router-dom";
 
 const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
   // console.log("postData: ", postData);
@@ -12,6 +13,7 @@ const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
     ? postData.profile.name
     : postData.profile.id;
   const userProDesc = postData.profile.bio;
+  const handle = postData.profile.handle;
 
   const ActiveProfileId = window.localStorage.getItem("profileId");
   // const [loading, setLoading] = useState(false);
@@ -40,11 +42,13 @@ const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
         <div className="flex justify-between">
           <div className="flex self-start space-x-1 space-y-3">
             <div className="my-2 mx-2">
-              <img
-                className="h-12 w-12 rounded-full"
-                src={userProPic}
-                alt="Profile Picture"
-              />
+              <NavLink to={"/profile/" + handle}>
+                <img
+                  className="h-12 w-12 rounded-full"
+                  src={userProPic}
+                  alt="Profile Picture"
+                />
+              </NavLink>
             </div>
             <div className="flex-1">
               <div className="text-xl font-bold text-gray-800">
@@ -79,6 +83,7 @@ const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
           postData={postData.stats}
           id={postData.id}
           fnc={{ mirrored, mirrorFunc }}
+          from="fullpost"
         />
       </div>
     </>

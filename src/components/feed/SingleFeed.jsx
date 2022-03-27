@@ -13,6 +13,7 @@ const SingleFeed = ({ data }) => {
   const pubTime = data.postTimeStamp;
   const pubImge = data.postMedia;
   const postId = data.postId;
+  const handle = data.profile.handle;
   const profileId = window.localStorage.getItem("profileId");
   const [mirrored, setMirrored] = useState("");
   const [loading, setLoading] = useState(false);
@@ -87,7 +88,11 @@ const SingleFeed = ({ data }) => {
               </div>
             </div>
           </Link>
-          <PostStatus postData={stats} fnc={{ mirrored, mirrorFunc }} />
+          <PostStatus
+            postData={stats}
+            fnc={{ mirrored, mirrorFunc }}
+            postId={postId}
+          />
         </div>
       </div>
     </>

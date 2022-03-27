@@ -56,6 +56,7 @@ fragment UserProfile on Profile {
   id
   name
   bio
+  handle
   picture {
     ... on NftImage {
       uri

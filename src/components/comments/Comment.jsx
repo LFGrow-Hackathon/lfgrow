@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const Comment = ({ data }) => {
   const { profile, metadata, createdAt, id } = data;
 
@@ -9,12 +11,15 @@ const Comment = ({ data }) => {
     : profile?.handle?.length
     ? profile?.handle
     : profile?.id;
+  const handle = profile.handle;
   // const userProDesc = profile.bio?.length ? profile.bio : "";
 
   return (
     <li className="py-4 border-b-2 border-gray-100">
       <div className="flex space-x-3">
-        <img className="h-6 w-6 rounded-full" src={userProPic} alt="" />
+        <NavLink to={"/profile/" + handle}>
+          <img className="h-6 w-6 rounded-full" src={userProPic} alt="" />
+        </NavLink>
         <div className="flex-1 space-y-1">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold">{userProName}</h3>
