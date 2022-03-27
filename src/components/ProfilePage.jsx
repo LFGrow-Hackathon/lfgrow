@@ -6,7 +6,7 @@ import Daos from "@/components/profile/Daos";
 import DisplayNFT from "@/components/profile/DisplayNFT";
 import getProfiles from "@/lens/get-profiles.js";
 import { useEffect, useState } from "react";
-import { NavLink, useParams, useNavigate } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import getAllPoap from "@/api_call/getAllPoap";
 import getVote from "@/api_call/getVote";
 import MyFeed from "./feed/MyFeed";
@@ -18,7 +18,6 @@ import {
 
 export default function ProfilePage() {
   const idURL = useParams();
-  const navigate = useNavigate();
   const [profile, setProfile] = useState();
   const [address, setAddress] = useState();
   const [pageDoesntExist, setPageDoesntExist] = useState(false);
@@ -29,7 +28,7 @@ export default function ProfilePage() {
   const { isInitialized, isAuthenticated } = useMoralis();
   const profileId = window.localStorage.getItem("profileId");
 
-  const { data: Transactions, error } = useNativeTransactions({
+  const { data: Transactions } = useNativeTransactions({
     address: address,
   });
 
@@ -67,7 +66,7 @@ export default function ProfilePage() {
     }
 
     fetchProfileInfo();
-  }, []);
+  }, [idURL.handle]);
 
   useEffect(() => {
     async function fetchPoap() {
@@ -114,9 +113,14 @@ export default function ProfilePage() {
   getAccoutAge();
 
   if (pageDoesntExist) {
-    return <p>This profile doesn't exist</p>;
+    return <p>This profile doesn&apos;t exist</p>;
   }
 
+  const profileName = profile?.name
+    ? profile.name
+    : profile?.handle
+    ? profile.handle
+    : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
   return (
     <div className="flex">
       <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
@@ -217,15 +221,15 @@ export default function ProfilePage() {
             </span> */}
           </div>
           <Daos DAO={vote} />
-          <div className="mt-5 p-3 rounded-3xl border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
-            Posts{" "}
+          <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
+            Posts
             <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               {profile?.stats.totalPosts}
             </span>
           </div>
           <CreatePublication />
 
-          <MyFeed />
+          <MyFeed profileId={profile?.id} />
         </div>
       </div>
       <div className="w-2/5 mr-5">

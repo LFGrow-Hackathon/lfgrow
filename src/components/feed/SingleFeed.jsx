@@ -2,8 +2,10 @@ import { createMirror } from "@/lens/mirror.js";
 import { hasMirrored } from "@/lens/check-mirror.js";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PostStatus from "../post/PostStatus";
 
 const SingleFeed = ({ data }) => {
+  const stats = data.postStats;
   const userProPic = data.profile.picture;
   const userProName = data.profile.name;
   const userProDesc = data.profile.description;
@@ -18,22 +20,21 @@ const SingleFeed = ({ data }) => {
   // const testContent = ;
 
   const mirrorFunc = async (_postId) => {
+    setLoading(true);
     await createMirror(profileId, _postId);
+    setLoading(false);
   };
 
   const checkMirror = async (_profileId, _postId) => {
-    setLoading(true);
     const res = await hasMirrored(_profileId, [_postId]);
     setMirrored(res);
-    setLoading(false);
   };
 
   useEffect(() => {
     if (profileId) {
-      console.log("check mirror");
       checkMirror(profileId, postId); // only checks after a user logged in
     }
-  }, []);
+  }, [loading]);
 
   return (
     <>
@@ -56,7 +57,7 @@ const SingleFeed = ({ data }) => {
       <div className="flex w-full justify-center">
         <div className="p-4 my-1 border-t-1 border-b-2 border-slate-300 max-w-3xl w-full hover:bg-gray-50 hover:shadow-sm">
           <Link to={`/post/${postId}`}>
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 py-10 pt-2">
               <img
                 className="h-9 w-9 rounded-full ring-2 ring-blue-100"
                 src={userProPic}
@@ -115,6 +116,7 @@ const SingleFeed = ({ data }) => {
               </button>
             )}
           </div>
+          <PostStatus postData={stats} fnc={{ mirrored, mirrorFunc }} />
         </div>
       </div>
     </>
