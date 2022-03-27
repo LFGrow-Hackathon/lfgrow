@@ -23,7 +23,7 @@ const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
               />
             </div>
             <div className="flex-1">
-              <div className="text-xl font-medium text-gray-800">
+              <div className="text-xl font-bold text-gray-800">
                 {userProName}
               </div>
               <div className="text-gray-500 text-sm">{userProDesc}</div>
