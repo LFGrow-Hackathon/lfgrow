@@ -32,6 +32,7 @@ const Feed = ({ size }) => {
           : filterdPost?.profile?.handle?.length
           ? filterdPost?.profile?.handle
           : filterdPost?.profile?.id,
+        handle: filterdPost?.profile?.handle,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
           : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg",

@@ -127,7 +127,7 @@ export default function ProfilePage() {
         <div className="">
           <div className="w-full flex justify-between">
             <div className="flex px-2 p-2">
-              <div className="mr-4 w-36">
+              <div className="mr-4 w-20">
                 <img
                   className="inline-block h-20 w-20 rounded-full ring-2 ring-blue-100"
                   src={
@@ -194,7 +194,7 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="flex w-full justify-between">
-            <div className="flex justify-start w-3/4">
+            <div className="flex justify-start w-3/4 pl-2">
               <p>{profile?.bio}</p>
             </div>
             {isPageOwner ? (
@@ -227,7 +227,7 @@ export default function ProfilePage() {
             </span> */}
           </div>
           <Daos DAO={vote} />
-          <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
+          <div className="mt-5 p-3 rounded-3xl border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Posts
             <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               {profile?.stats.totalPosts}

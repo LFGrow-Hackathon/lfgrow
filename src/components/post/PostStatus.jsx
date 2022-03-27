@@ -1,5 +1,9 @@
-const PostStatus = ({ postData, id, fnc }) => {
+import { NavLink } from "react-router-dom";
+import FullPost from "./FullPost";
+
+const PostStatus = ({ postData, id, fnc, from, postId }) => {
   const { mirrored, mirrorFunc } = fnc;
+
   return (
     <>
       <div className="w-full flex px-2 justify-between ">
@@ -33,17 +37,19 @@ const PostStatus = ({ postData, id, fnc }) => {
           </div>
         </span>
         <div className="flex justify-end gap-2 mt-2">
+          {from !== "fullpost" && (
+            <NavLink to={"/post/" + postId}>
+              <button
+                type="button"
+                className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+              >
+                Comment
+              </button>
+            </NavLink>
+          )}
           <button
             type="button"
             className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
-            onClick={() => mirrorFunc(postId)}
-          >
-            Comment
-          </button>
-          <button
-            type="button"
-            className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
-            onClick={() => mirrorFunc(postId)}
           >
             Collect
           </button>
