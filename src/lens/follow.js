@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client/core';
-import { apolloClient } from '../helpers/apollo-client';
-import { signedTypeData, splitSignature, getAddress } from '@/helpers/ethers-service';
-import { lensHub } from '@/lens/utils/lens-hub';
-import { login } from '@/lens/login-users'
+import { gql } from "@apollo/client/core";
+import { apolloClient } from "../helpers/apollo-client";
+import { signedTypeData, splitSignature, getAddress } from "@/helpers/ethers-service";
+import { lensHub } from "@/lens/utils/lens-hub";
+import { login } from "@/lens/login-users";
 
 const CREATE_FOLLOW_TYPED_DATA = `
   mutation($request: FollowRequest!) { 
@@ -45,18 +45,16 @@ const createFollowTypedData = (followRequestInfo) => {
   });
 };
 
-export const follow = async (profileId = '0x12') => {
+export const follow = async (profileId) => {
 
-  await login()
+  await login();
 
   if (!profileId) {
-    throw new Error('profileId is undefined');
+    throw new Error("profileId is undefined");
   }
   const address = getAddress();
-  console.log('follow: address', address);
-  console.log(profileId)
+  console.log("follow: address", address);
 
-  // hard coded to make the code example clear
   const followRequest = [
     {
       profile: profileId,
@@ -64,13 +62,13 @@ export const follow = async (profileId = '0x12') => {
   ];
 
   const result = await createFollowTypedData(followRequest);
-  console.log('follow: result', result);
+  console.log("follow: result", result);
 
   const typedData = result.data.createFollowTypedData.typedData;
-  console.log('follow: typedData', typedData);
+  console.log("follow: typedData", typedData);
 
   const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
-  console.log('follow: signature', signature);
+  console.log("follow: signature", signature);
 
   const { v, r, s } = splitSignature(signature);
 
@@ -85,6 +83,6 @@ export const follow = async (profileId = '0x12') => {
       deadline: typedData.value.deadline,
     },
   });
-  console.log('follow: tx hash', tx.hash);
+  console.log("follow: tx hash", tx.hash);
   return tx.hash;
 };
