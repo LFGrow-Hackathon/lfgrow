@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --output public",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
