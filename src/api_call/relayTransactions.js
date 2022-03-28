@@ -6,7 +6,7 @@ const mainAxios = axios.create({
 
 // Example of a Post request. When you send a data object you will receive a
 // body object in Express
-async function setDispatcher(body) {
+async function relaySetDispatcher(body) {
   try {
     const response = await mainAxios({
       method: "post",
@@ -21,7 +21,18 @@ async function setDispatcher(body) {
   }
 }
 
-async function updateProfilPicture(body) {
+async function relayTransactions(params) {
+  try {
+    const response = await mainAxios(params);
+
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message.data);
+  }
+}
+
+async function relayUpdateProfilePicture(body) {
   try {
     const response = await mainAxios({
       method: "post",
@@ -35,4 +46,4 @@ async function updateProfilPicture(body) {
     return { data: null, error: error };
   }
 }
-export { setDispatcher, updateProfilPicture };
+export { relaySetDispatcher, relayUpdateProfilePicture, relayTransactions };

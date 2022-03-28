@@ -6,10 +6,8 @@ import {
   signedTypeData,
   splitSignature,
 } from '@/helpers/ethers-service';
-import { setDispatcher } from "@/api_call/relayTransactions"
+import { relaySetDispatcher } from "@/api_call/relayTransactions"
 import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed.js'
-
-const profileId = localStorage.getItem('profileId');
 
 const CREATE_SET_DISPATCHER_TYPED_DATA = `
   mutation($request: SetDispatcherRequest!) { 
@@ -65,8 +63,17 @@ const disableDispatcherWithTypedData = (profileId) => {
 };
 
 export const setDispatcher = async () => {
+  const profileId = localStorage.getItem('profileId');
+  const deadline = window.localStorage.getItem("deadlineDispatcher");
+
   if (!profileId) {
     throw new Error('Must define PROFILE_ID');
+  }
+
+  const currentTime = Math.floor(Date.now() / 1000);
+  if (deadline && (deadline > currentTime)) {
+    console.log("dispatcher is still valid")
+    return true;
   }
 
   await login();
@@ -80,44 +87,36 @@ export const setDispatcher = async () => {
     setDispatcherRequest.profileId,
     setDispatcherRequest.dispatcher
   );
-  console.log('set dispatcher: enableDispatcherWithTypedData', result);
 
   const typedData = result.data.createSetDispatcherTypedData.typedData;
-  console.log('set dispatcher: typedData', typedData);
 
   const signature = await signedTypeData(
     typedData.domain,
     typedData.types,
     typedData.value
   );
-  console.log('set dispatcher: signature', signature);
 
   const { v, r, s } = splitSignature(signature);
 
+  const request = {
+    profileId: typedData.value.profileId,
+    dispatcher: typedData.value.dispatcher,
+    sig: {
+      v,
+      r,
+      s,
+      deadline: typedData.value.deadline,
+    },
+  }
+
   try {
-    const res = await setDispatcher({
-      profileId: typedData.value.profileId,
-      dispatcher: typedData.value.dispatcher,
-      sig: {
-        v,
-        r,
-        s,
-        deadline: typedData.value.deadline,
-      },
-    });
-    console.log("res ", res)
+    const res = await relaySetDispatcher(request);
+
+    console.log("res relay set dispathc", res)
+    window.localStorage.setItem("deadlineDispatcher", typedData.value.deadline);
   } catch (error) {
     // if dispatcher fail, go back to classic
-    const tx = await lensHub.setDispatcherWithSig({
-      profileId: typedData.value.profileId,
-      dispatcher: typedData.value.dispatcher,
-      sig: {
-        v,
-        r,
-        s,
-        deadline: typedData.value.deadline,
-      },
-    });
-    return tx;
+    const tx = await lensHub.setDispatcherWithSig(request);
+    window.localStorage.setItem("deadlineDispatcher", typedData.value.deadline);
   }
 };

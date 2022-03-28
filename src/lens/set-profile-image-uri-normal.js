@@ -1,13 +1,13 @@
 
 import { gql } from '@apollo/client/core';
 import { apolloClient } from '@/helpers/apollo-client';
-import { login } from '@/lens/login-users';
 import {
   signedTypeData,
   splitSignature,
 } from '@/helpers/ethers-service';
 import { lensHub } from '@/lens/utils/lens-hub';
-import { updateProfilPicture } from "@/api_call/relayTransactions"
+import { setDispatcher } from '@/lens/set-dispatcher';
+import { relayUpdateProfilePicture } from "@/api_call/relayTransactions"
 
 const CREATE_SET_PROFILE_IMAGE_URI_TYPED_DATA = `
   mutation($request: UpdateProfileImageRequest!) { 
@@ -52,40 +52,45 @@ export const setProfileImageUriNormal = async ({ profileId, url }) => {
     throw new Error('Must define PROFILE_ID');
   }
 
-  await login();
+  await setDispatcher();
 
   const setProfileImageUriRequest = {
     profileId,
     url,
   };
 
-  const res = await updateProfilPicture({ function: "setProfileImageURI", profileId, url });
-  console.log(res)
+  try {
 
-  // const result = await createSetProfileImageUriTypedData(
-  //   setProfileImageUriRequest
-  // );
+    console.log("relaying tx update profile picture")
+    const res = await relayUpdateProfilePicture({ function: "setProfileImageURI", profileId, url });
+    console.log(res)
+  } catch (error) {
+    console.error(errorl)
+    const result = await createSetProfileImageUriTypedData(
+      setProfileImageUriRequest
+    );
 
-  // const typedData = result.data.createSetProfileImageURITypedData.typedData;
+    const typedData = result.data.createSetProfileImageURITypedData.typedData;
 
-  // const signature = await signedTypeData(
-  //   typedData.domain,
-  //   typedData.types,
-  //   typedData.value
-  // );
+    const signature = await signedTypeData(
+      typedData.domain,
+      typedData.types,
+      typedData.value
+    );
 
-  // const { v, r, s } = splitSignature(signature);
+    const { v, r, s } = splitSignature(signature);
 
-  // const tx = await lensHub.setProfileImageURIWithSig({
-  //   profileId: typedData.value.profileId,
-  //   imageURI: typedData.value.imageURI,
-  //   sig: {
-  //     v,
-  //     r,
-  //     s,
-  //     deadline: typedData.value.deadline,
-  //   },
-  // });
+    const tx = await lensHub.setProfileImageURIWithSig({
+      profileId: typedData.value.profileId,
+      imageURI: typedData.value.imageURI,
+      sig: {
+        v,
+        r,
+        s,
+        deadline: typedData.value.deadline,
+      },
+    });
+  }
 };
 
 export default createSetProfileImageUriTypedData;
