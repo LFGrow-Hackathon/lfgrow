@@ -79,7 +79,7 @@ export const ViewPost = () => {
         console.log("queryResponse: ", queryResponse);
         if (isMounted.current) {
           setQueryRes(queryResponse);
-          setMirrorsCount(queryResponse.post.stats.totalAmountOfMirrors);
+          setMirrorsCount(queryResponse.post.stats?.totalAmountOfMirrors);
         }
       } catch (gQLErrorRes) {
         if (isMounted.current) {

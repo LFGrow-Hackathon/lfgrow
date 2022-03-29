@@ -1,11 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SingleFeed from "./SingleFeed.jsx";
-("react");
 import { getMyPosts } from "lens/get-my-publications.js";
 
 const MyFeed = ({ profileId }) => {
-  console.log("profileId: ", profileId);
   const [posts, setPosts] = useState([]);
   const [zeroPost, setZeroPost] = useState();
   const [pageInfo, setPageInfo] = useState({});
@@ -18,13 +16,11 @@ const MyFeed = ({ profileId }) => {
 
   useEffect(() => {
     isMounted.current = true;
-    console.log("useEffect Myfeed");
     setPosts([]);
     if (profileId) {
       query();
     }
     return () => {
-      console.log("unmount useEffect MyFeed");
       isMounted.current = false;
     };
   }, [profileId]);

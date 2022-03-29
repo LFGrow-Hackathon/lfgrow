@@ -5,7 +5,7 @@ import HomePage from "components/HomePage.jsx";
 import Welcome from "components/welcome/Welcome.jsx";
 import TopBar from "components/navbar/TopBar.jsx";
 import Feed from "components/feed/Feed.jsx";
-import ProfilePage from "components/ProfilePage.jsx";
+import ProfilePage from "components/profile/ProfilePage.jsx";
 import EditProfile from "components/profile/EditProfile.jsx";
 import DiscoverCommunities from "./components/communities/DiscoverCommunities.jsx";
 import CommunityPage from "./components/communities/CommunityPage.jsx";
@@ -17,7 +17,6 @@ function App() {
     enableWeb3,
     isAuthenticated,
     isWeb3EnableLoading,
-    // account,
   } = useMoralis();
 
   /* ------------------------------- 
@@ -35,6 +34,7 @@ function App() {
     }
   }, [isAuthenticated, isWeb3Enabled]);
 
+  // to delete
   // asks the user for permission to change network to polygon mumbain testnet if other network is detected
   useEffect(() => {
     if (window.ethereum) {

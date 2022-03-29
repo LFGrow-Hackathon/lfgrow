@@ -4,7 +4,6 @@ import omitDeep from "omit-deep";
 // This code will assume you are using MetaMask.
 // It will also assume that you have already done all the connecting to metamask
 // this is purely here to show you how the public API hooks together
-console.log("i am here");
 let ethersProvider;
 try {
   if (window.ethereum) {

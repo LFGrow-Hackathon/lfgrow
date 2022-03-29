@@ -9,10 +9,10 @@ import { useEffect, useState, useRef } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import getAllPoap from "api_call/getAllPoap.js";
 import getVote from "api_call/getVote.js";
-import MyFeed from "./feed/MyFeed.jsx";
+import MyFeed from "../feed/MyFeed.jsx";
 import doesFollowFunc from "lens/does-follow.js";
-import FollowBtn from "./buttons/FollowBtn.jsx";
-import UnfollowBtn from "./buttons/UnfollowBtn.jsx";
+import FollowBtn from "../buttons/FollowBtn.jsx";
+import UnfollowBtn from "../buttons/UnfollowBtn.jsx";
 import defaultUserIcon from "assets/defaultUserIcon.png";
 import {
   useMoralis,
@@ -30,9 +30,9 @@ export default function ProfilePage() {
   const [vote, setVote] = useState();
   const [NFT, setNFT] = useState();
   const [loading, setLoading] = useState(false);
-  const hasClickFollow = useRef(false);
   const [doesFollow, setDoesFollow] = useState(false);
   const { isInitialized, isAuthenticated } = useMoralis();
+  const hasClickFollow = useRef(false);
   const profileId = window.localStorage.getItem("profileId");
 
   const { data: Transactions } = useNativeTransactions({
@@ -44,7 +44,7 @@ export default function ProfilePage() {
   const fetchNFTs = async () => {
     const options = {
       chain: "eth",
-      address: address,
+      address,
     };
     const NFTs = await Web3Api.account.getNFTs(options);
     setNFT(NFTs);
@@ -52,16 +52,17 @@ export default function ProfilePage() {
 
   useEffect(() => {
     async function fetchProfileInfo() {
+      const { handle } = idURL;
       //Check if it's an address
-      if (idURL.handle.startsWith("0x") && idURL.handle.length === 42) {
-        setAddress(idURL.handle);
-        const { profiles } = await getProfiles({ ownedBy: [idURL.handle] });
+      if (handle.startsWith("0x") && handle.length === 42) {
+        setAddress(handle);
+        const { profiles } = await getProfiles({ ownedBy: [handle] });
         setProfile(profiles.items[0]);
       }
       //Handle must be less than 32 characters
-      else if (idURL.handle.length < 32) {
-        const { profiles } = await getProfiles({ handles: [idURL.handle] });
-        if (profiles.items.length !== 0) {
+      else if (handle.length < 32) {
+        const { profiles } = await getProfiles({ handles: [handle] });
+        if (profiles.items.length > 0) {
           setProfile(profiles.items[0]);
           setAddress(profiles.items[0].ownedBy);
         } else {
@@ -73,7 +74,7 @@ export default function ProfilePage() {
     }
 
     fetchProfileInfo();
-  }, [idURL.handle]);
+  }, [idURL]);
 
   useEffect(() => {
     async function fetchData() {
