@@ -4,15 +4,27 @@ import omitDeep from "omit-deep";
 // This code will assume you are using MetaMask.
 // It will also assume that you have already done all the connecting to metamask
 // this is purely here to show you how the public API hooks together
-export const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+console.log("i am here");
+let ethersProvider;
+try {
+  if (window.ethereum) {
+    ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+  }
+} catch (myErr) {
+  console.log("expected err log");
+  console.log("myErr: ", myErr);
+}
 
-export const getAddress = async() => {
-  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+export const getAddress = async () => {
+  if (!window.ethereum) return;
+  const accounts = await window.ethereum?.request({
+    method: "eth_requestAccounts",
+  });
   return accounts[0];
 };
 
 export const getSigner = () => {
-  return ethersProvider.getSigner();
+  return ethersProvider?.getSigner();
 };
 
 export const getAddressFromSigner = () => {
@@ -39,6 +51,6 @@ export const splitSignature = (signature) => {
 };
 
 export const sendTx = (transaction) => {
-  const signer = ethersProvider.getSigner();
+  const signer = ethersProvider?.getSigner();
   return signer.sendTransaction(transaction);
 };

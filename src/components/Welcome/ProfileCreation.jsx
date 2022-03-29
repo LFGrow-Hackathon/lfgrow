@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import createProfile from "@/lens/create-profile";
+import createProfile from "lens/create-profile.js";
 import { useState } from "react";
 
 export default function ProfileCreation() {
@@ -7,7 +7,7 @@ export default function ProfileCreation() {
   const [handle, setHandle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   let navigate = useNavigate();
-  var forbiddenCharacter = /[!@#$%^&*()_+\-=\[\]{};':"\\|,`<>\/?]+/;
+  var forbiddenCharacter = /[!@#$%^&*()_+\-=[\]{};':"\\|,`<>/?]+/;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +39,7 @@ export default function ProfileCreation() {
   return (
     <div className="bg-white mt-16 max-w-md mx-auto px-10 shadow sm:rounded-3xl">
       <div className="flex flex-col px-4 items-center py-5 sm:pb-6 sm:pt-10">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">You don't have a Lens profile yet</h3>
+        <h3 className="text-lg leading-6 font-medium text-gray-900">{"You don't have a Lens profile yet"}</h3>
         <div className="mt-6 max-w-xl text-sm text-gray-500">
           <p>Choose your name to create it.</p>
         </div>

@@ -49,12 +49,11 @@ const createFollowTypedData = (followRequestInfo) => {
 export const follow = async (profileId) => {
   console.log("hello")
   if (!profileId) {
-    throw new Error('profileId is undefined');
+    throw new Error("profileId is undefined");
   }
 
   await setDispatcher();
 
-  // hard coded to make the code example clear
   const followRequest = [
     {
       profile: profileId,

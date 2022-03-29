@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { getCommentsByPost } from "@/lens/get-comments-of-post";
-import FullPost from "./FullPost";
-import CommentList from "@/components/comments/CommentList";
-import CommentPublication from "../comments/postComment";
-import { createMirror } from "@/lens/mirror.js";
-import { hasMirrored } from "@/lens/check-mirror.js";
+import { getCommentsByPost } from "lens/get-comments-of-post.js";
+import FullPost from "./FullPost.jsx";
+import CommentList from "components/comments/CommentList.jsx";
+import CommentPublication from "../comments/postComment.jsx";
+import { createMirror } from "lens/mirror.js";
+import { hasMirrored } from "lens/check-mirror.js";
 
 export const ViewPost = () => {
   const routeParam = useParams();
@@ -15,6 +15,7 @@ export const ViewPost = () => {
   const ActiveProfileId = window.localStorage.getItem("profileId");
   const [loading, setLoading] = useState(false);
   const [mirrored, setMirrored] = useState("");
+  const profileId = window.localStorage.getItem("profileId");
   const [mirrorsCount, setMirrorsCount] = useState("");
 
   const mirrorFunc = async (_postId) => {
@@ -29,7 +30,9 @@ export const ViewPost = () => {
   };
 
   useEffect(() => {
-    checkMirror(ActiveProfileId, routeParam.postId);
+    if (profileId) {
+      checkMirror(ActiveProfileId, routeParam.postId);
+    }
   }, [loading]);
 
   useEffect(() => {

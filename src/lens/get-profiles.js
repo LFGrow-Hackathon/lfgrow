@@ -105,7 +105,6 @@ const getProfilesRequest = (request) => {
 async function getProfiles(request) {
   const profiles = await getProfilesRequest(request);
 
-  // console.log('profiles: result', profiles.data);
 
   return profiles.data;
 };

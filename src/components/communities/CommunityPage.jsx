@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMoralis } from "react-moralis";
-import Twitter from "@/assets/twitter_logo.png";
-import Github from "@/assets/github_logo.png";
-import Website from "@/assets/website_logo.png";
-import Feed from "@/components/feed/Feed";
+import CreatePublication from "../publications/CreatePublication";
+import Twitter from "assets/twitter_logo.png";
+import Github from "assets/github_logo.png";
+import Website from "assets/website_logo.png";
+import Feed from "components/feed/Feed.jsx";
 
 export default function CommunityPage() {
   const [community, setCommunity] = useState();
@@ -12,7 +13,6 @@ export default function CommunityPage() {
 
   let { id } = useParams();
   const { Moralis, isInitialized } = useMoralis();
-  console.log(id);
 
   useEffect(() => {
     async function getInfoDB() {
@@ -25,10 +25,8 @@ export default function CommunityPage() {
         setCommunity(result[0].attributes);
       } else {
         const query2 = new Moralis.Query(Community);
-        console.log(`${id}.eth`);
         query2.equalTo("space_id", `${id}.eth`);
         const result2 = await query2.find();
-        console.log("RESU", result2);
         if (result2.length !== 0) {
           setCommunity(result2[0].attributes);
         } else {
@@ -123,7 +121,7 @@ export default function CommunityPage() {
             <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
               Communities
             </div>
-            <Feed size="w-full" />
+            <CreatePublication />
           </div>
         </div>
         <div className="w-2/5 mr-5">
@@ -131,9 +129,9 @@ export default function CommunityPage() {
             Categories
           </div>
           <div className="mt-5">
-            {community?.categories.map((category) => {
+            {community?.categories.map((category, index) => {
               return (
-                <div className="mt-2 p-2 bg-white border-2 border-blue-200 rounded-md text-md text-slate-900 shadow-sm">
+                <div key={index} className="mt-2 p-2 bg-white border-2 border-blue-200 rounded-md text-md text-slate-900 shadow-sm">
                   {category}
                 </div>
               );
@@ -154,11 +152,4 @@ export default function CommunityPage() {
       </div>
     );
   }
-}
-
-{
-  /* <div className="flex flex-col mt-20">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white m-auto" />
-          <p className="flex justify-center mt-5 text-lg text-white">Loading your profiles</p>
-        </div> */
 }

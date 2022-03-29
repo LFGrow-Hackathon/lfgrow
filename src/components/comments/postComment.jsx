@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import createComment from "@/lens/publication/create-comment.js";
-import { uploadImageIpfs, uploadMetadataIpfs } from "@/helpers/ipfs";
-import UploadFileModal from "@/components/publications/UploadFileModal";
+import createComment from "lens/publication/create-comment.js";
+import { uploadImageIpfs, uploadMetadataIpfs } from "helpers/ipfs.js";
+import UploadFileModal from "components/publications/UploadFileModal.jsx";
 import { PaperClipIcon } from "@heroicons/react/solid";
 
 function classNames(...classes) {

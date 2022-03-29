@@ -1,11 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useMemo } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { useDropzone } from 'react-dropzone';
+import { Fragment, useMemo } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { useDropzone } from "react-dropzone";
 
 function UploadFileModal({ isModalVisible, setIsModalVisible, setFile }) {
   const config = {
-    accept: 'image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/svg+xml, image/webp',
+    accept: "image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/svg+xml, image/webp",
     maxFiles: 1,
     onDrop: acceptedFiles => {
       setFile(acceptedFiles.map(file => Object.assign(file, {
@@ -13,7 +13,7 @@ function UploadFileModal({ isModalVisible, setIsModalVisible, setFile }) {
       })));
       setIsModalVisible(false);
     }
-  }
+  };
 
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone(config);
 
@@ -61,7 +61,7 @@ function UploadFileModal({ isModalVisible, setIsModalVisible, setFile }) {
               <section className="container">
                 <div {...getRootProps({ style })}>
                   <input {...getInputProps()} />
-                  <p>Drag 'n' drop a file, or click to select one</p>
+                  <p>{"Drag 'n' drop a file, or click to select one"}</p>
                 </div>
               </section>
             </div>
@@ -69,35 +69,35 @@ function UploadFileModal({ isModalVisible, setIsModalVisible, setFile }) {
         </div>
       </Dialog>
     </Transition.Root>
-  )
+  );
 }
 
 export default UploadFileModal;
 
 const baseStyle = {
   flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "20px",
   borderWidth: 2,
   borderRadius: 2,
-  borderColor: '#eeeeee',
-  borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
-  color: '#bdbdbd',
-  outline: 'none',
-  transition: 'border .24s ease-in-out'
+  borderColor: "#eeeeee",
+  borderStyle: "dashed",
+  backgroundColor: "#fafafa",
+  color: "#bdbdbd",
+  outline: "none",
+  transition: "border .24s ease-in-out"
 };
 
 const focusedStyle = {
-  borderColor: '#2196f3'
+  borderColor: "#2196f3"
 };
 
 const acceptStyle = {
-  borderColor: '#00e676'
+  borderColor: "#00e676"
 };
 
 const rejectStyle = {
-  borderColor: '#ff1744'
+  borderColor: "#ff1744"
 };

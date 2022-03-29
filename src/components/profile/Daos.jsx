@@ -2,7 +2,7 @@ import { UserIcon, BookmarkIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { space } from "tailwindcss/defaultTheme";
-import daoLogo from "@/assets/dao_logo.png";
+import daoLogo from "assets/dao_logo.png";
 
 export default function Daos({ DAO }) {
   const navigate = useNavigate();
@@ -38,7 +38,6 @@ export default function Daos({ DAO }) {
       }
 
       SetDAODisplay(DAOList);
-      console.log(DAOList);
     }
   };
 

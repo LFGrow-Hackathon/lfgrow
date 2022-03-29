@@ -1,8 +1,8 @@
-import { createMirror } from "@/lens/mirror.js";
-import { hasMirrored } from "@/lens/check-mirror.js";
+import { createMirror } from "lens/mirror.js";
+import { hasMirrored } from "lens/check-mirror.js";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import PostStatus from "../post/PostStatus";
+import PostStatus from "../post/PostStatus.jsx";
 
 const SingleFeed = ({ data }) => {
   const stats = data.postStats;
@@ -13,11 +13,10 @@ const SingleFeed = ({ data }) => {
   const pubTime = data.postTimeStamp;
   const pubImge = data.postMedia;
   const postId = data.postId;
+  // const handle = data.profile.handle;
   const profileId = window.localStorage.getItem("profileId");
   const [mirrored, setMirrored] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // const testContent = ;
 
   const mirrorFunc = async (_postId) => {
     setLoading(true);
@@ -73,7 +72,7 @@ const SingleFeed = ({ data }) => {
                     {pubTime.slice(5, 10) + " " + pubTime.slice(12, 16)}
                   </p>
                 </div>
-                <p className="text-base text-gray-800 line-clamp-4">
+                <p className="text-base text-gray-800 line-clamp-4 break-all">
                   {pubContent?.replace(/(<([^>]+)>)/gi, "")}
                   {/* {pubContent} */}
                 </p>
@@ -87,7 +86,11 @@ const SingleFeed = ({ data }) => {
               </div>
             </div>
           </Link>
-          <PostStatus postData={stats} fnc={{ mirrored, mirrorFunc }} />
+          <PostStatus
+            postData={stats}
+            fnc={{ mirrored, mirrorFunc }}
+            postId={postId}
+          />
         </div>
       </div>
     </>

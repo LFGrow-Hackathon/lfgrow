@@ -1,4 +1,4 @@
-import getProfiles from "@/lens/get-profiles.js";
+import getProfiles from "lens/get-profiles.js";
 
 async function searchHandle({ query, setMessage, setIsError }) {
   try {

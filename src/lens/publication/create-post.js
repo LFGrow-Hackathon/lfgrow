@@ -45,15 +45,15 @@ function createPostTypedData(createPostTypedDataRequest) {
     variables: {
       request: createPostTypedDataRequest
     },
-  })
+  });
 }
 
 async function createPost({ ipfsCid }) {
-  const profileId = localStorage.getItem('profileId');
+  const profileId = localStorage.getItem("profileId");
 
   if (!ipfsCid) {
-    throw new Error('ipfsCid is undefined');
-  } else if (profileId === 'undefined') {
+    throw new Error("ipfsCid is undefined");
+  } else if (profileId === "undefined") {
     throw new Error("You do not have a Lens profile");
   }
 
@@ -68,7 +68,7 @@ async function createPost({ ipfsCid }) {
     referenceModule: {
       followerOnlyReferenceModule: false
     }
-  }
+  };
 
   const result = await createPostTypedData(createPostRequest);
   const { domain, types, value } = result.data.createPostTypedData.typedData;

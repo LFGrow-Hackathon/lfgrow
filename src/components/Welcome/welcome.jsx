@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import getProfiles from "@/lens/get-profiles.js";
+import getProfiles from "lens/get-profiles.js";
 import { useMoralis } from "react-moralis";
-import SelectProfiles from "./SelectProfile";
-import ProfileCreation from "./ProfileCreation";
+import SelectProfiles from "./SelectProfile.jsx";
+import ProfileCreation from "./ProfileCreation.jsx";
 
 export default function Welcome() {
 

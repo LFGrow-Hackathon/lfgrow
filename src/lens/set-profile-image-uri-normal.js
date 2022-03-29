@@ -49,7 +49,7 @@ const createSetProfileImageUriTypedData = (request) => {
 
 export const setProfileImageUriNormal = async ({ profileId, url }) => {
   if (!profileId) {
-    throw new Error('Must define PROFILE_ID');
+    throw new Error("Must define PROFILE_ID");
   }
 
   await setDispatcher();

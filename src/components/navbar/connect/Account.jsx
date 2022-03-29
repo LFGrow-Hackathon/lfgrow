@@ -3,7 +3,8 @@ import { useMoralis } from "react-moralis";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
-import ConnectModal from "@/components/navbar/connect/ConnectModal.jsx";
+import ConnectModal from "components/navbar/connect/ConnectModal.jsx";
+import defaultUserIcon from "assets/defaultUserIcon.png";
 
 const defaultImage = "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg";
 
@@ -60,7 +61,7 @@ function Account(props) {
         <div>
           <Menu.Button className="bg-white rounded-full py-1 px-1 lg:py-1 lg:px-2 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <p className="hidden lg:block text-lg truncate text-gray-500 font-bold mr-2">{props.handle}</p>
-            <img className="h-8 w-8 rounded-full" src={props.userImage ? props.userImage : defaultImage} alt="" />
+            <img className="h-8 w-8 rounded-full" src={props.userImage ? props.userImage : defaultUserIcon} alt="" />
           </Menu.Button>
         </div>
         <Transition

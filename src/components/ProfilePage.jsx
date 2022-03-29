@@ -1,15 +1,19 @@
-import Twitter from "@/assets/twitter_logo.png";
+import Twitter from "assets/twitter_logo.png";
 import { BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
-import CreatePublication from "@/components/publications/CreatePublication.jsx";
-import Poaps from "@/components/profile/Poaps";
-import Daos from "@/components/profile/Daos";
-import DisplayNFT from "@/components/profile/DisplayNFT";
-import getProfiles from "@/lens/get-profiles.js";
-import { useEffect, useState } from "react";
+import CreatePublication from "components/publications/CreatePublication.jsx";
+import Poaps from "components/profile/Poaps.jsx";
+import Daos from "components/profile/Daos.jsx";
+import DisplayNFT from "components/profile/DisplayNFT.jsx";
+import getProfiles from "lens/get-profiles.js";
+import { useEffect, useState, useRef } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import getAllPoap from "@/api_call/getAllPoap";
-import getVote from "@/api_call/getVote";
-import MyFeed from "./feed/MyFeed";
+import getAllPoap from "api_call/getAllPoap.js";
+import getVote from "api_call/getVote.js";
+import MyFeed from "./feed/MyFeed.jsx";
+import doesFollowFunc from "lens/does-follow.js";
+import FollowBtn from "./buttons/FollowBtn.jsx";
+import UnfollowBtn from "./buttons/UnfollowBtn.jsx";
+import defaultUserIcon from "assets/defaultUserIcon.png";
 import {
   useMoralis,
   useMoralisWeb3Api,
@@ -25,6 +29,9 @@ export default function ProfilePage() {
   const [poap, setPoap] = useState();
   const [vote, setVote] = useState();
   const [NFT, setNFT] = useState();
+  const [loading, setLoading] = useState(false);
+  const hasClickFollow = useRef(false);
+  const [doesFollow, setDoesFollow] = useState(false);
   const { isInitialized, isAuthenticated } = useMoralis();
   const profileId = window.localStorage.getItem("profileId");
 
@@ -69,16 +76,19 @@ export default function ProfilePage() {
   }, [idURL.handle]);
 
   useEffect(() => {
-    async function fetchPoap() {
+    async function fetchData() {
       if (address) {
         const dataPoap = await getAllPoap(address);
         const dataVote = await getVote(address);
-        console.log("vote", dataVote);
         setPoap(dataPoap);
         setVote(dataVote);
       }
+      if (profile && profileId) {
+        const resultFollow = await doesFollowFunc(profile.id);
+        setDoesFollow(resultFollow);
+      }
     }
-    fetchPoap();
+    fetchData();
     if (isInitialized) {
       fetchNFTs();
     }
@@ -87,6 +97,12 @@ export default function ProfilePage() {
     }
   }, [address, isInitialized, profile, isAuthenticated]);
 
+  useEffect(() => {
+    if (loading) {
+      setDoesFollow(!doesFollow);
+    }
+  }, [loading]);
+
   let monthsDisplay;
   let yearsDisplay;
 
@@ -94,7 +110,6 @@ export default function ProfilePage() {
     const firstTx =
       Transactions?.result[Transactions.result.length - 1].block_timestamp;
     if (firstTx) {
-      console.log("first", firstTx);
       const firstTxDate = new Date(
         `${firstTx?.substring(5, 7)}/${firstTx.substring(
           8,
@@ -119,36 +134,25 @@ export default function ProfilePage() {
   const profileName = profile?.name
     ? profile.name
     : profile?.handle
-    ? profile.handle
-    : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+      ? profile.handle
+      : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+
   return (
     <div className="flex">
       <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
         <div className="">
           <div className="w-full flex justify-between">
             <div className="flex px-2 p-2">
-              <div className="mr-4 w-36">
+              <div className="mr-4 w-20">
                 <img
                   className="inline-block h-20 w-20 rounded-full ring-2 ring-blue-100"
-                  src={
-                    profile?.picture?.original?.url ||
-                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  }
+                  src={profile?.picture?.original?.url || defaultUserIcon}
                   alt="profile picture"
                 />
               </div>
               <div className="">
                 {(profile || address) && (
-                  <h4 className="text-lg font-bold">
-                    {profile?.name
-                      ? profile.name
-                      : profile?.handle
-                      ? profile.handle
-                      : `${address.substring(0, 5)}...${address.substring(
-                          38,
-                          42
-                        )}`}
-                  </h4>
+                  <h4 className="text-lg font-bold">{profileName}</h4>
                 )}
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
@@ -194,40 +198,33 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="flex w-full justify-between">
-            <div className="flex justify-start w-3/4">
+            <div className="flex justify-start w-3/4 pl-2">
               <p>{profile?.bio}</p>
             </div>
             {isPageOwner ? (
-              <div className="flex justify-end">
-                <NavLink
-                  to="/edit"
-                  className="inline-flex items-center max-h-10 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" />{" "}
-                  Edit profile
-                </NavLink>
-              </div>
+              <ProfileEditButton />
+            ) : !profileId ? (
+              <></>
+            ) : doesFollow ? (
+              <UnfollowBtn
+                profileId={profile?.id}
+                hasClickFollow={hasClickFollow}
+              />
             ) : (
-              <div className="flex justify-end">
-                <button className="inline-flex items-center max-h-10 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:border-blue-400 hover:border-1">
-                  FOLLOW
-                </button>
-              </div>
+              <FollowBtn
+                profileId={profile?.id}
+                setLoading={setLoading}
+                hasClickFollow={hasClickFollow}
+              />
             )}
           </div>
         </div>
         <div className="w-full h-full pl-5 pr-5 mt-5 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center shadow-md">
           <div className="mt-5 p-3 rounded-3xl border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Communities
-            {/* <span className="inline-flex items-center mr-1 ml-3 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
-              24 votes
-            </span>
-            <span className="inline-flex items-center mr-1 ml-1 px-2.5 py-0.5 rounded-md border-pink-800 text-sm font-medium bg-purple-100 text-purple-800">
-              11 DAOS
-            </span> */}
           </div>
           <Daos DAO={vote} />
-          <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
+          <div className="mt-5 p-3 rounded-3xl border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
             Posts
             <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               {profile?.stats.totalPosts}
@@ -248,3 +245,16 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+const ProfileEditButton = () => {
+  return (
+    <div className="flex justify-end">
+      <NavLink
+        to="/edit"
+        className="inline-flex items-center max-h-10 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit profile
+      </NavLink>
+    </div>
+  );
+};

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import createPost from "@/lens/publication/create-post.js";
-import { uploadImageIpfs, uploadMetadataIpfs } from "@/helpers/ipfs";
-import UploadFileModal from "@/components/publications/UploadFileModal";
+import createPost from "lens/publication/create-post.js";
+import { uploadImageIpfs, uploadMetadataIpfs } from "helpers/ipfs.js";
+import UploadFileModal from "components/publications/UploadFileModal.jsx";
 import { PaperClipIcon } from "@heroicons/react/solid";
 
 function classNames(...classes) {
@@ -54,7 +54,7 @@ function CreatePublication() {
                 name="comment"
                 id="comment"
                 className="block w-full my-2 border-0 focus:ring-0 sm:text-sm"
-                placeholder="Add your comment..."
+                placeholder="Write your post here..."
                 onChange={(e) => {
                   setMessage(e.target.value);
                 }}

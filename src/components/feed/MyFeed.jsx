@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SingleFeed from "./SingleFeed";
+import SingleFeed from "./SingleFeed.jsx";
 ("react");
-import { getMyPosts } from "@/lens/get-my-publications";
+import { getMyPosts } from "lens/get-my-publications.js";
 
 const MyFeed = ({ profileId }) => {
   console.log("profileId: ", profileId);
@@ -48,8 +48,8 @@ const MyFeed = ({ profileId }) => {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
           : filterdPost?.profile?.handle?.length
-          ? filterdPost?.profile?.handle
-          : filterdPost?.profile?.id,
+            ? filterdPost?.profile?.handle
+            : filterdPost?.profile?.id,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
           : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg",
