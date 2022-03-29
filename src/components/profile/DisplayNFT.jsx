@@ -1,5 +1,5 @@
-import { useVerifyMetadata } from "@/helpers/useVerifyMetadata";
-import { resolveIPFS } from "@/helpers/resolveIPFS";
+import { useVerifyMetadata } from "helpers/useVerifyMetadata.js";
+import { resolveIPFS } from "helpers/resolveIPFS.js";
 
 export default function DisplayNFT({ NFT }) {
   const { verifyMetadata } = useVerifyMetadata();
@@ -21,7 +21,7 @@ export default function DisplayNFT({ NFT }) {
     return (
       <div className="w-full mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500 shadow-md">
         NFTs
-        <p className="py-5 italic">This user doesn't have any NFT</p>
+        <p className="py-5 italic">{"This user doesn't have any NFT"}</p>
       </div>
     );
   }

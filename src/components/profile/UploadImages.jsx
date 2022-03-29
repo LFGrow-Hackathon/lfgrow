@@ -1,16 +1,16 @@
-import { useEffect, useMemo } from 'react'
-import { useDropzone } from 'react-dropzone';
+import { useEffect, useMemo } from "react";
+import { useDropzone } from "react-dropzone";
 
 function UploadImages({ picture, setPicture }) {
   const config = {
-    accept: 'image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/svg+xml, image/webp',
+    accept: "image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/svg+xml, image/webp",
     maxFiles: 1,
     onDrop: acceptedFiles => {
       setPicture(acceptedFiles.map(picture => Object.assign(picture, {
         preview: URL.createObjectURL(picture)
       })));
     }
-  }
+  };
 
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone(config);
 
@@ -43,45 +43,45 @@ function UploadImages({ picture, setPicture }) {
       <section className="container">
         <div {...getRootProps({ style })}>
           <input {...getInputProps()} />
-          <p className='text-xs'>Drag 'n' drop a picture, or click to select one</p>
+          <p className='text-xs'>{"Drag 'n' drop a picture, or click to select one"}</p>
         </div>
         <aside style={thumbsContainer}>
           {thumbs}
         </aside>
       </section>
     </div>
-  )
+  );
 }
 
 export default UploadImages;
 
 const baseStyle = {
   flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "20px",
   borderWidth: 2,
   borderRadius: 2,
-  borderColor: '#eeeeee',
-  borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
-  color: '#bdbdbd',
-  outline: 'none',
-  transition: 'border .24s ease-in-out'
+  borderColor: "#eeeeee",
+  borderStyle: "dashed",
+  backgroundColor: "#fafafa",
+  color: "#bdbdbd",
+  outline: "none",
+  transition: "border .24s ease-in-out"
 };
 
 const focusedStyle = {
-  borderColor: '#2196f3'
+  borderColor: "#2196f3"
 };
 
 const acceptStyle = {
-  borderColor: '#00e676'
+  borderColor: "#00e676"
 };
 
 const rejectStyle = {
-  borderColor: '#ff1744'
-}
+  borderColor: "#ff1744"
+};
 const thumbsContainer = {
   display: "flex",
   flexDirection: "row",

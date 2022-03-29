@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { Routes, Route } from "react-router-dom";
-import HomePage from "@/components/HomePage.jsx";
-import Welcome from "@/components/Welcome/welcome";
-import TopBar from "@/components/navbar/TopBar";
-import Feed from "@/components/feed/Feed";
-import ProfilePage from "@/components/ProfilePage";
-import EditProfile from "@/components/profile/EditProfile";
-import DiscoverCommunities from "./components/communities/DiscoverCommunities";
-import CommunityPage from "./components/communities/CommunityPage";
-import { ViewPost } from "@/components/post/ViewPost";
+import HomePage from "components/HomePage.jsx";
+import Welcome from "components/welcome/welcome.jsx";
+import TopBar from "components/navbar/TopBar.jsx";
+import Feed from "components/feed/Feed.jsx";
+import ProfilePage from "components/ProfilePage.jsx";
+import EditProfile from "components/profile/EditProfile.jsx";
+import DiscoverCommunities from "./components/communities/DiscoverCommunities.jsx";
+import CommunityPage from "./components/communities/CommunityPage.jsx";
+import { ViewPost } from "components/post/ViewPost.jsx";
 
 function App() {
   const {

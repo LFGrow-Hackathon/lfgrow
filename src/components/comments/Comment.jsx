@@ -1,16 +1,17 @@
 import { NavLink } from "react-router-dom";
+import defaultUserIcon from "assets/defaultUserIcon.png";
 
 const Comment = ({ data }) => {
   const { profile, metadata, createdAt, id } = data;
 
   const userProPic = profile?.picture?.medium?.url?.length
     ? profile.picture.medium.url
-    : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg";
+    : defaultUserIcon;
   const userProName = profile?.name?.length
     ? profile?.name
     : profile?.handle?.length
-    ? profile?.handle
-    : profile?.id;
+      ? profile?.handle
+      : profile?.id;
   const handle = profile.handle;
   // const userProDesc = profile.bio?.length ? profile.bio : "";
 

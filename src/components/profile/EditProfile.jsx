@@ -1,9 +1,9 @@
-import { uploadImageIpfs } from "@/helpers/ipfs";
-import updateProfile from "@/lens/update-profile";
-import getProfiles from "@/lens/get-profiles.js";
-import { useState, useRef, useEffect } from "react";
+import { uploadImageIpfs } from "helpers/ipfs.js";
+import updateProfile from "lens/update-profile.js";
+import getProfiles from "lens/get-profiles.js";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import UploadImages from "@/components/profile/UploadImages";
+import UploadImages from "components/profile/UploadImages.jsx";
 
 export default function EditProfile(props) {
   const profileId = window.localStorage.getItem("profileId");

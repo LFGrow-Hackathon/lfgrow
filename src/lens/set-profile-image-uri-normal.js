@@ -1,12 +1,12 @@
 
-import { gql } from '@apollo/client/core';
-import { apolloClient } from '@/helpers/apollo-client';
-import { login } from '@/lens/login-users';
+import { gql } from "@apollo/client/core";
+import { apolloClient } from "helpers/apollo-client";
+import { login } from "lens/login-users";
 import {
   signedTypeData,
   splitSignature,
-} from '@/helpers/ethers-service';
-import { lensHub } from '@/lens/utils/lens-hub';
+} from "helpers/ethers-service";
+import { lensHub } from "lens/utils/lens-hub";
 
 const CREATE_SET_PROFILE_IMAGE_URI_TYPED_DATA = `
   mutation($request: UpdateProfileImageRequest!) { 
@@ -48,7 +48,7 @@ const createSetProfileImageUriTypedData = (request) => {
 
 export const setProfileImageUriNormal = async ({ profileId, url }) => {
   if (!profileId) {
-    throw new Error('Must define PROFILE_ID');
+    throw new Error("Must define PROFILE_ID");
   }
 
   await login();

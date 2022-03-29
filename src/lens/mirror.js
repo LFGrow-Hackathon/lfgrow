@@ -1,10 +1,10 @@
-import { gql } from '@apollo/client/core';
-import { BigNumber, utils } from 'ethers';
-import { apolloClient } from '../helpers/apollo-client';
-import { login } from '@/lens/login-users';
-import { signedTypeData, splitSignature, getAddress } from '@/helpers/ethers-service';
+import { gql } from "@apollo/client/core";
+import { BigNumber, utils } from "ethers";
+import { apolloClient } from "../helpers/apollo-client";
+import { login } from "lens/login-users";
+import { signedTypeData, splitSignature, getAddress } from "helpers/ethers-service";
 import { pollUntilIndexed } from "./utils/has-transaction-been-indexed";
-import { lensHub } from '@/lens/utils/lens-hub';
+import { lensHub } from "lens/utils/lens-hub";
 
 const CREATE_MIRROR_TYPED_DATA = `
   mutation($request: CreateMirrorRequest!) { 
@@ -49,11 +49,11 @@ const createMirrorTypedData = (createMirrorTypedDataRequest) => {
 };
 
 export const createMirror = async (_profileId, _pubId) => {
-  
-  const profileId = _profileId
+
+  const profileId = _profileId;
 
   if (!profileId && !_pubId) {
-    throw new Error('Must define PROFILE_ID in the .env to run this');
+    throw new Error("Must define PROFILE_ID in the .env to run this");
   }
 
   await login();
@@ -69,13 +69,13 @@ export const createMirror = async (_profileId, _pubId) => {
   };
 
   const result = await createMirrorTypedData(createMirrorRequest);
-  console.log('create mirror: createMirrorTypedData', result);
+  console.log("create mirror: createMirrorTypedData", result);
 
   const typedData = result.data.createMirrorTypedData.typedData;
-  console.log('create mirror: typedData', typedData);
+  console.log("create mirror: typedData", typedData);
 
   const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
-  console.log('create mirror: signature', signature);
+  console.log("create mirror: signature", signature);
 
   const { v, r, s } = splitSignature(signature);
 
@@ -92,35 +92,35 @@ export const createMirror = async (_profileId, _pubId) => {
       deadline: typedData.value.deadline,
     },
   });
-  console.log('create mirror: tx hash', tx.hash);
+  console.log("create mirror: tx hash", tx.hash);
 
-  console.log('create mirror: poll until indexed');
+  console.log("create mirror: poll until indexed");
   const indexedResult = await pollUntilIndexed(tx.hash);
 
-  console.log('create mirror: profile has been indexed', result);
+  console.log("create mirror: profile has been indexed", result);
 
   const logs = indexedResult.txReceipt.logs;
 
-  console.log('create mirror: logs', logs);
+  console.log("create mirror: logs", logs);
 
-  const topicId = utils.id('MirrorCreated(uint256,uint256,uint256,uint256,address,bytes,uint256)');
-  console.log('topicid we care about', topicId);
+  const topicId = utils.id("MirrorCreated(uint256,uint256,uint256,uint256,address,bytes,uint256)");
+  console.log("topicid we care about", topicId);
 
   const profileCreatedLog = logs.find((l) => l.topics[0] === topicId);
-  console.log('create mirror: created log', profileCreatedLog);
+  console.log("create mirror: created log", profileCreatedLog);
 
   let profileCreatedEventLog = profileCreatedLog.topics;
-  console.log('create mirror: created event logs', profileCreatedEventLog);
+  console.log("create mirror: created event logs", profileCreatedEventLog);
 
-  const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0];
+  const publicationId = utils.defaultAbiCoder.decode(["uint256"], profileCreatedEventLog[2])[0];
 
   console.log(
-    'create mirror: contract publication id',
+    "create mirror: contract publication id",
     BigNumber.from(publicationId).toHexString()
   );
   console.log(
-    'create mirror: internal publication id',
-    profileId + '-' + BigNumber.from(publicationId).toHexString()
+    "create mirror: internal publication id",
+    profileId + "-" + BigNumber.from(publicationId).toHexString()
   );
 
   return result.data;

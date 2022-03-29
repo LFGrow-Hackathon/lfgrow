@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client/core";
 import { apolloClient } from "../helpers/apollo-client";
-import { login } from "@/lens/login-users";
+import { login } from "lens/login-users";
 import { setProfileImageUriNormal } from "./set-profile-image-uri-normal";
 
 const UPDATE_PROFILE = `
@@ -14,7 +14,7 @@ const UPDATE_PROFILE = `
 const updateProfileRequest = async (profileInfo) => {
   // probably reseting the whole store isn't the way to go
   await apolloClient.resetStore();
-  
+
   return apolloClient.mutate({
     mutation: gql(UPDATE_PROFILE),
     variables: {
@@ -34,7 +34,7 @@ const updateProfile = async (profileNewData) => {
   await updateProfileRequest(profileNewData);
 
   if (picture) {
-    await setProfileImageUriNormal({ profileId, url: picture })
+    await setProfileImageUriNormal({ profileId, url: picture });
   }
 };
 
