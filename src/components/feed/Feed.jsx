@@ -31,8 +31,8 @@ const Feed = ({ size }) => {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
           : filterdPost?.profile?.handle?.length
-            ? filterdPost?.profile?.handle
-            : filterdPost?.profile?.id,
+          ? filterdPost?.profile?.handle
+          : filterdPost?.profile?.id,
         handle: filterdPost?.profile?.handle,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
@@ -71,7 +71,7 @@ const Feed = ({ size }) => {
                 cursor: pageInfo.next,
               });
             }}
-            loader={<>{console.log("loadng")}</>}
+            loader={<></>}
           >
             {posts.map((post, key) => {
               return <SingleFeed data={post} key={key} />;

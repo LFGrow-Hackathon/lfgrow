@@ -31,7 +31,7 @@ export default function Welcome() {
     );
   }
 
-  //If the user doesn't have a lens profile
+  //If the user doesn't have a lens profiles
   if (profilesLens?.length == 0) {
     return (
       <div className="flex flex-col h-screen bg-gradient-to-br from-[#15C1E9] via-[#CF6ACD] to-[#F35161]">
