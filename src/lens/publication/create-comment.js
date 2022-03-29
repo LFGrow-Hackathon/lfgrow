@@ -1,11 +1,10 @@
 import { gql } from '@apollo/client/core';
-import { apolloClient } from '@/helpers/apollo-client';
-import { login } from '@/lens/login-users';
-import { signedTypeData, splitSignature } from '@/helpers/ethers-service.js';
-import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed';
+import { apolloClient } from 'helpers/apollo-client';
+import { signedTypeData, splitSignature } from 'helpers/ethers-service.js';
+import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed';
 import { lensHub } from '../utils/lens-hub';
-import { setDispatcher } from '@/lens/set-dispatcher';
-import { relayTransactions } from '@/api_call/relayTransactions';
+import { setDispatcher } from 'lens/set-dispatcher';
+import { relayTransactions } from 'api_call/relayTransactions';
 
 const CREATE_COMMENT_TYPED_DATA = `
   mutation($request: CreatePublicCommentRequest!) { 

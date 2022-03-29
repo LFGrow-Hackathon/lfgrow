@@ -1,13 +1,13 @@
 
 import { gql } from '@apollo/client/core';
-import { apolloClient } from '@/helpers/apollo-client';
+import { apolloClient } from 'helpers/apollo-client';
 import {
   signedTypeData,
   splitSignature,
-} from '@/helpers/ethers-service';
-import { lensHub } from '@/lens/utils/lens-hub';
-import { setDispatcher } from '@/lens/set-dispatcher';
-import { relayUpdateProfilePicture } from "@/api_call/relayTransactions"
+} from 'helpers/ethers-service';
+import { lensHub } from 'lens/utils/lens-hub';
+import { setDispatcher } from 'lens/set-dispatcher';
+import { relayUpdateProfilePicture } from "api_call/relayTransactions"
 
 const CREATE_SET_PROFILE_IMAGE_URI_TYPED_DATA = `
   mutation($request: UpdateProfileImageRequest!) { 
@@ -65,7 +65,7 @@ export const setProfileImageUriNormal = async ({ profileId, url }) => {
     const res = await relayUpdateProfilePicture({ function: "setProfileImageURI", profileId, url });
     console.log(res)
   } catch (error) {
-    console.error(errorl)
+    console.error(error)
     const result = await createSetProfileImageUriTypedData(
       setProfileImageUriRequest
     );

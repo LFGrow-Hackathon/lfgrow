@@ -1,10 +1,10 @@
-import { signedTypeData, splitSignature } from '@/helpers/ethers-service.js';
+import { signedTypeData, splitSignature } from 'helpers/ethers-service.js';
 import { lensHub } from '../utils/lens-hub';
-import { apolloClient } from '@/helpers/apollo-client.js';
+import { apolloClient } from 'helpers/apollo-client.js';
 import { gql } from '@apollo/client'
-import { setDispatcher } from '@/lens/set-dispatcher';
-import { relayTransactions } from '@/api_call/relayTransactions';
-/* import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed.js' */
+import { setDispatcher } from 'lens/set-dispatcher';
+import { relayTransactions } from 'api_call/relayTransactions';
+/* import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed.js' */
 
 const CREATE_POST_TYPED_DATA = `
   mutation($request: CreatePublicPostRequest!) { 

@@ -14,7 +14,7 @@ import {
 import Account from "./connect/Account";
 import Search from "./search/Search";
 
-import getProfiles from "@/lens/get-profiles";
+import getProfiles from "lens/get-profiles";
 import { useNavigate } from "react-router-dom";
 import { getNotifications } from "lens/notifications.js";
 

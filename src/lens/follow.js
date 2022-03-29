@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client/core';
 import { apolloClient } from '../helpers/apollo-client';
-import { signedTypeData, splitSignature, getAddress } from '@/helpers/ethers-service';
-import { lensHub } from '@/lens/utils/lens-hub';
-import { setDispatcher } from '@/lens/set-dispatcher';
-import { relayTransactions } from '@/api_call/relayTransactions';
+import { signedTypeData, splitSignature, getAddress } from 'helpers/ethers-service';
+import { lensHub } from 'lens/utils/lens-hub';
+import { setDispatcher } from 'lens/set-dispatcher';
+import { relayTransactions } from 'api_call/relayTransactions';
 
 const CREATE_FOLLOW_TYPED_DATA = `
   mutation($request: FollowRequest!) { 
@@ -47,7 +47,6 @@ const createFollowTypedData = (followRequestInfo) => {
 };
 
 export const follow = async (profileId) => {
-  console.log("hello")
   if (!profileId) {
     throw new Error("profileId is undefined");
   }
@@ -69,7 +68,7 @@ export const follow = async (profileId) => {
   const { v, r, s } = splitSignature(signature);
 
   const request = {
-    follower: getAddress(),
+    follower: await getAddress(),
     profileIds: typedData.value.profileIds,
     datas: typedData.value.datas,
     sig: {

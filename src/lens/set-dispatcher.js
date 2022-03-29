@@ -1,13 +1,13 @@
 import { gql } from '@apollo/client/core';
 import { lensHub } from './utils/lens-hub';
-import { apolloClient } from '@/helpers/apollo-client.js';
-import { login } from '@/lens/login-users';
+import { apolloClient } from 'helpers/apollo-client.js';
+import { login } from 'lens/login-users';
 import {
   signedTypeData,
   splitSignature,
-} from '@/helpers/ethers-service';
-import { relaySetDispatcher } from "@/api_call/relayTransactions"
-import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed.js'
+} from 'helpers/ethers-service';
+import { relaySetDispatcher } from "api_call/relayTransactions"
+import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed.js'
 
 const CREATE_SET_DISPATCHER_TYPED_DATA = `
   mutation($request: SetDispatcherRequest!) { 
