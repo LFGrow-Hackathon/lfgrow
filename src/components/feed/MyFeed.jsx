@@ -5,7 +5,7 @@ import SingleFeed from "./SingleFeed.jsx";
 import { getMyPosts } from "lens/get-my-publications.js";
 
 const MyFeed = ({ profileId }) => {
-  console.log("profileId: ", profileId);
+  // console.log("profileId: ", profileId);
   const [posts, setPosts] = useState([]);
   const [zeroPost, setZeroPost] = useState();
   const [pageInfo, setPageInfo] = useState({});
@@ -18,13 +18,13 @@ const MyFeed = ({ profileId }) => {
 
   useEffect(() => {
     isMounted.current = true;
-    console.log("useEffect Myfeed");
+    // console.log("useEffect Myfeed");
     setPosts([]);
     if (profileId) {
       query();
     }
     return () => {
-      console.log("unmount useEffect MyFeed");
+      // console.log("unmount useEffect MyFeed");
       isMounted.current = false;
     };
   }, [profileId]);
@@ -48,8 +48,8 @@ const MyFeed = ({ profileId }) => {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
           : filterdPost?.profile?.handle?.length
-            ? filterdPost?.profile?.handle
-            : filterdPost?.profile?.id,
+          ? filterdPost?.profile?.handle
+          : filterdPost?.profile?.id,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
           : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg",
