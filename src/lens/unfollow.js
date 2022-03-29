@@ -62,15 +62,6 @@ const unfollow = async (unfollowProfileId) => {
 
   const { v, r, s } = splitSignature(signature);
 
-  // load up the follower nft contract
-  const followNftContract = new ethers.Contract(
-    typedData.domain.verifyingContract,
-    LENS_FOLLOW_NFT_ABI,
-    getSigner()
-  );
-
-  console.log("contract : ", typedData.domain.verifyingContract)
-
   const sig = {
     v,
     r,
@@ -81,7 +72,7 @@ const unfollow = async (unfollowProfileId) => {
   try {
     const res = await relayTransactions({
       method: "post",
-      url: "/api/follow",
+      url: "/api/unfollow",
       data: {
         contractAddress: typedData.domain.verifyingContract,
         tokenId: typedData.value.tokenId,
@@ -89,6 +80,13 @@ const unfollow = async (unfollowProfileId) => {
       },
     });
   } catch (error) {
+    // load up the follower nft contract
+    const followNftContract = new ethers.Contract(
+      typedData.domain.verifyingContract,
+      LENS_FOLLOW_NFT_ABI,
+      getSigner()
+    );
+
     const tx = await followNftContract.burnWithSig(typedData.value.tokenId, sig);
     console.log("follow: tx hash", tx.hash);
   }

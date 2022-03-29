@@ -6,7 +6,7 @@ import {
   signedTypeData,
   splitSignature,
 } from 'helpers/ethers-service';
-import { relaySetDispatcher } from "api_call/relayTransactions"
+import { relayTransactions } from "api_call/relayTransactions"
 import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed.js'
 
 const CREATE_SET_DISPATCHER_TYPED_DATA = `
@@ -110,8 +110,11 @@ export const setDispatcher = async () => {
   }
 
   try {
-    const res = await relaySetDispatcher(request);
-
+    const res = await relayTransactions({
+      method: "post",
+      url: "/api/set-dispatcher",
+      data: request
+    });
     console.log("res relay set dispathc", res)
     window.localStorage.setItem("deadlineDispatcher", typedData.value.deadline);
   } catch (error) {

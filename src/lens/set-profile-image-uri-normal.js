@@ -7,7 +7,7 @@ import {
 } from 'helpers/ethers-service';
 import { lensHub } from 'lens/utils/lens-hub';
 import { setDispatcher } from 'lens/set-dispatcher';
-import { relayUpdateProfilePicture } from "api_call/relayTransactions"
+import { relayTransactions } from "api_call/relayTransactions"
 
 const CREATE_SET_PROFILE_IMAGE_URI_TYPED_DATA = `
   mutation($request: UpdateProfileImageRequest!) { 
@@ -60,12 +60,14 @@ export const setProfileImageUriNormal = async ({ profileId, url }) => {
   };
 
   try {
-
-    console.log("relaying tx update profile picture")
-    const res = await relayUpdateProfilePicture({ function: "setProfileImageURI", profileId, url });
-    console.log(res)
+    const res = await relayTransactions({
+      method: "post",
+      url: "/api/update-picture",
+      data: { profileId, url },
+    });
   } catch (error) {
     console.error(error)
+
     const result = await createSetProfileImageUriTypedData(
       setProfileImageUriRequest
     );
