@@ -1,7 +1,7 @@
-import { getAddress, signText } from "@/helpers/ethers-service";
+import { getAddress, signText } from "helpers/ethers-service";
 import { gql } from "@apollo/client";
-import { apolloClient } from "@/helpers/apollo-client";
-import getProfiles from "@/lens/get-profiles.js";
+import { apolloClient } from "helpers/apollo-client";
+import getProfiles from "lens/get-profiles.js";
 import * as jose from "jose";
 
 const AUTHENTICATION = `

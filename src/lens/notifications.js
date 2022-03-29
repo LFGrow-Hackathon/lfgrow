@@ -1,4 +1,4 @@
-import { apolloClient } from "@/helpers/apollo-client";
+import { apolloClient } from "helpers/apollo-client";
 // this is showing you how you use it with react for example
 // if your using node or something else you can import using
 // @apollo/client/core!

@@ -1,9 +1,9 @@
-import { signedTypeData, splitSignature } from '@/helpers/ethers-service.js';
-import { lensHub } from '../utils/lens-hub';
-import { apolloClient } from '@/helpers/apollo-client.js';
-import { gql } from '@apollo/client'
-import { login } from '@/lens/login-users';
-/* import { pollUntilIndexed } from '@/lens/utils/has-transaction-been-indexed.js' */
+import { signedTypeData, splitSignature } from "helpers/ethers-service.js";
+import { lensHub } from "../utils/lens-hub";
+import { apolloClient } from "helpers/apollo-client.js";
+import { gql } from "@apollo/client";
+import { login } from "lens/login-users";
+/* import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed.js' */
 
 const CREATE_POST_TYPED_DATA = `
   mutation($request: CreatePublicPostRequest!) { 
@@ -44,15 +44,15 @@ function createPostTypedData(createPostTypedDataRequest) {
     variables: {
       request: createPostTypedDataRequest
     },
-  })
+  });
 }
 
 async function createPost({ ipfsCid }) {
-  const profileId = localStorage.getItem('profileId');
+  const profileId = localStorage.getItem("profileId");
 
   if (!ipfsCid) {
-    throw new Error('ipfsCid is undefined');
-  } else if (profileId === 'undefined') {
+    throw new Error("ipfsCid is undefined");
+  } else if (profileId === "undefined") {
     throw new Error("You do not have a Lens profile");
   }
 
@@ -67,7 +67,7 @@ async function createPost({ ipfsCid }) {
     referenceModule: {
       followerOnlyReferenceModule: false
     }
-  }
+  };
 
   const result = await createPostTypedData(createPostRequest);
 

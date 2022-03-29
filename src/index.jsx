@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import "@/index.css";
-import App from "@/App.jsx";
+import "index.css";
+import App from "App.jsx";
 import { MoralisProvider } from "react-moralis";
 
 /* ------------------------------- 
 Setup Moralis server 
 ---------------------------------*/
-const APP_ID = import.meta.env.VITE_APP_MORALIS_APPLICATION_ID;
-const SERVER_URL = import.meta.env.VITE_APP_MORALIS_SERVER_URL;
+const APP_ID = process.env.REACT_APP_MORALIS_APPLICATION_ID;
+const SERVER_URL = process.env.REACT_APP_MORALIS_SERVER_URL;
 
 const Application = () => {
   if (!APP_ID || !SERVER_URL) {

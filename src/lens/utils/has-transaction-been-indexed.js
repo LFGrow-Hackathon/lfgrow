@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client/core";
-import { apolloClient } from "@/helpers/apollo-client";
+import { apolloClient } from "helpers/apollo-client";
 
 const HAS_TX_BEEN_INDEXED = `
   query($request: HasTxHashBeenIndexedRequest!) {
@@ -85,7 +85,7 @@ const hasTxBeenIndexed = (txHash) => {
         txHash,
       },
     },
-    fetchPolicy: 'network-only',
+    fetchPolicy: "network-only",
   });
 };
 
@@ -94,6 +94,7 @@ const sleep = (milliseconds) => {
 };
 
 export const pollUntilIndexed = async (txHash) => {
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const result = await hasTxBeenIndexed(txHash);
     console.log("pool until indexed: result", result.data);

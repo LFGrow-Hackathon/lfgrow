@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
-import { createMirror } from "@/lens/mirror.js";
-import { hasMirrored } from "@/lens/check-mirror.js";
-import PostStatus from "./PostStatus";
+import { useEffect } from "react";
+// import { createMirror } from "lens/mirror.js";
+// import { hasMirrored } from "lens/check-mirror.js";
+import PostStatus from "./PostStatus.jsx";
 import { NavLink } from "react-router-dom";
+import defaultUserIcon from "assets/defaultUserIcon.png";
+
 
 const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
   // console.log("postData: ", postData);
   const userProPic = postData.profile.picture?.medium?.url.length
     ? postData.profile.picture?.medium?.url
-    : "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg";
+    : defaultUserIcon;
   const userProName = postData.profile.name?.length
     ? postData.profile.name
     : postData.profile.id;

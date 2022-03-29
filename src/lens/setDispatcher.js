@@ -1,5 +1,5 @@
-import { signedTypeData, splitSignature } from "@/helpers/ethers-service";
-import { apolloClient } from "@/helpers/apollo-client";
+import { signedTypeData, splitSignature } from "helpers/ethers-service";
+import { apolloClient } from "helpers/apollo-client";
 import { gql } from "@apollo/client";
 import { lensHub } from "./utils/lens-hub";
 import { login } from "./login-users";

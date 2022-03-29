@@ -1,4 +1,4 @@
-import unfollow from "@/lens/unfollow";
+import unfollow from "lens/unfollow.js";
 
 export default function UnfollowBtn({ profileId, setLoading }) {
 

@@ -1,4 +1,4 @@
-import lensLogo from "@/assets/lenslogo.png";
+import lensLogo from "assets/lenslogo.png";
 import { useNavigate } from "react-router-dom";
 
 export default function SelectProfile({ profiles }) {

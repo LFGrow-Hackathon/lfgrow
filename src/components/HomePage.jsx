@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import CreatePublication from "@/components/publications/CreatePublication.jsx";
-import { getTimeline } from "@/lens/get-timeline";
-import SingleFeed from "@/components/feed/SingleFeed";
+import CreatePublication from "components/publications/CreatePublication.jsx";
+import { getTimeline } from "lens/get-timeline.js";
+import SingleFeed from "components/feed/SingleFeed.jsx";
 
 export default function HomePage({ size }) {
   const [posts, setPosts] = useState([]);
@@ -37,8 +37,8 @@ export default function HomePage({ size }) {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
           : filterdPost?.profile?.handle?.length
-          ? filterdPost?.profile?.handle
-          : filterdPost?.profile?.id,
+            ? filterdPost?.profile?.handle
+            : filterdPost?.profile?.id,
         handle: filterdPost?.profile?.handle,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url

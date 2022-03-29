@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client/core";
-import { apolloClient } from "@/helpers/apollo-client";
+import { apolloClient } from "helpers/apollo-client";
 
 const GET_COMMENTS_BY_POST = `
 query getCommentsByPost(
@@ -80,7 +80,7 @@ const getCommets = (request) => {
   return apolloClient.query({
     query: gql(GET_COMMENTS_BY_POST),
     variables: request,
-    fetchPolicy: 'network-only'
+    fetchPolicy: "network-only"
   });
 };
 

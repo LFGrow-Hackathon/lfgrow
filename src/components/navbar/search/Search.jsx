@@ -1,27 +1,27 @@
-import { useState } from 'react'
-import { SearchIcon } from '@heroicons/react/solid'
-import { Combobox } from '@headlessui/react'
+import { useState } from "react";
+import { SearchIcon } from "@heroicons/react/solid";
+import { Combobox } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
-import LoadingSearchModal from '@/components/navbar/search/LoadingSearchModal'
-import searchAddress from '@/components/navbar/search/searchAddress'
-import searchHandle from '@/components/navbar/search/searchHandle'
+import LoadingSearchModal from "components/navbar/search/LoadingSearchModal.jsx";
+import searchAddress from "components/navbar/search/searchAddress.js";
+import searchHandle from "components/navbar/search/searchHandle.js";
 
 
 const searchFeature = [
-  { id: 1, base: 'handle: ', func: searchHandle },
-  { id: 2, base: 'address: ', func: searchAddress },
-  { id: 3, base: 'community: ', func: ({ query }) => `/communities/${query}` },
-  { id: 4, base: 'hashtag: ', func: ({ query }) => `/hastag/${query}` },
-]
+  { id: 1, base: "handle: ", func: searchHandle },
+  { id: 2, base: "address: ", func: searchAddress },
+  { id: 3, base: "community: ", func: ({ query }) => `/communities/${query}` },
+  { id: 4, base: "hashtag: ", func: ({ query }) => `/hastag/${query}` },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 function Search() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('Loading search');
+  const [message, setMessage] = useState("Loading search");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
@@ -57,8 +57,8 @@ function Search() {
                     value={{ query, feature }}
                     className={({ active }) =>
                       classNames(
-                        'relative cursor-default select-none py-2 pl-3 pr-9',
-                        active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                        "relative cursor-default select-none py-2 pl-3 pr-9",
+                        active ? "bg-indigo-600 text-white" : "text-gray-900"
                       )
                     }
                   >
@@ -80,7 +80,7 @@ function Search() {
         setIsError={setIsError}
       />
     </div>
-  )
+  );
 }
 
 export default Search;

@@ -1,4 +1,4 @@
-import { follow } from "@/lens/follow";
+import { follow } from "lens/follow.js";
 
 export default function FollowBtn({ profileId, setLoading }) {
 

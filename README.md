@@ -20,8 +20,8 @@ They can be found in "View Details" on the Moralis server page.
 ```sh
 touch .env 
 
-VITE_REACT_APP_MORALIS_SERVER_URL=""
-VITE_REACT_APP_MORALIS_APPLICATION_ID=""
+REACT_APP_MORALIS_SERVER_URL=""
+REACT_APP_MORALIS_APPLICATION_ID=""
 ```
 
 You're then ready to launch the app on localhost

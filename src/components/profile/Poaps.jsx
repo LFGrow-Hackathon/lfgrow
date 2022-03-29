@@ -3,7 +3,7 @@ export default function Poaps({ poaps }) {
     return (
       <div className="w-full mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500 shadow-md">
         POAPS
-        <p className="py-5 italic">This user doesn't have any poap</p>
+        <p className="py-5 italic">{"This user doesn't have any poap"}</p>
       </div>
     );
   }

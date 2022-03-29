@@ -1,7 +1,7 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Metamask from "@/assets/WalletIcons/metamaskWallet.png";
-import WalletConnect from "@/assets/WalletIcons/wallet-connect.svg";
+import Metamask from "assets/WalletIcons/metamaskWallet.png";
+import WalletConnect from "assets/WalletIcons/wallet-connect.svg";
 
 export default function ConnectModal({
   isAuthModalVisible,

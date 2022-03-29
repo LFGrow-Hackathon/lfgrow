@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import FullPost from "./FullPost";
+import FullPost from "./FullPost.jsx";
 
 const PostStatus = ({ postData, id, fnc, from, postId }) => {
   const { mirrored, mirrorFunc } = fnc;

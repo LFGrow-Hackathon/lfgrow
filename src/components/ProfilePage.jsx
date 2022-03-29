@@ -1,19 +1,19 @@
-import Twitter from "@/assets/twitter_logo.png";
+import Twitter from "assets/twitter_logo.png";
 import { BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
-import CreatePublication from "@/components/publications/CreatePublication.jsx";
-import Poaps from "@/components/profile/Poaps";
-import Daos from "@/components/profile/Daos";
-import DisplayNFT from "@/components/profile/DisplayNFT";
-import getProfiles from "@/lens/get-profiles.js";
+import CreatePublication from "components/publications/CreatePublication.jsx";
+import Poaps from "components/profile/Poaps.jsx";
+import Daos from "components/profile/Daos.jsx";
+import DisplayNFT from "components/profile/DisplayNFT.jsx";
+import getProfiles from "lens/get-profiles.js";
 import { useEffect, useState, useRef } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import getAllPoap from "@/api_call/getAllPoap";
-import getVote from "@/api_call/getVote";
-import MyFeed from "./feed/MyFeed";
-import defaultUserIcon from "@/assets/defaultUserIcon.svg";
-import doesFollowFunc from "@/lens/does-follow";
-import FollowBtn from "./buttons/FollowBtn";
-import UnfollowBtn from "./buttons/UnfollowBtn";
+import getAllPoap from "api_call/getAllPoap.js";
+import getVote from "api_call/getVote.js";
+import MyFeed from "./feed/MyFeed.jsx";
+import doesFollowFunc from "lens/does-follow.js";
+import FollowBtn from "./buttons/FollowBtn.jsx";
+import UnfollowBtn from "./buttons/UnfollowBtn.jsx";
+import defaultUserIcon from "assets/defaultUserIcon.png";
 import {
   useMoralis,
   useMoralisWeb3Api,
@@ -134,8 +134,8 @@ export default function ProfilePage() {
   const profileName = profile?.name
     ? profile.name
     : profile?.handle
-    ? profile.handle
-    : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+      ? profile.handle
+      : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
 
   return (
     <div className="flex">

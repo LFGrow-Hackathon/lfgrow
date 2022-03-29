@@ -3,8 +3,8 @@ import { useMoralis } from "react-moralis";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
-import ConnectModal from "@/components/navbar/connect/ConnectModal.jsx";
-import defaultUserIcon from "@/assets/defaultUserIcon.svg";
+import ConnectModal from "components/navbar/connect/ConnectModal.jsx";
+import defaultUserIcon from "assets/defaultUserIcon.png";
 
 const defaultImage = "https://storageapi.fleek.co/c43ca3a0-c092-4d21-8877-4dc28180feca-bucket/undraw_profile_pic_ic-5-t.svg";
 

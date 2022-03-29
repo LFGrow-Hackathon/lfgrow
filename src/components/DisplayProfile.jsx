@@ -1,9 +1,9 @@
 import { useEnsAddress, useNativeTransactions } from "react-moralis";
-import getProfiles from "@/lens/get-profiles.js";
-import doesFollowFunc from "@/lens/does-follow";
+import getProfiles from "lens/get-profiles.js";
+import doesFollowFunc from "lens/does-follow.js";
 import { useEffect, useState, useRef } from "react";
-import FollowBtn from "./buttons/FollowBtn";
-import UnfollowBtn from "./buttons/UnfollowBtn";
+import FollowBtn from "./buttons/FollowBtn.jsx";
+import UnfollowBtn from "./buttons/UnfollowBtn.jsx";
 
 export default function DisplayProfile(props) {
   const [profile, setProfile] = useState();

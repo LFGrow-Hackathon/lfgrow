@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client/core";
-import { apolloClient } from "@/helpers/apollo-client";
-import { getAddress } from "@/helpers/ethers-service";
+import { apolloClient } from "helpers/apollo-client";
+import { getAddress } from "helpers/ethers-service";
 
 const DOES_FOLLOW = `
   query($request: DoesFollowRequest!) {
@@ -25,7 +25,7 @@ const doesFollowRequest = (followInfos) => {
 
 const doesFollow = async (profileId) => {
   if (!profileId) {
-    throw new Error('profileId is undefined');
+    throw new Error("profileId is undefined");
   }
 
   const address = await getAddress();

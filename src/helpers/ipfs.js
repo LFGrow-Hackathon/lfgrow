@@ -1,5 +1,5 @@
-import { Moralis } from "moralis"
-import { v4 as uuidv4 } from 'uuid';
+import { Moralis } from "moralis";
+import { v4 as uuidv4 } from "uuid";
 
 async function uploadImageIpfs(fileToUpload) {
   const file = new Moralis.File(fileToUpload.name, fileToUpload);
@@ -8,11 +8,11 @@ async function uploadImageIpfs(fileToUpload) {
   return [{
     item: "https://gateway.moralisipfs.com/ipfs/" + file._hash,
     type: fileToUpload.type
-  }]
+  }];
 }
 
 async function uploadMetadataIpfs({ message, media }) {
-  const profileId = localStorage.getItem('profileId');
+  const profileId = localStorage.getItem("profileId");
   const metadata_id = uuidv4();
 
   const object = JSON.stringify({
@@ -27,7 +27,7 @@ async function uploadMetadataIpfs({ message, media }) {
     appId: "zilly"
   });
 
-  const encodedFile = { base64: btoa(object) }
+  const encodedFile = { base64: btoa(object) };
   const file = new Moralis.File(`publication-${profileId}-${metadata_id}.json`, encodedFile);
 
   await file.saveIPFS();

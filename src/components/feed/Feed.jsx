@@ -1,10 +1,9 @@
-import { getPublications } from "@/lens/get-publications";
+import { getPublications } from "lens/get-publications";
 import { useState, useEffect, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SingleFeed from "./SingleFeed";
-import CreatePublication from "../publications/CreatePublication";
-import iconUser from "@/assets/iconUser.png";
-import defaultUserIcon from "@/assets/defaultUserIcon.svg";
+import SingleFeed from "./SingleFeed.jsx";
+import CreatePublication from "../publications/CreatePublication.jsx";
+import defaultUserIcon from "assets/defaultUserIcon.png";
 
 const Feed = ({ size }) => {
   const [posts, setPosts] = useState([]);

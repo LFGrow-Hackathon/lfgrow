@@ -1,4 +1,4 @@
-import Comment from "./Comment";
+import Comment from "./Comment.jsx";
 
 const CommentList = ({ commentsData }) => {
   return (
