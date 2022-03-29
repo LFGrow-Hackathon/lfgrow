@@ -17,11 +17,11 @@ yarn install
 You will need to setup your .env file for your Moralis server key. 
 They can be found in "View Details" on the Moralis server page. 
 
+Add this to your .env file:
 ```sh
-touch .env 
-
 REACT_APP_MORALIS_SERVER_URL=""
 REACT_APP_MORALIS_APPLICATION_ID=""
+ALCHEMY_APIKEY=""
 ```
 
 You're then ready to launch the app on localhost
