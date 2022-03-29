@@ -89,7 +89,7 @@ const SingleFeed = ({ data }) => {
           <PostStatus
             postData={stats}
             fnc={{ mirrored, mirrorFunc }}
-            postId={postId}
+            id={postId}
           />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import FullPost from "./FullPost.jsx";
 
-const PostStatus = ({ postData, id, fnc, from, postId }) => {
+const PostStatus = ({ postData, id, fnc, from }) => {
   const { mirrored, mirrorFunc } = fnc;
 
   return (
@@ -40,7 +40,7 @@ const PostStatus = ({ postData, id, fnc, from, postId }) => {
             type="button"
             className="-ml-px relative inline-flex items-center p-2 pl-2 pr-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-slate-100"
           >
-            <NavLink to={"/post/" + postId}>
+            <NavLink to={"/post/" + id}>
               Comments
               <span className="inline-flex items-center ml-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
                 {postData.totalAmountOfComments}
