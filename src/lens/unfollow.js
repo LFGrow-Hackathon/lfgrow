@@ -1,9 +1,11 @@
 import { gql } from "@apollo/client/core";
 import { ethers } from "ethers";
 import { apolloClient } from "../helpers/apollo-client";
-import { LENS_HUB_ABI } from "lens/utils/config-abi";
+import { LENS_FOLLOW_NFT_ABI } from "lens/utils/config-abi";
 import { getAddress, getSigner, signedTypeData, splitSignature } from "helpers/ethers-service";
 import { login } from "lens/login-users";
+import { setDispatcher } from 'lens/set-dispatcher';
+import { relayTransactions } from 'api_call/relayTransactions';
 
 
 const CREATE_UNFOLLOW_TYPED_DATA = `
@@ -46,33 +48,19 @@ const createUnfollowTypedData = (profile) => {
 };
 
 const unfollow = async (unfollowProfileId) => {
-
-  await login();
-
   if (!unfollowProfileId) {
     throw new Error("unfollowProfileId is undefined");
   }
 
-  const address = await getAddress();
-  console.log("unfollow: address", address);
+  await setDispatcher();
 
-  // hard coded to make the code example clear
   const result = await createUnfollowTypedData(unfollowProfileId);
-  console.log("unfollow: result", result);
 
   const typedData = result.data.createUnfollowTypedData.typedData;
 
   const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
-  console.log("unfollow: signature", signature);
 
   const { v, r, s } = splitSignature(signature);
-
-  // load up the follower nft contract
-  const followNftContract = new ethers.Contract(
-    typedData.domain.verifyingContract,
-    LENS_HUB_ABI,
-    getSigner()
-  );
 
   const sig = {
     v,
@@ -81,9 +69,27 @@ const unfollow = async (unfollowProfileId) => {
     deadline: typedData.value.deadline,
   };
 
-  // force the tx to send
-  const tx = await followNftContract.burnWithSig(typedData.value.tokenId, sig);
-  console.log("follow: tx hash", tx.hash);
+  try {
+    const res = await relayTransactions({
+      method: "post",
+      url: "/api/unfollow",
+      data: {
+        contractAddress: typedData.domain.verifyingContract,
+        tokenId: typedData.value.tokenId,
+        sig
+      },
+    });
+  } catch (error) {
+    // load up the follower nft contract
+    const followNftContract = new ethers.Contract(
+      typedData.domain.verifyingContract,
+      LENS_FOLLOW_NFT_ABI,
+      getSigner()
+    );
+
+    const tx = await followNftContract.burnWithSig(typedData.value.tokenId, sig);
+    console.log("follow: tx hash", tx.hash);
+  }
 };
 
 export default unfollow;

@@ -1,8 +1,9 @@
-import { gql } from "@apollo/client/core";
-import { apolloClient } from "../helpers/apollo-client";
-import { signedTypeData, splitSignature, getAddress } from "helpers/ethers-service";
-import { lensHub } from "lens/utils/lens-hub";
-import { login } from "lens/login-users";
+import { gql } from '@apollo/client/core';
+import { apolloClient } from '../helpers/apollo-client';
+import { signedTypeData, splitSignature, getAddress } from 'helpers/ethers-service';
+import { lensHub } from 'lens/utils/lens-hub';
+import { setDispatcher } from 'lens/set-dispatcher';
+import { relayTransactions } from 'api_call/relayTransactions';
 
 const CREATE_FOLLOW_TYPED_DATA = `
   mutation($request: FollowRequest!) { 
@@ -46,14 +47,11 @@ const createFollowTypedData = (followRequestInfo) => {
 };
 
 export const follow = async (profileId) => {
-
-  await login();
-
   if (!profileId) {
     throw new Error("profileId is undefined");
   }
-  const address = getAddress();
-  console.log("follow: address", address);
+
+  await setDispatcher();
 
   const followRequest = [
     {
@@ -62,18 +60,15 @@ export const follow = async (profileId) => {
   ];
 
   const result = await createFollowTypedData(followRequest);
-  console.log("follow: result", result);
 
   const typedData = result.data.createFollowTypedData.typedData;
-  console.log("follow: typedData", typedData);
 
   const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
-  console.log("follow: signature", signature);
 
   const { v, r, s } = splitSignature(signature);
 
-  const tx = await lensHub.followWithSig({
-    follower: getAddress(),
+  const request = {
+    follower: await getAddress(),
     profileIds: typedData.value.profileIds,
     datas: typedData.value.datas,
     sig: {
@@ -82,7 +77,17 @@ export const follow = async (profileId) => {
       s,
       deadline: typedData.value.deadline,
     },
-  });
-  console.log("follow: tx hash", tx.hash);
-  return tx.hash;
+  }
+
+  try {
+    const res = await relayTransactions({
+      method: "post",
+      url: "/api/follow",
+      data: request,
+    });
+  } catch (error) {
+    const tx = await lensHub.followWithSig(request);
+    console.log('follow: tx hash', tx.hash);
+    return tx.hash;
+  }
 };

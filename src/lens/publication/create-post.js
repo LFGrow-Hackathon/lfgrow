@@ -1,8 +1,9 @@
-import { signedTypeData, splitSignature } from "helpers/ethers-service.js";
-import { lensHub } from "../utils/lens-hub";
-import { apolloClient } from "helpers/apollo-client.js";
-import { gql } from "@apollo/client";
-import { login } from "lens/login-users";
+import { signedTypeData, splitSignature } from 'helpers/ethers-service.js';
+import { lensHub } from '../utils/lens-hub';
+import { apolloClient } from 'helpers/apollo-client.js';
+import { gql } from '@apollo/client'
+import { setDispatcher } from 'lens/set-dispatcher';
+import { relayTransactions } from 'api_call/relayTransactions';
 /* import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed.js' */
 
 const CREATE_POST_TYPED_DATA = `
@@ -56,7 +57,7 @@ async function createPost({ ipfsCid }) {
     throw new Error("You do not have a Lens profile");
   }
 
-  await login();
+  await setDispatcher();
 
   const createPostRequest = {
     profileId,
@@ -70,31 +71,43 @@ async function createPost({ ipfsCid }) {
   };
 
   const result = await createPostTypedData(createPostRequest);
-
   const { domain, types, value } = result.data.createPostTypedData.typedData;
 
-  const signature = await signedTypeData(domain, types, value);
-
-  const { v, r, s } = splitSignature(signature);
-
-  const tx = await lensHub.postWithSig({
+  const request = {
     profileId: value.profileId,
     contentURI: value.contentURI,
     collectModule: value.collectModule,
     collectModuleData: value.collectModuleData,
     referenceModule: value.referenceModule,
-    referenceModuleData: value.referenceModuleData,
-    sig: {
-      v,
-      r,
-      s,
-      deadline: value.deadline,
-    },
-  });
+    referenceModuleData: value.referenceModuleData
+  }
 
-  await tx.wait();
-  /* const content = await pollUntilIndexed(tx.hash); */
-  return tx;
+  try {
+    const res = await relayTransactions({
+      method: "post",
+      url: "/api/create-post",
+      data: request,
+    });
+  } catch (error) {
+    console.error("Dispatcher error, going back to normal tx. ", error);
+    const signature = await signedTypeData(domain, types, value);
+
+    const { v, r, s } = splitSignature(signature);
+
+    const tx = await lensHub.postWithSig({
+      ...request,
+      sig: {
+        v,
+        r,
+        s,
+        deadline: value.deadline,
+      },
+    });
+
+    await tx.wait();
+    /* const content = await pollUntilIndexed(tx.hash); */
+    return tx;
+  }
 }
 
 export default createPost;
