@@ -29,6 +29,28 @@ export const ViewPost = () => {
     setLoading(false);
   };
 
+  const query = async () => { 
+    const queryArguments = {
+      commentArg: { commentsOf: routeParam.postId, limit: "50" },
+      postArg: { publicationId: routeParam.postId },
+    };
+    try {
+      const queryResponse = await getCommentsByPost(queryArguments);
+      console.log("queryResponse: ", queryResponse);
+      if (isMounted.current) {
+        setQueryRes(queryResponse);
+        setMirrorsCount(queryResponse.post.stats.totalAmountOfMirrors);
+      }
+    } catch (gQLErrorRes) {
+      if (isMounted.current) {
+        console.log("call setPostIdError: ");
+        setPostIdError(true);
+      }
+      console.log("Expected Error Of Invalid PostId");
+      console.log("gQLErrorRes: ", gQLErrorRes);
+    }
+  };
+
   useEffect(() => {
     if (profileId) {
       checkMirror(ActiveProfileId, routeParam.postId);
@@ -37,28 +59,6 @@ export const ViewPost = () => {
 
   useEffect(() => {
     isMounted.current = true;
-
-    const query = async () => {
-      const queryArguments = {
-        commentArg: { commentsOf: routeParam.postId, limit: "50" },
-        postArg: { publicationId: routeParam.postId },
-      };
-      try {
-        const queryResponse = await getCommentsByPost(queryArguments);
-        console.log("queryResponse: ", queryResponse);
-        if (isMounted.current) {
-          setQueryRes(queryResponse);
-          setMirrorsCount(queryResponse.post.stats.totalAmountOfMirrors);
-        }
-      } catch (gQLErrorRes) {
-        if (isMounted.current) {
-          console.log("call setPostIdError: ");
-          setPostIdError(true);
-        }
-        console.log("Expected Error Of Invalid PostId");
-        console.log("gQLErrorRes: ", gQLErrorRes);
-      }
-    };
     query();
 
     return () => {
@@ -116,7 +116,7 @@ export const ViewPost = () => {
                 mirrorFunc={mirrorFunc}
                 mirrorsCount={mirrorsCount}
               />
-              <CommentPublication pubId={routeParam.postId} />
+              <CommentPublication pubId={routeParam.postId} query={query} />
               <CommentList commentsData={queryRes.comments} />
             </>
           )}
