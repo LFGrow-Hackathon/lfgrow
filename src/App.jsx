@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "components/HomePage.jsx";
-import Welcome from "components/welcome/welcome.jsx";
+import Welcome from "components/welcome/Welcome.jsx";
 import TopBar from "components/navbar/TopBar.jsx";
 import Feed from "components/feed/Feed.jsx";
 import ProfilePage from "components/ProfilePage.jsx";
