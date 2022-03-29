@@ -203,6 +203,7 @@ const getMyPostsRequest = (request) => {
   return apolloClient.query({
     query: gql(GET_MY_POSTS),
     variables: { request },
+    fetchPolicy: "network-only",
   });
 };
 

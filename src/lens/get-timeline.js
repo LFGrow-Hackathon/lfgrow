@@ -312,6 +312,7 @@ const getTimelineRequest = (request) => {
   return apolloClient.query({
     query: gql(GET_TIMELINE),
     variables: { request },
+    fetchPolicy: "network-only",
   });
 };
 

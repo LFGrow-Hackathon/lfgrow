@@ -319,6 +319,7 @@ export const getPublicationsRequest = (request) => {
   return apolloClient.query({
     query: gql(GET_PUBLICATIONS),
     variables: { request },
+    fetchPolicy: "network-only",
   });
 };
 

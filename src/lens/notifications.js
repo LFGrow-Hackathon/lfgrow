@@ -228,5 +228,6 @@ export const getNotifications = (profileId) => {
         limit: 10
       }
     },
+    fetchPolicy: "network-only",
   });
 };

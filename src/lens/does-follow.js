@@ -20,6 +20,7 @@ const doesFollowRequest = (followInfos) => {
         followInfos,
       },
     },
+    fetchPolicy: "network-only",
   });
 };
 
