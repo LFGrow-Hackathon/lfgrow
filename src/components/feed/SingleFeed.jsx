@@ -13,7 +13,7 @@ const SingleFeed = ({ data }) => {
   const pubTime = data.postTimeStamp;
   const pubImge = data.postMedia;
   const postId = data.postId;
-  // const handle = data.profile.handle;
+  const handle = data.profile.handle;
   const profileId = window.localStorage.getItem("profileId");
   const [mirrored, setMirrored] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,15 +57,19 @@ const SingleFeed = ({ data }) => {
         <div className="p-4 my-1 border-t-1 border-b-2 border-slate-300 max-w-3xl w-full hover:bg-gray-50 hover:shadow-sm">
           <Link to={`/post/${postId}`}>
             <div className="flex space-x-3 py-10 pt-2">
-              <img
-                className="h-9 w-9 rounded-full ring-2 ring-blue-100"
-                src={userProPic}
-                alt="profile picture"
-              />
+              <Link to={`/profile/${handle}`}>
+                <img
+                  className="h-9 w-9 rounded-full ring-2 ring-blue-100 hover:brightness-90"
+                  src={userProPic}
+                  alt="profile picture"
+                />
+              </Link>
               <div className="flex-1 space-y-1 flex flex-col">
                 <div className="flex items-center justify-between">
                   <div className="">
-                    <h3 className="text-sm font-bold">{userProName}</h3>
+                    <Link to={`/profile/${handle}`}>
+                      <h3 className="text-sm font-bold hover:underline">{userProName}</h3>
+                    </Link>
                     <p className="text-gray-500 text-sm">{userProDesc}</p>
                   </div>
                   <p className="text-sm text-gray-500">
