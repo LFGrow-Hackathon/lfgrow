@@ -57,8 +57,6 @@ async function createPost({ ipfsCid }) {
     throw new Error("You do not have a Lens profile");
   }
 
-
-  console.log("Ok this is weird")
   await setDispatcher();
 
   const createPostRequest = {
@@ -72,35 +70,32 @@ async function createPost({ ipfsCid }) {
     }
   }
 
+  const result = await createPostTypedData(createPostRequest);
+  const { domain, types, value } = result.data.createPostTypedData.typedData;
+
+  const request = {
+    profileId: value.profileId,
+    contentURI: value.contentURI,
+    collectModule: value.collectModule,
+    collectModuleData: value.collectModuleData,
+    referenceModule: value.referenceModule,
+    referenceModuleData: value.referenceModuleData
+  }
+
   try {
     const res = await relayTransactions({
       method: "post",
       url: "/api/create-post",
-      data: createPostRequest,
+      data: request,
     });
-
-    console.log(res);
   } catch (error) {
-
-
-    const result = await createPostTypedData(createPostRequest);
-
-    const { domain, types, value } = result.data.createPostTypedData.typedData;
-
+    console.error("Dispatcher error, going back to normal tx. ", error);
     const signature = await signedTypeData(domain, types, value);
 
     const { v, r, s } = splitSignature(signature);
 
-    const res = await helloWorld();
-    console.log(res);
-
     const tx = await lensHub.postWithSig({
-      profileId: value.profileId,
-      contentURI: value.contentURI,
-      collectModule: value.collectModule,
-      collectModuleData: value.collectModuleData,
-      referenceModule: value.referenceModule,
-      referenceModuleData: value.referenceModuleData,
+      ...request,
       sig: {
         v,
         r,
@@ -113,7 +108,6 @@ async function createPost({ ipfsCid }) {
     /* const content = await pollUntilIndexed(tx.hash); */
     return tx;
   }
-
 }
 
 export default createPost;
