@@ -66,7 +66,6 @@ function App() {
       <Route element={<TopBar />}>
         <Route path="/" element={<Feed size="max-w-[70%]" />} />
         <Route path="/home" element={<HomePage size="max-w-[70%]" />} />
-        {/* <Route path="/profile" element={<ProfilePage address={account} />} /> */}
         <Route path="/profile/:handle" element={<ProfilePage />} />
         <Route path="/edit" element={<EditProfile />} />
         <Route path="/communities" element={<DiscoverCommunities />} />
