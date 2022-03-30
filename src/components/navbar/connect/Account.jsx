@@ -14,26 +14,8 @@ function classNames(...classes) {
 
 function Account(props) {
   const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
-  // const [handle, setHandle] = useState();
-  // const [userImage, setUserImage] = useState(defaultImage);
   const { authenticate, isAuthenticated, account, logout } = useMoralis();
-  // const profileId = window.localStorage.getItem("profileId");
 
-  // useEffect(async () => {
-  //   if (isAuthenticated) {
-  //     if (profileId && profileId !== "undefined") {
-  //       const { profiles } = await getProfiles({ profileIds: [profileId] });
-
-  //       setHandle(profiles.items[0].handle);
-  //       if (profiles.items[0].picture) {
-  //         setUserImage(profiles.items[0].picture.original?.url);
-  //       }
-  //     } else {
-  //       navigate("/welcome");
-  //     }
-  //   }
-
-  // }, [isAuthenticated, profileId]);
 
   if (!isAuthenticated || !account) {
     return (

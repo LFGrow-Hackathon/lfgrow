@@ -6,7 +6,7 @@ const CommentList = ({ commentsData }) => {
       {commentsData.items.map((data, key) => {
         return (
           <div className="w-full mt-5" key={key}>
-            <div className="pl-5 pr-5">
+            <div className="">
               <ul role="list" className="divide-solid divide-y divide-gray-200">
                 <Comment data={data} />
               </ul>

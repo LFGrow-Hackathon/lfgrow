@@ -45,6 +45,22 @@ export default function Daos({ DAO }) {
     organizeDAOs();
   }, [DAO]);
 
+  if (!DAODisplay) {
+    return (
+      <div className="grid grid-cols-2 mt-5 gap-4 animate-pulse sm:grid-cols-3">
+        <div
+          className="relative h-28 rounded-xl border bg-white px-3 py-5 shadow-sm flex items-center space-x-3">
+        </div>
+        <div
+          className="relative h-28 rounded-xl border bg-white px-3 py-5 shadow-sm flex items-center space-x-3">
+        </div>
+        <div
+          className="relative h-28 rounded-xl border bg-white px-3 py-5 shadow-sm flex items-center space-x-3">
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="grid grid-cols-2 mt-5 gap-4 sm:grid-cols-3">
       {DAODisplay &&

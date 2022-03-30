@@ -209,7 +209,7 @@ export default function ProfilePage() {
             </div>
             <div className="flex mt-8 mx-2 sm:mx-0 sm:mt-0 divide-x-2 h-10 items-center space-x-3">
               <div className="justify-center">
-                <div className="flex gap-2">
+                {/* <div className="flex gap-2">
                   {yearsDisplay ? (
                     <h4 className="text-md font-bold">{yearsDisplay}y</h4>
                   ) : (
@@ -221,7 +221,7 @@ export default function ProfilePage() {
                     ""
                   )}
                 </div>
-                <h4 className="text-xs text-slate-500">IN WEB3</h4>
+                <h4 className="text-xs text-slate-500">IN WEB3</h4> */}
               </div>
               <div className="block justify-center pl-2">
                 <h4 className="text-md font-bold">{poap?.length}</h4>

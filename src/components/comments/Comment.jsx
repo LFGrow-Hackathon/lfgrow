@@ -16,10 +16,10 @@ const Comment = ({ data }) => {
   // const userProDesc = profile.bio?.length ? profile.bio : "";
 
   return (
-    <li className="py-4 border-b-2 border-gray-100">
+    <li className="p-4 bg-white rounded-xl">
       <div className="flex space-x-3">
         <NavLink to={"/profile/" + handle}>
-          <img className="h-6 w-6 rounded-full" src={userProPic} alt="" />
+          <img className="h-8 w-8 rounded-full" src={userProPic} alt="" />
         </NavLink>
         <div className="flex-1 space-y-1">
           <div className="flex items-center justify-between">
