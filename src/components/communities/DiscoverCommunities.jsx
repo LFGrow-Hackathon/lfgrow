@@ -21,7 +21,7 @@ export default function DiscoverCommunities() {
     async function getCommunity() {
       const Community = Moralis.Object.extend("Community");
       const query = new Moralis.Query(Community);
-      query.greaterThan("followersCount", 100);
+      query.greaterThan("followersCount", 50);
       query.limit(200);
       query.descending("followersCount");
       const result = await query.find();
@@ -34,8 +34,8 @@ export default function DiscoverCommunities() {
 
   if (!communities) {
     return (
-      <div className="mt-10 mx-20">
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="mt-10  mx-5 sm:mr-20 2xl:mr-44">
+        <ul className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <Skeleton />
           <Skeleton />
           <Skeleton />
@@ -46,28 +46,28 @@ export default function DiscoverCommunities() {
   }
 
   return (
-    <div className="mt-10 mx-20">
+    <div className="mt-10  mx-5 sm:mr-20 2xl:mr-44">
       <p className="pb-10 text-xl font-bold text-gray-500">
         Discover 2700+ web3 communities
       </p>
       <ul
         role="list"
-        className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4"
       >
         {communities.map((community) => (
           <NavLink
             key={community.attributes.name}
             to={`/communities/${community.attributes.tokenId}`}
           >
-            <li className="col-span-1 flex flex-col text-center bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] rounded-lg shadow-md divide-y divide-gray-200 hover:shadow-xl">
-              <div className="flex flex-col justify-between h-64 bg-white text-white rounded-lg p-4">
-                <div className="flex-1 flex flex-col p-5">
+            <li className="col-span-1 flex flex-col text-center rounded-2xl shadow-md hover:shadow-xl">
+              <div className="flex flex-col justify-between h-52 sm:h-64 bg-white text-white rounded-lg p-4">
+                <div className="flex-1 flex flex-col sm:p-5">
                   <img
-                    className="w-20 h-20 flex-shrink-0 mx-auto rounded-full"
+                    className="w-14 h-14 sm:w-20 sm:h-20 flex-shrink-0 mx-auto rounded-full"
                     src={community.attributes.logo}
                     alt=""
                   />
-                  <h3 className="mt-6 text-gray-900 text-sm font-medium">
+                  <h3 className="mt-3 sm:mt-6 text-gray-900 text-sm font-medium">
                     {community.attributes.name}
                   </h3>
                   <dl className="mt-1 flex-grow flex flex-col  justify-between">

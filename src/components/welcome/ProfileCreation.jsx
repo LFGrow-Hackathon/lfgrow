@@ -21,11 +21,10 @@ export default function ProfileCreation() {
     if (result === false) {
       setIsLoading(false);
     } else {
-      navigate("/profile");
+      navigate(`/profile/${handle}`);
     }
     console.log("create profile: profile has been indexed", result);
     return true;
-
   };
 
   if (isLoading) {

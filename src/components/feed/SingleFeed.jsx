@@ -54,25 +54,25 @@ const SingleFeed = ({ data }) => {
       </div> */}
 
       <div className="flex w-full justify-center">
-        <div className="p-4 my-1 border-t-1 border-b-2 border-slate-300 max-w-3xl w-full hover:bg-gray-50 hover:shadow-sm">
+        <div className="p-4 mt-5 bg-white rounded-2xl max-w-3xl w-full hover:bg-gray-50 hover:shadow-sm">
           <Link to={`/post/${postId}`}>
-            <div className="flex space-x-3 py-10 pt-2">
+            <div className="flex w-full space-x-3 pb-5 pt-2">
               <img
                 className="h-9 w-9 rounded-full ring-2 ring-blue-100"
                 src={userProPic}
                 alt="profile picture"
               />
-              <div className="flex-1 space-y-1 flex flex-col">
-                <div className="flex items-center justify-between">
-                  <div className="">
+              <div className="space-y-1 flex flex-col overflow-hidden ">
+                <div className="flex w-full justify-between items-center">
+                  <div className="flex flex-col ">
                     <h3 className="text-sm font-bold">{userProName}</h3>
-                    <p className="text-gray-500 text-sm">{userProDesc}</p>
+                    <p className="w-52 pr-5 line-clamp-1 sm:line-clamp-2 sm:w-full text-gray-500 text-sm">{userProDesc}</p>
                   </div>
-                  <p className="text-sm text-gray-500">
+                  <p className="flex pl-5 text-sm text-gray-500">
                     {pubTime.slice(5, 10) + " " + pubTime.slice(12, 16)}
                   </p>
                 </div>
-                <p className="text-base text-gray-800 line-clamp-4 break-all">
+                <p className=" text-base pt-2 text-gray-800 line-clamp-4 break-words">
                   {pubContent?.replace(/(<([^>]+)>)/gi, "")}
                   {/* {pubContent} */}
                 </p>

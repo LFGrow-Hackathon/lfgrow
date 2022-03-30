@@ -6,7 +6,7 @@ const PostStatus = ({ postData, id, fnc, from, postId }) => {
 
   return (
     <>
-      <div className="w-full flex px-2 justify-start">
+      <div className="w-full flex px-2 justify-end">
         <span className="relative z-0 inline-flex shadow-sm rounded-md">
           {mirrored ? (
             <div className="relative inline-flex items-center p-2 pl-2 pr-2 rounded-l-md border border-gray-300 text-sm leading-4 font-medium text-white bg-gradient-to-r from-[#12C2E9] via-[#C471ED] to-[#F64F59] hover:bg-gray-50 focus:outline-none">

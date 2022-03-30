@@ -59,7 +59,7 @@ const Feed = ({ size }) => {
       <div className="m-4 mt-8 self-center text-lg text-slate-500">
         Explore Public Feed
       </div>
-      <div className="w-full h-full pl-5 pr-5 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center shadow-md">
+      <div className="w-full h-full sm:px-5 place-content-center">
         <CreatePublication />
         {posts.length ? (
           <InfiniteScroll

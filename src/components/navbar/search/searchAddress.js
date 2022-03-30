@@ -24,7 +24,7 @@ async function searchAddress({ query, setMessage, setIsError }) {
     if (isSupportedDomain(query)) {
       if (query.endsWith(".eth")) {
         setMessage("Looking in the ENS directory");
-        const provider = new ethers.providers.AlchemyProvider("homestead", process.env.VITE_ALCHEMY_APIKEY);
+        const provider = new ethers.providers.AlchemyProvider("homestead", process.env.REACT_APP_ALCHEMY_APIKEY);
 
         address = await provider.resolveName(query);
         if (!address) {
