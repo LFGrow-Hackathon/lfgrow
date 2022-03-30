@@ -40,7 +40,7 @@ const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
 
   return (
     <>
-      <div className="flex flex-col w-full self-start">
+      <div className="flex p-5 bg-white rounded-xl flex-col w-full self-start">
         <div className="flex justify-between">
           <div className="flex self-start space-x-1 space-y-3">
             <div className="my-2 mx-2">

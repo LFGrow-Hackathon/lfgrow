@@ -97,13 +97,10 @@ export const ViewPost = () => {
     };
   }, [mirrored]);
 
-  // console.log("routeParam: ", routeParam);
-  // console.log("res data", queryRes);
-
   return (
     <>
       <div className="flex w-full mt-10 lg:max-w-[70%] px-4">
-        <div className="rounded-md border-2 border-[#e1e8f7] m-1 w-full flex justify-center flex-col items-center">
+        <div className="m-1 w-full flex justify-center flex-col items-center">
           {postIdError ? (
             <PostIdError />
           ) : !queryRes ? (

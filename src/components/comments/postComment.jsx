@@ -42,10 +42,10 @@ function CommentPublication(props) {
 
   return (
     <>
-      <div className="flex items-start w-full  max-w-7xl mx-auto mt-5">
+      <div className="flex bg-white rounded-xl items-start w-full max-w-7xl mx-auto mt-5">
         <div className="max-w-3xl mx-auto flex-1">
           <form action="#" className="relative">
-            <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+            <div className="shadow-sm overflow-hidden">
               <label htmlFor="comment" className="sr-only">
                 Add your comment
               </label>
