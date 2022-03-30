@@ -25,6 +25,12 @@ function CommentPublication(props) {
     if (tx) {
       alert("Post has been successfully created :)");
     }
+    // lens needs time to be able to retreive the new comment, 5 seconds looks like enough
+    setTimeout(() => {
+      props.query()
+      setMessage('')
+    }, 8000)
+
   }
 
   const thumbs = file?.map((file) => (
@@ -42,10 +48,10 @@ function CommentPublication(props) {
 
   return (
     <>
-      <div className="flex items-start w-full  max-w-7xl mx-auto mt-5">
+      <div className="flex bg-white rounded-xl items-start w-full max-w-7xl mx-auto mt-5">
         <div className="max-w-3xl mx-auto flex-1">
           <form action="#" className="relative">
-            <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+            <div className="shadow-sm overflow-hidden">
               <label htmlFor="comment" className="sr-only">
                 Add your comment
               </label>
@@ -55,6 +61,7 @@ function CommentPublication(props) {
                 id="comment"
                 className="block w-full my-2 border-0 focus:ring-0 sm:text-sm"
                 placeholder="Add your comment..."
+                value={message}
                 onChange={(e) => {
                   setMessage(e.target.value);
                 }}

@@ -53,7 +53,7 @@ const MyFeed = ({ profileId }) => {
       },
       postId: filterdPost?.id,
       postContent: filterdPost?.metadata?.content,
-      postMedia: filterdPost?.metadata?.image,
+      postMedia: filterdPost?.metadata?.image ? filterdPost?.metadata?.image : filterdPost?.metadata?.media[0]?.original?.url,
       postTimeStamp: filterdPost?.createdAt,
       postStats: filterdPost?.stats,
     }));

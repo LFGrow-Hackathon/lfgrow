@@ -64,7 +64,7 @@ const SingleFeed = ({ data }) => {
                   alt="profile picture"
                 />
               </Link>
-              <div className="space-y-1 flex flex-col overflow-hidden">
+              <div className="space-y-1 w-full flex flex-col overflow-hidden">
                 <div className="flex w-full justify-between items-center">
                   <div className="flex flex-col">
                     <Link to={`/profile/${handle}`}>

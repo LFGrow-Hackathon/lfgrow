@@ -25,7 +25,7 @@ export default function ProfilePage() {
   const idURL = useParams();
   const [profile, setProfile] = useState();
   const [address, setAddress] = useState();
-  const [ens, setEns] = useState();
+  // const [ens, setEns] = useState();
   const [pageDoesntExist, setPageDoesntExist] = useState(false);
   const [isPageOwner, setIsPageOwner] = useState(false);
   const [poap, setPoap] = useState();
@@ -82,17 +82,15 @@ export default function ProfilePage() {
   useEffect(() => {
     async function fetchData() {
       if (address) {
-        const dataPoap = await getAllPoap(address);
-        const dataVote = await getVote(address);
-        const ALCHEMY = process.env.REACT_APP_ALCHEMY_APIKEY;
-        const provider = new ethers.providers.AlchemyProvider(
-          "homestead",
-          ALCHEMY
-        );
-        const ensResolved = await provider.lookupAddress(address);
+        // const ALCHEMY = process.env.REACT_APP_ALCHEMY_APIKEY;
+        // const provider = new ethers.providers.AlchemyProvider("homestead", ALCHEMY);
+        // const ensResolved = provider.lookupAddress(address);
+        const dataPoapPromise = getAllPoap(address);
+        const dataVotePromise = getVote(address);
+        const [dataPoap, dataVote] = await Promise.all([dataPoapPromise, dataVotePromise]);
         setPoap(dataPoap);
         setVote(dataVote);
-        setEns(ensResolved);
+        // setEns(ensResolved);
       }
       if (profile && profileId) {
         const resultFollow = await doesFollowFunc(profile.id);
@@ -143,12 +141,11 @@ export default function ProfilePage() {
   }
 
   const profileName = profile?.name
-    ? profile.name
+    ? profile?.handle
     : profile?.handle
-    ? profile.handle
-    : ens
-    ? ens
-    : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+      ? profile.handle
+      : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+
   const ProfileButton = () => {
     if (isPageOwner) {
       return (
@@ -216,7 +213,7 @@ export default function ProfilePage() {
             </div>
             <div className="flex mt-8 mx-2 sm:mx-0 sm:mt-0 divide-x-2 h-10 items-center space-x-3">
               <div className="justify-center">
-                <div className="flex gap-2">
+                {/* <div className="flex gap-2">
                   {yearsDisplay ? (
                     <h4 className="text-md font-bold">{yearsDisplay}y</h4>
                   ) : (
@@ -228,7 +225,7 @@ export default function ProfilePage() {
                     ""
                   )}
                 </div>
-                <h4 className="text-xs text-slate-500">IN WEB3</h4>
+                <h4 className="text-xs text-slate-500">IN WEB3</h4> */}
               </div>
               <div className="block justify-center pl-2">
                 <h4 className="text-md font-bold">{poap?.length}</h4>

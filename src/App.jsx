@@ -34,7 +34,6 @@ function App() {
     }
   }, [isAuthenticated, isWeb3Enabled]);
 
-  // to delete
   // asks the user for permission to change network to polygon mumbain testnet if other network is detected
   useEffect(() => {
     if (window.ethereum) {
