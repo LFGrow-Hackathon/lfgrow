@@ -30,6 +30,7 @@ export default function EditProfile(props) {
 
       setUserInfo({
         name: profiles.items[0].name || "",
+        handle: profiles.items[0].handle || "",
         bio: profiles.items[0].bio || "",
         location: profiles.items[0].location || "",
         website: profiles.items[0].website || "",
@@ -92,23 +93,27 @@ export default function EditProfile(props) {
 
     let data = {};
     data.profileId = profileId;
-    userInfo.name ? (data.name = userInfo.name) : profile.name;
-    userInfo.website ? (data.website = userInfo.website) : null;
-    userInfo.bio ? (data.bio = userInfo.bio) : profile.bio;
-    userInfo.location ? (data.location = userInfo.location) : null;
-    userInfo.twitterUrl ? (data.twitterUrl = userInfo.twitterUrl) : null;
-    userInfo.picture ? (data.picture = userInfo.picture) : null;
+    userInfo.name ? (data.name = userInfo.name) : (data.name = profile.name);
+    userInfo.website ? (data.website = userInfo.website) : (data.website = "");
+    userInfo.bio ? (data.bio = userInfo.bio) : (data.bio = "");
+    userInfo.location
+      ? (data.location = userInfo.location)
+      : (data.location = "");
+    userInfo.twitterUrl
+      ? (data.twitterUrl = userInfo.twitterUrl)
+      : (data.twitterUrl = "");
+    userInfo.picture ? (data.picture = userInfo.picture) : (data.picture = "");
 
     if (userInfo.coverPicture) {
       // we don't want the coverPicture field at all if nothing was added, otherwise it'll erase the previous one
       data.coverPicture = userInfo.coverPicture;
     }
     await updateProfile(data);
-    navigate("/");
+    navigate("/profile/" + userInfo.handle);
   };
 
   const cancel = () => {
-    navigate("/");
+    navigate("/profile/" + userInfo.handle);
   };
 
   return (

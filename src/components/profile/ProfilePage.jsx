@@ -65,6 +65,7 @@ export default function ProfilePage() {
       else if (handle.length < 32) {
         const { profiles } = await getProfiles({ handles: [handle] });
         if (profiles.items.length > 0) {
+          console.log("profile recu:", profiles.items[0]);
           setProfile(profiles.items[0]);
           setAddress(profiles.items[0].ownedBy);
         } else {
@@ -146,7 +147,6 @@ export default function ProfilePage() {
       : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
 
   const ProfileButton = () => {
-
     if (isPageOwner) {
       return (
         <div className="flex justify-end">
@@ -154,7 +154,8 @@ export default function ProfilePage() {
             to="/edit"
             className="inline-flex items-center max-h-10  text-md font-medium rounded-xl text-black hover:bg-gray-50"
           >
-            <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit profile
+            <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit
+            profile
           </NavLink>
         </div>
       );
@@ -173,9 +174,10 @@ export default function ProfilePage() {
               hasClickFollow={hasClickFollow}
             />
           )}
-        </>)
+        </>
+      );
     }
-    return (<></>)
+    return <></>;
   };
 
   return (
@@ -193,7 +195,9 @@ export default function ProfilePage() {
               </div>
               <div className="">
                 {(profile || address) && (
-                  <h4 className="text-xl sm:text-2xl font-bold">{profileName}</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold">
+                    {profileName}
+                  </h4>
                 )}
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
@@ -248,18 +252,21 @@ export default function ProfilePage() {
             <div className="hidden sm:block">
               <ProfileButton />
             </div>
-
           </div>
         </div>
         <div className="w-full h-full place-content-center">
           <div className="py-3 mt-5 rounded-2xl">
             <div className="w-fit font-bold min-h-10">
-              <p className="bg-gradient-to-r text-transparent bg-clip-text text-2xl from-[#609EEB] via-purple-500 to-[#E05E99]">Communities</p>
+              <p className="bg-gradient-to-r text-transparent bg-clip-text text-2xl from-[#609EEB] via-purple-500 to-[#E05E99]">
+                Communities
+              </p>
             </div>
             <Daos DAO={vote} />
           </div>
           <div className="mt-5 p-3 flex flex-row w-fit font-bold min-h-10">
-            <p className="bg-gradient-to-r pr-3 text-transparent bg-clip-text text-2xl from-[#609EEB] via-purple-500 to-[#E05E99]">Post</p>
+            <p className="bg-gradient-to-r pr-3 text-transparent bg-clip-text text-2xl from-[#609EEB] via-purple-500 to-[#E05E99]">
+              Post
+            </p>
             <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               {profile?.stats.totalPosts}
             </span>

@@ -31,8 +31,8 @@ const Feed = ({ size }) => {
         name: filterdPost?.profile?.name?.length
           ? filterdPost?.profile?.name
           : filterdPost?.profile?.handle?.length
-          ? filterdPost?.profile?.handle
-          : filterdPost?.profile?.id,
+            ? filterdPost?.profile?.handle
+            : filterdPost?.profile?.id,
         handle: filterdPost?.profile?.handle,
         picture: filterdPost?.profile?.picture
           ? filterdPost?.profile?.picture?.original.url
@@ -41,7 +41,7 @@ const Feed = ({ size }) => {
       },
       postId: filterdPost?.id,
       postContent: filterdPost?.metadata?.content,
-      postMedia: filterdPost?.metadata?.image,
+      postMedia: filterdPost?.metadata?.image ? filterdPost?.metadata?.image : filterdPost?.metadata?.media[0]?.original?.url,
       postTimeStamp: filterdPost?.createdAt,
       postStats: filterdPost.stats,
     }));

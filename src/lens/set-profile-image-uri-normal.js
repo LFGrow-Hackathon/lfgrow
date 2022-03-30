@@ -8,6 +8,7 @@ import {
 import { lensHub } from 'lens/utils/lens-hub';
 import { setDispatcher } from 'lens/set-dispatcher';
 import { relayTransactions } from "api_call/relayTransactions"
+import { pollUntilIndexed } from './utils/has-transaction-been-indexed'
 
 const CREATE_SET_PROFILE_IMAGE_URI_TYPED_DATA = `
   mutation($request: UpdateProfileImageRequest!) { 
@@ -65,6 +66,7 @@ export const setProfileImageUriNormal = async ({ profileId, url }) => {
       url: "/api/update-picture",
       data: { profileId, url },
     });
+    await pollUntilIndexed(res)
   } catch (error) {
     console.error(error)
 
@@ -92,6 +94,8 @@ export const setProfileImageUriNormal = async ({ profileId, url }) => {
         deadline: typedData.value.deadline,
       },
     });
+
+    await pollUntilIndexed(tx)
   }
 };
 

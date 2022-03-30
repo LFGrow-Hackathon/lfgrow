@@ -8,7 +8,7 @@ async function relayTransactions(params) {
   try {
     const response = await mainAxios(params);
 
-    console.log(response.data);
+    console.log('relay response =>',response.data);
     return response.data;
   } catch (error) {
     throw new Error(error.message.data);
