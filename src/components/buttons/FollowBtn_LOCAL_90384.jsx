@@ -5,7 +5,6 @@ export default function FollowBtn({ profileId, setLoading }) {
     await follow(profileId);
   };
 
-
   return (
     <button
       onClick={() => {

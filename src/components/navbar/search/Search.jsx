@@ -36,7 +36,7 @@ function Search() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-fit sm:w-80 md:w-[300px] lg:w-[400px] xl:w-[500px]">
       <div className="relative">
         <Combobox as="div" value={query} onChange={(text) => onSubmit(text)}>
           <div className="relative mt-1">

@@ -61,8 +61,8 @@ export default function HomePage({ size }) {
   };
 
   return (
-    <div className={`flex w-full lg:${size} px-4`}>
-      <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center shadow-md">
+    <div className={`flex w-full lg:${size} px-5 sm:px-10`}>
+      <div className="w-full h-full sm:mt-10 place-content-center">
         <CreatePublication />
         {posts.length ? (
           posts.map((post, key) => {

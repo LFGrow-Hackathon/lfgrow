@@ -67,10 +67,10 @@ function CreatePublication() {
 
   return (
     <>
-      <div className="flex items-start max-w-7xl mx-auto mt-5">
+      <div className="flex max-w-7xl mt-5">
         <div className="max-w-3xl mx-auto flex-1">
           <form action="#" className="relative">
-            <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+            <div className="rounded-2xl p-4 bg-white shadow-sm overflow-hidden">
               <label htmlFor="comment" className="sr-only">
                 Write your post here...
               </label>

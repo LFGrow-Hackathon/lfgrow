@@ -73,7 +73,7 @@ function Account(props) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none">
+          <Menu.Items className="absolute right-0 lg:right-5 xl:right-20 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none">
             <Menu.Item key={1}>
               {({ active }) => (
                 <NavLink
