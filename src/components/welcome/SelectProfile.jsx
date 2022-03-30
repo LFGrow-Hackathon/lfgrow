@@ -1,5 +1,6 @@
 import lensLogo from "assets/lenslogo.png";
 import { useNavigate } from "react-router-dom";
+import { setDispatcher } from "lens/set-dispatcher";
 
 export default function SelectProfile({ profiles }) {
   const navigate = useNavigate();
@@ -13,8 +14,9 @@ export default function SelectProfile({ profiles }) {
             {profiles.map((person) => (
               <li key={person.handle} className="bg-white">
                 <button className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
-                  onClick={() => {
+                  onClick={async () => {
                     window.localStorage.setItem("profileId", person.id);
+                    await setDispatcher();
                     navigate(`/profile/${person.handle}`);
                   }}>
                   <div className="flex-shrink-0">

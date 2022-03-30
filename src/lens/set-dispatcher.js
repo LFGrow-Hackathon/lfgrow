@@ -64,6 +64,7 @@ const disableDispatcherWithTypedData = (profileId) => {
 
 export const setDispatcher = async () => {
   const profileId = localStorage.getItem('profileId');
+  console.log("DIS", profileId);
   const deadline = window.localStorage.getItem("deadlineDispatcher");
 
   if (!profileId) {
