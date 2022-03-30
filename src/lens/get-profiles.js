@@ -88,6 +88,7 @@ const getProfilesRequest = (request) => {
     variables: {
       request,
     },
+    fetchPolicy: "network-only",
   });
 };
 

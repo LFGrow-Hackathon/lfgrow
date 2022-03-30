@@ -63,6 +63,7 @@ export default function ProfilePage() {
       else if (handle.length < 32) {
         const { profiles } = await getProfiles({ handles: [handle] });
         if (profiles.items.length > 0) {
+          console.log("profile recu:", profiles.items[0]);
           setProfile(profiles.items[0]);
           setAddress(profiles.items[0].ownedBy);
         } else {
@@ -135,8 +136,12 @@ export default function ProfilePage() {
   const profileName = profile?.name
     ? profile.name
     : profile?.handle
-      ? profile.handle
-      : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+    ? profile.handle
+    : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+
+  const profilePic = profile?.picture?.original?.url
+    ? profile.picture.original.url
+    : defaultUserIcon;
 
   return (
     <div className="flex">
@@ -147,7 +152,7 @@ export default function ProfilePage() {
               <div className="mr-4 w-20">
                 <img
                   className="inline-block h-20 w-20 rounded-full ring-2 ring-blue-100"
-                  src={profile?.picture?.original?.url || defaultUserIcon}
+                  src={profilePic}
                   alt="profile picture"
                 />
               </div>
