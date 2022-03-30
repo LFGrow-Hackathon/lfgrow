@@ -1,5 +1,6 @@
 import Twitter from "assets/twitter_logo.png";
 import { BookmarkIcon, PencilIcon } from "@heroicons/react/outline";
+import { ethers } from "ethers";
 import CreatePublication from "components/publications/CreatePublication.jsx";
 import Poaps from "components/profile/Poaps.jsx";
 import Daos from "components/profile/Daos.jsx";
@@ -24,6 +25,7 @@ export default function ProfilePage() {
   const idURL = useParams();
   const [profile, setProfile] = useState();
   const [address, setAddress] = useState();
+  const [ens, setEns] = useState();
   const [pageDoesntExist, setPageDoesntExist] = useState(false);
   const [isPageOwner, setIsPageOwner] = useState(false);
   const [poap, setPoap] = useState();
@@ -81,8 +83,12 @@ export default function ProfilePage() {
       if (address) {
         const dataPoap = await getAllPoap(address);
         const dataVote = await getVote(address);
+        const ALCHEMY = process.env.REACT_APP_ALCHEMY_APIKEY;
+        const provider = new ethers.providers.AlchemyProvider("homestead", ALCHEMY);
+        const ensResolved = await provider.lookupAddress(address);
         setPoap(dataPoap);
         setVote(dataVote);
+        setEns(ensResolved);
       }
       if (profile && profileId) {
         const resultFollow = await doesFollowFunc(profile.id);
@@ -109,7 +115,7 @@ export default function ProfilePage() {
 
   const getAccoutAge = () => {
     const firstTx =
-      Transactions?.result[Transactions.result.length - 1].block_timestamp;
+      Transactions?.result[Transactions.result.length - 1]?.block_timestamp;
     if (firstTx) {
       const firstTxDate = new Date(
         `${firstTx?.substring(5, 7)}/${firstTx.substring(
@@ -136,24 +142,58 @@ export default function ProfilePage() {
     ? profile.name
     : profile?.handle
       ? profile.handle
-      : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+      : ens ?
+        ens
+        : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+  const ProfileButton = () => {
+
+    if (isPageOwner) {
+      return (
+        <div className="flex justify-end">
+          <NavLink
+            to="/edit"
+            className="inline-flex items-center max-h-10  text-md font-medium rounded-xl text-black hover:bg-gray-50"
+          >
+            <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit profile
+          </NavLink>
+        </div>
+      );
+    } else if (profileId) {
+      return (
+        <>
+          {doesFollow ? (
+            <UnfollowBtn
+              profileId={profile?.id}
+              hasClickFollow={hasClickFollow}
+            />
+          ) : (
+            <FollowBtn
+              profileId={profile?.id}
+              setLoading={setLoading}
+              hasClickFollow={hasClickFollow}
+            />
+          )}
+        </>)
+    }
+    return (<></>)
+  };
 
   return (
     <div className="flex">
-      <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
+      <div className="w-full mt-10 px-4 sm:px-4 lg:pr-10">
         <div className="">
-          <div className="w-full flex justify-between">
+          <div className="w-full flex flex-col sm:flex-row justify-between">
             <div className="flex px-2 p-2">
-              <div className="mr-4 w-20">
+              <div className="mr-4 w-16 sm:w-20">
                 <img
-                  className="inline-block h-20 w-20 rounded-full ring-2 ring-blue-100"
+                  className="inline-block h-16 w-16 sm:h-20 sm:w-20 rounded-full"
                   src={profile?.picture?.original?.url || defaultUserIcon}
                   alt="profile picture"
                 />
               </div>
               <div className="">
                 {(profile || address) && (
-                  <h4 className="text-lg font-bold">{profileName}</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold">{profileName}</h4>
                 )}
                 <a
                   href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
@@ -163,8 +203,11 @@ export default function ProfilePage() {
                   <img className="inline-block h-5 w-5" src={Twitter} alt="" />
                 </a>
               </div>
+              <div className="block sm:hidden pl-10">
+                <ProfileButton />
+              </div>
             </div>
-            <div className="flex justify-end divide-x-2 h-10 space-x-3">
+            <div className="flex mt-8 mx-2 sm:mx-0 sm:mt-0 divide-x-2 h-10 items-center space-x-3">
               <div className="justify-center">
                 <div className="flex gap-2">
                   {yearsDisplay ? (
@@ -198,35 +241,25 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
-          <div className="flex w-full justify-between">
-            <div className="flex justify-start w-3/4 pl-2">
+          <div className="flex w-full mt-8 sm:mt-4 justify-between">
+            <div className="flex justify-start sm:w-3/4 pl-2">
               <p>{profile?.bio}</p>
             </div>
-            {isPageOwner ? (
-              <ProfileEditButton />
-            ) : !profileId ? (
-              <></>
-            ) : doesFollow ? (
-              <UnfollowBtn
-                profileId={profile?.id}
-                hasClickFollow={hasClickFollow}
-              />
-            ) : (
-              <FollowBtn
-                profileId={profile?.id}
-                setLoading={setLoading}
-                hasClickFollow={hasClickFollow}
-              />
-            )}
+            <div className="hidden sm:block">
+              <ProfileButton />
+            </div>
+
           </div>
         </div>
-        <div className="w-full h-full pl-5 pr-5 mt-5 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center shadow-md">
-          <div className="mt-5 p-3 rounded-3xl border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
-            Communities
+        <div className="w-full h-full place-content-center">
+          <div className="py-3 mt-5 rounded-2xl">
+            <div className="w-fit font-bold min-h-10">
+              <p className="bg-gradient-to-r text-transparent bg-clip-text text-2xl from-[#609EEB] via-purple-500 to-[#E05E99]">Communities</p>
+            </div>
+            <Daos DAO={vote} />
           </div>
-          <Daos DAO={vote} />
-          <div className="mt-5 p-3 rounded-3xl border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
-            Posts
+          <div className="mt-5 p-3 flex flex-row w-fit font-bold min-h-10">
+            <p className="bg-gradient-to-r pr-3 text-transparent bg-clip-text text-2xl from-[#609EEB] via-purple-500 to-[#E05E99]">Post</p>
             <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               {profile?.stats.totalPosts}
             </span>
@@ -234,28 +267,16 @@ export default function ProfilePage() {
           <CreatePublication />
 
           <MyFeed profileId={profile?.id} />
+          <div className="block sm:hidden mt-5">
+            <Poaps poaps={poap} />
+            <DisplayNFT NFT={NFT} />
+          </div>
         </div>
       </div>
-      <div className="w-2/5 mr-5">
-        <div className="flex max-h-10 mt-[129px] font-medium text-lg items-center">
-          Badges <BookmarkIcon className="h-5 w-5 ml-2" aria-hidden="true" />
-        </div>
+      <div className="hidden sm:block w-2/5 mr-20 xl:mr-32 mt-[140px]">
         <Poaps poaps={poap} />
         <DisplayNFT NFT={NFT} />
       </div>
     </div>
   );
 }
-
-const ProfileEditButton = () => {
-  return (
-    <div className="flex justify-end">
-      <NavLink
-        to="/edit"
-        className="inline-flex items-center max-h-10 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        <PencilIcon className="h-4 w-4 mr-2" aria-hidden="true" /> Edit profile
-      </NavLink>
-    </div>
-  );
-};

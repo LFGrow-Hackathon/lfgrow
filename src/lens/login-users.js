@@ -2,7 +2,7 @@ import { getAddress, signText } from "helpers/ethers-service";
 import { gql } from "@apollo/client";
 import { apolloClient } from "helpers/apollo-client";
 import getProfiles from "lens/get-profiles.js";
-import * as jose from "jose";
+import jwt_decode from "jwt-decode";
 
 const AUTHENTICATION = `
   mutation($request: SignedAuthChallenge!) { 
@@ -70,9 +70,10 @@ const refresh = async () => {
     return false;
   }
 
-  let decodedRefresh = jose.decodeJwt(refreshToken);
-  let decodedAccess = jose.decodeJwt(accessToken);
+  let decodedRefresh = jwt_decode(refreshToken);
+  let decodedAccess = jwt_decode(accessToken);
 
+  console.log("JWT", decodedAccess, decodedRefresh);
   //Check if the accessToken is expired or not
   if (decodedAccess.exp > Date.now() / 1000) {
     return true;

@@ -53,17 +53,17 @@ export default function CommunityPage() {
     return (
       <div className="flex">
         <div className="w-full mt-10 px-4 sm:px-4 lg:px-4">
-          <div className="header flex justify-between">
-            <div className="left flex">
-              <div className="mr-4 ">
+          <div className="w-full flex flex-col sm:flex-row justify-between">
+            <div className="flex px-2 p-2">
+              <div className="mr-4  w-16 sm:w-20">
                 <img
-                  className="inline-block h-20 w-20 rounded-full"
+                  className="inline-block h-16 w-16 sm:h-20 sm:w-20 rounded-full"
                   src={community?.logo}
-                  alt=""
+                  alt="logo"
                 />
               </div>
-              <div className="info flex flex-col justify-end">
-                <h4 className="text-lg font-bold">{community?.name || "-"}</h4>
+              <div className="">
+                <h4 className="text-xl sm:text-2xl font-bold">{community?.name || "-"}</h4>
                 <div className="links">
                   {community?.twitter_name ? (
                     <a
@@ -113,18 +113,19 @@ export default function CommunityPage() {
                 </div>
               </div>
             </div>
-            <p className="flex mr-5 w-1/2 text-ellipsis max-h-[50px] overflow-hidden mt-[15px]">
+          </div>
+          <div className="w-full h-full pl-5 pr-5 mt-10 ">
+            <p className="flex sm:w-3/4 line-clamp-4  overflow-hidden mb-5">
               {community.description}
             </p>
-          </div>
-          <div className="w-full h-full pl-5 pr-5 mt-10 bg-white border-2 border-[#e1e8f7] rounded-md place-content-center shadow-md">
-            <div className="mt-5 p-3 rounded-md border-[#355DA8] border-2 font-bold bg-[#e2effa] min-h-10 opacity-75">
-              Communities
+            <div className="w-fit font-bold min-h-10">
+              <p className="bg-gradient-to-r text-transparent bg-clip-text text-2xl from-[#609EEB] via-purple-500 to-[#E05E99]">Communities</p>
             </div>
+
             <CreatePublication />
           </div>
         </div>
-        <div className="w-2/5 mr-5">
+        <div className="hidden sm:w-2/5 mr-5">
           <div className="flex max-h-10 mt-[112px] font-lg text-xl items-center">
             Categories
           </div>
@@ -143,7 +144,7 @@ export default function CommunityPage() {
   } else {
     return (
       <div className="flex items-center justify-center w-full h-[80vh]">
-        <div className="w-4/5 ounded-md p-6 text-center mr-10 mb-10 text-xl text-white font-black">
+        <div className="rounded-md p-6 text-center mr-10 mb-10 text-xl text-white font-black">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black m-auto" />
           <p className="flex justify-center mt-5 text-lg text-black">
             Loading...
