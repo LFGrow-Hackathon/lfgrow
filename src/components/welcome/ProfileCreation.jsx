@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import createProfile from "lens/create-profile.js";
 import { useState } from "react";
+import { setDispatcher } from "lens/set-dispatcher";
 
 export default function ProfileCreation() {
 
@@ -14,9 +15,13 @@ export default function ProfileCreation() {
     if (forbiddenCharacter.test(handle)) {
       alert("Special character are not allowed.");
       return false;
+    } else if (handle.includes(' ')) {
+      alert("Spaces are not allowed.");
+      return false;
     }
     setIsLoading(true);
     const result = await createProfile(handle);
+    await setDispatcher();
 
     if (result === false) {
       setIsLoading(false);
