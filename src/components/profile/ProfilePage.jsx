@@ -200,7 +200,7 @@ export default function ProfilePage() {
                   </h4>
                 )}
                 <a
-                  href={profile?.twitterUrl || "https://twitter.com/yanis_mezn"}
+                  href={profile?.twitterUrl || "https://twitter.com/zilly_social"}
                   target="_blank"
                   rel="noreferrer"
                 >
