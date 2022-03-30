@@ -25,7 +25,7 @@ export default function ProfilePage() {
   const idURL = useParams();
   const [profile, setProfile] = useState();
   const [address, setAddress] = useState();
-  const [ens, setEns] = useState();
+  // const [ens, setEns] = useState();
   const [pageDoesntExist, setPageDoesntExist] = useState(false);
   const [isPageOwner, setIsPageOwner] = useState(false);
   const [poap, setPoap] = useState();
@@ -81,14 +81,15 @@ export default function ProfilePage() {
   useEffect(() => {
     async function fetchData() {
       if (address) {
-        const dataPoap = await getAllPoap(address);
-        const dataVote = await getVote(address);
-        const ALCHEMY = process.env.REACT_APP_ALCHEMY_APIKEY;
-        const provider = new ethers.providers.AlchemyProvider("homestead", ALCHEMY);
-        const ensResolved = await provider.lookupAddress(address);
+        // const ALCHEMY = process.env.REACT_APP_ALCHEMY_APIKEY;
+        // const provider = new ethers.providers.AlchemyProvider("homestead", ALCHEMY);
+        // const ensResolved = provider.lookupAddress(address);
+        const dataPoapPromise = getAllPoap(address);
+        const dataVotePromise = getVote(address);
+        const [dataPoap, dataVote] = await Promise.all([dataPoapPromise, dataVotePromise]);
         setPoap(dataPoap);
         setVote(dataVote);
-        setEns(ensResolved);
+        // setEns(ensResolved);
       }
       if (profile && profileId) {
         const resultFollow = await doesFollowFunc(profile.id);
@@ -139,12 +140,11 @@ export default function ProfilePage() {
   }
 
   const profileName = profile?.name
-    ? profile.name
+    ? profile?.handle
     : profile?.handle
       ? profile.handle
-      : ens ?
-        ens
-        : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+      : `${address?.substring(0, 5)}...${address?.substring(38, 42)}`;
+
   const ProfileButton = () => {
 
     if (isPageOwner) {

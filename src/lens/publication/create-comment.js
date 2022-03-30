@@ -51,10 +51,10 @@ const createCommentTypedData = (createCommentTypedDataRequest) => {
   });
 };
 
-const createComment = async (ipfsCid, _publicationId) => {
+const createComment = async ({ ipfsCid, publicationId, setTxIndexed }) => {
   const profileId = localStorage.getItem("profileId");
 
-  if (!ipfsCid && !_publicationId) {
+  if (!ipfsCid && !publicationId) {
     throw new Error("ipfsCid is undefined");
   } else if (profileId === "undefined") {
     throw new Error("You do not have a Lens profile");
@@ -64,7 +64,7 @@ const createComment = async (ipfsCid, _publicationId) => {
 
   const createCommentRequest = {
     profileId,
-    publicationId: _publicationId,
+    publicationId,
     contentURI: "ipfs://" + ipfsCid,
     collectModule: {
       revertCollectModule: true,

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getCommentsByPost } from "lens/get-comments-of-post.js";
 import FullPost from "./FullPost.jsx";
 import CommentList from "components/comments/CommentList.jsx";
-import CommentPublication from "../comments/postComment.jsx";
+import CreatePublication from "../publications/CreatePublication.jsx";
 import { createMirror } from "lens/mirror.js";
 import { hasMirrored } from "lens/check-mirror.js";
 
@@ -97,9 +97,6 @@ export const ViewPost = () => {
     };
   }, [mirrored]);
 
-  // console.log("routeParam: ", routeParam);
-  // console.log("res data", queryRes);
-
   return (
     <>
       <div className="flex w-full mt-10 lg:max-w-[70%] px-4">
@@ -116,7 +113,7 @@ export const ViewPost = () => {
                 mirrorFunc={mirrorFunc}
                 mirrorsCount={mirrorsCount}
               />
-              <CommentPublication pubId={routeParam.postId} />
+              <CreatePublication publicationId={routeParam.postId} />
               <CommentList commentsData={queryRes.comments} />
             </>
           )}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import createPost from "lens/publication/create-post.js";
+import createComment from "lens/publication/create-comment.js";
 import getProfiles from "lens/get-profiles.js";
 import { uploadImageIpfs, uploadMetadataIpfs } from "helpers/ipfs.js";
 import UploadFileModal from "components/publications/UploadFileModal.jsx";
@@ -11,7 +12,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function CreatePublication() {
+function CreatePublication(props) {
   const profileId = window.localStorage.getItem("profileId");
   const [file, setFile] = useState([]);
   const [profile, setProfile] = useState()
@@ -29,7 +30,11 @@ function CreatePublication() {
 
     const ipfsCid = await uploadMetadataIpfs({ message, media });
 
-    createPost({ ipfsCid, setTxIndexed });
+    if (props.publicationId) {
+      createComment({ ipfsCid, publicationId: props.publicationId, setTxIndexed });
+    } else {
+      createPost({ ipfsCid, setTxIndexed });
+    }
     setMockPost({
       name: profile?.name,
       handle: profile.handle,
@@ -39,6 +44,8 @@ function CreatePublication() {
       postMedia: media?.item
     });
     setIsLoading(false);
+    setFile([])
+    setMessage("")
   }
 
   const thumbs = file?.map((file) => (
@@ -67,7 +74,7 @@ function CreatePublication() {
 
   return (
     <>
-      <div className="flex max-w-7xl mt-5">
+      <div className="max-w-7xl mt-5 flex items-start w-full  ">
         <div className="max-w-3xl mx-auto flex-1">
           <form action="#" className="relative">
             <div className="rounded-2xl p-4 bg-white shadow-sm overflow-hidden">
@@ -122,7 +129,8 @@ function CreatePublication() {
                   )}
                 >
                   {isLoading && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mx-1" />}
-                  {!isLoading && <p>Post</p>}
+                  {!isLoading && props.publicationId && <p>Comment</p>}
+                  {!isLoading && !props.publicationId && <p>Post</p>}
                 </button>
               </div>
             </div>
