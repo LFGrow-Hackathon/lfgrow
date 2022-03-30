@@ -4,7 +4,7 @@ import { apolloClient } from 'helpers/apollo-client.js';
 import { gql } from '@apollo/client'
 import { setDispatcher } from 'lens/set-dispatcher';
 import { relayTransactions } from 'api_call/relayTransactions';
-/* import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed.js' */
+import { pollUntilIndexed } from 'lens/utils/has-transaction-been-indexed.js';
 
 const CREATE_POST_TYPED_DATA = `
   mutation($request: CreatePublicPostRequest!) { 
@@ -48,7 +48,7 @@ function createPostTypedData(createPostTypedDataRequest) {
   });
 }
 
-async function createPost({ ipfsCid }) {
+async function createPost({ ipfsCid, setTxIndexed }) {
   const profileId = localStorage.getItem("profileId");
 
   if (!ipfsCid) {
@@ -83,11 +83,15 @@ async function createPost({ ipfsCid }) {
   }
 
   try {
-    const res = await relayTransactions({
+    const tx = await relayTransactions({
       method: "post",
       url: "/api/create-post",
       data: request,
     });
+
+    const content = await pollUntilIndexed(tx);
+    console.log(content);
+    setTxIndexed(true);
   } catch (error) {
     console.error("Dispatcher error, going back to normal tx. ", error);
     const signature = await signedTypeData(domain, types, value);
@@ -106,7 +110,6 @@ async function createPost({ ipfsCid }) {
 
     await tx.wait();
     /* const content = await pollUntilIndexed(tx.hash); */
-    return tx;
   }
 }
 

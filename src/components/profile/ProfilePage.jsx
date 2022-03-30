@@ -109,7 +109,7 @@ export default function ProfilePage() {
 
   const getAccoutAge = () => {
     const firstTx =
-      Transactions?.result[Transactions.result.length - 1].block_timestamp;
+      Transactions?.result[Transactions.result.length - 1]?.block_timestamp;
     if (firstTx) {
       const firstTxDate = new Date(
         `${firstTx?.substring(5, 7)}/${firstTx.substring(

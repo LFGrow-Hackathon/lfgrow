@@ -1,30 +1,44 @@
 import { useState, useEffect } from "react";
 import createPost from "lens/publication/create-post.js";
+import getProfiles from "lens/get-profiles.js";
 import { uploadImageIpfs, uploadMetadataIpfs } from "helpers/ipfs.js";
 import UploadFileModal from "components/publications/UploadFileModal.jsx";
 import { PaperClipIcon } from "@heroicons/react/solid";
+import defaultUserIcon from "assets/defaultUserIcon.png";
+import MockSingleFeed from "../feed/MockSingleFeed";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 function CreatePublication() {
+  const profileId = window.localStorage.getItem("profileId");
   const [file, setFile] = useState([]);
+  const [profile, setProfile] = useState()
   const [message, setMessage] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [mockPost, setMockPost] = useState();
+  const [txIndexed, setTxIndexed] = useState(false);
 
   async function createPublication(event) {
     event.preventDefault();
+    setIsLoading(true)
 
     const media = file.length > 0 ? await uploadImageIpfs(file[0]) : [];
 
     const ipfsCid = await uploadMetadataIpfs({ message, media });
 
-    const tx = await createPost({ ipfsCid });
-
-    if (tx) {
-      alert("Post has been successfully created :)");
-    }
+    createPost({ ipfsCid, setTxIndexed });
+    setMockPost({
+      name: profile?.name,
+      handle: profile.handle,
+      profilePicture: profile?.picture?.original?.url || defaultUserIcon,
+      bio: profile?.bio,
+      postContent: message,
+      postMedia: media?.item
+    });
+    setIsLoading(false);
   }
 
   const thumbs = file?.map((file) => (
@@ -39,6 +53,17 @@ function CreatePublication() {
     // Make sure to revoke the data uris to avoid memory leaks
     URL.revokeObjectURL(file?.preview);
   }, [file]);
+
+  useEffect(() => {
+    async function fetchProfileInfo() {
+      const { profiles } = await getProfiles({ profileIds: [profileId] });
+      setProfile(profiles.items[0]);
+    }
+
+    if (profileId && profileId !== "undefined") {
+      fetchProfileInfo();
+    }
+  }, [profileId])
 
   return (
     <>
@@ -96,13 +121,15 @@ function CreatePublication() {
                     "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white"
                   )}
                 >
-                  Post
+                  {isLoading && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mx-1" />}
+                  {!isLoading && <p>Post</p>}
                 </button>
               </div>
             </div>
           </form>
+          {mockPost && <MockSingleFeed data={mockPost} />}
         </div>
-      </div>
+      </div >
 
       {isModalVisible && (
         <UploadFileModal
@@ -110,7 +137,8 @@ function CreatePublication() {
           setIsModalVisible={setIsModalVisible}
           setFile={setFile}
         />
-      )}
+      )
+      }
     </>
   );
 }

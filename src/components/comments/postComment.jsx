@@ -25,6 +25,12 @@ function CommentPublication(props) {
     if (tx) {
       alert("Post has been successfully created :)");
     }
+    // lens needs time to be able to retreive the new comment, 5 seconds looks like enough
+    setTimeout(() => {
+      props.query()
+      setMessage('')
+    }, 8000)
+
   }
 
   const thumbs = file?.map((file) => (
@@ -55,6 +61,7 @@ function CommentPublication(props) {
                 id="comment"
                 className="block w-full my-2 border-0 focus:ring-0 sm:text-sm"
                 placeholder="Add your comment..."
+                value={message}
                 onChange={(e) => {
                   setMessage(e.target.value);
                 }}
