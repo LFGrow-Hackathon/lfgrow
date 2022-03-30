@@ -9,17 +9,17 @@ export default function Poaps({ poaps }) {
   }
 
   return (
-    <div className="w-full mt-5 p-2 bg-white border-2 border-[#e1e8f7] rounded-md text-md text-slate-500 shadow-md">
-      POAPS
+    <div className="w-full mt-5 sm:mt-16 p-4 bg-white rounded-3xl text-md text-slate-500 shadow-md">
+      {`POAPs - ${poaps?.length}`}
       <ul
         role="list"
-        className="grid grid-cols-1 mt-5 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        className="grid grid-cols-4 mt-5 gap-1"
       >
         {poaps &&
-          poaps.map((poap, index) => (
+          poaps.slice(0, 16).map((poap, index) => (
             <li
               key={index}
-              className="col-span-1 flex flex-col text-center bg-white rounded-lg"
+              className="col-span-1 flex flex-col text-center rounded-lg"
             >
               <div className="flex-1 flex flex-col">
                 <a

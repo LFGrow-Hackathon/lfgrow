@@ -66,7 +66,14 @@ export default function ConnectModal({
                 <button
                   type="button"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm"
-                  onClick={() => setIsAuthModalVisible(false)}
+                  onClick={async () => {
+                    try {
+                      await authenticate({ provider: "walletconnect" });
+                      window.localStorage.setItem("connectorId", "walletconnect");
+                    } catch (e) {
+                      console.error(e);
+                    }
+                  }}
                 >
                   <img src={WalletConnect} alt={"WalletConnect"} />
                   WalletConnect

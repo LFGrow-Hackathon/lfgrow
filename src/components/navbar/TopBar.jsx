@@ -11,6 +11,7 @@ import {
   MenuAlt2Icon,
   XIcon,
 } from "@heroicons/react/outline";
+import logoZilly from "../../assets/logoZilly.svg"
 import Account from "./connect/Account";
 import Search from "./search/Search";
 
@@ -51,7 +52,7 @@ export default function TopBar() {
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
-            className="fixed inset-0 flex z-40 md:hidden"
+            className="fixed inset-0 flex z-40 lg:hidden"
             onClose={setSidebarOpen}
           >
             <Transition.Child
@@ -107,7 +108,7 @@ export default function TopBar() {
                   </NavLink>
                 </div>
                 <div className="mt-5 flex-1 h-0 overflow-y-auto">
-                  <div className="flex w-1/5 flex-col pt-10 pr-5">
+                  <div className="flex flex-col pt-10 ">
                     <button
                       onClick={() => {
                         if (isAuthenticated && handle) {
@@ -117,11 +118,12 @@ export default function TopBar() {
                             "You need to be connected to access you profile page"
                           );
                         }
+                        setSidebarOpen(false)
                       }}
-                      className="inline-flex items-center w-36 mr-3 ml-10 px-5 py-2  text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100"
+                      className="inline-flex items-center w-36 mr-3 ml-3 px-5 py-2  text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100"
                     >
                       <UserIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-                      <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">
+                      <p className="">
                         My profile
                       </p>
                     </button>
@@ -129,7 +131,8 @@ export default function TopBar() {
                     {profileId ? (
                       <NavLink
                         to="/home"
-                        className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
+                        className="inline-flex items-center w-fit mx-3 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
+                        onClick={() => setSidebarOpen(false)}
                       >
                         <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" />{" "}
                         Home
@@ -140,7 +143,8 @@ export default function TopBar() {
 
                     <NavLink
                       to="/"
-                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
+                      className="inline-flex items-center w-fit mx-3 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
+                      onClick={() => setSidebarOpen(false)}
                     >
                       <LightningBoltIcon
                         className="mr-2 h-5 w-5"
@@ -150,7 +154,8 @@ export default function TopBar() {
                     </NavLink>
                     <NavLink
                       to="/communities"
-                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
+                      className="inline-flex items-center w-fit mx-3 px-5 py-2 text-base font-medium rounded-lg text-black bg-[#fcfcfc] hover:bg-gray-100"
+                      onClick={() => setSidebarOpen(false)}
                     >
                       <UserGroupIcon
                         className="mr-2 h-5 w-5"
@@ -169,16 +174,16 @@ export default function TopBar() {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+        <div className="hidden lg:flex lg:w-64 2xl:w-96 3xl:w-[500px] md:flex-col md:fixed md:inset-y-0">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-col flex-grow bg-[#fcfcfc] overflow-y-auto">
-            <div className="flex items-center py-3 flex-shrink-0 bg-gradient-to-r from-[#13C2E9] to-[#609EEB] px-4">
-              <NavLink to="/" className="text-white font-bold pl-10 text-4xl">
-                Zilly
+          <div className="flex flex-col  flex-grow bg-gray-100 overflow-y-auto">
+            <div className="flex justify-end py-5 pr-20 flex-shrink-0 bg-gradient-to-r from-[#13C2E9] to-[#609EEB]">
+              <NavLink to="/" className="text-white font-bold  text-4xl">
+                <img src={logoZilly} alt="" className="h-6" />
               </NavLink>
             </div>
-            <div className="mt-5 flex-grow flex flex-col">
-              <div className="flex w-1/5 flex-col pt-10 gap-1">
+            <div className="mt-5 flex-grow items-end pr-10 flex flex-col">
+              <div className="flex flex-col pt-10 gap-1">
                 <button
                   onClick={() => {
                     if (isAuthenticated && handle) {
@@ -189,23 +194,21 @@ export default function TopBar() {
                       );
                     }
                   }}
-                  className="inline-flex items-center w-36 mr-3 ml-10 px-5 py-2  text-base font-medium rounded-lg text-black bg-white hover:bg-gray-100"
+                  className="inline-flex items-center w-36 py-2 text-xl font-medium rounded-lg text-black hover:bg-white focus:bg-white"
                 >
                   <UserIcon
-                    className="mr-2 h-5 w-5 text-blue-400"
+                    className="ml-3 mr-2 h-7 w-7"
                     aria-hidden="true"
                   />
-                  <p className="bg-gradient-to-r text-transparent bg-clip-text from-[#609EEB] via-purple-500 to-[#E05E99]">
-                    My profile
-                  </p>
+                  My profile
                 </button>
                 {profileId ? (
                   <>
                     <NavLink
                       to="/home"
-                      className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
+                      className="inline-flex items-center w-fit px-3 py-2 text-xl font-medium rounded-lg text-black hover:bg-white focus:bg-white"
                     >
-                      <HomeIcon className="mr-2 h-5 w-5" aria-hidden="true" />{" "}
+                      <HomeIcon className="mr-2 h-7 w-7" aria-hidden="true" />{" "}
                       Home
                     </NavLink>
                   </>
@@ -215,47 +218,47 @@ export default function TopBar() {
 
                 <NavLink
                   to="/"
-                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
+                  className="inline-flex items-center w-fit px-3 py-2 text-xl font-medium rounded-lg text-black hover:bg-white focus:bg-white"
                 >
                   <LightningBoltIcon
-                    className="mr-2 h-5 w-5"
+                    className="mr-2 h-7 w-7"
                     aria-hidden="true"
                   />
                   Explore
                 </NavLink>
                 <NavLink
                   to="/communities"
-                  className="inline-flex items-center w-fit mr-3 ml-10 px-5 py-2 text-base font-medium rounded-lg text-black hover:bg-gray-100"
+                  className="inline-flex items-center w-fit px-3 py-2 text-xl font-medium rounded-lg text-black hover:bg-white focus:bg-white"
                 >
-                  <UserGroupIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+                  <UserGroupIcon className="mr-2 h-7 w-7" aria-hidden="true" />
                   Communities
                 </NavLink>
               </div>
             </div>
           </div>
         </div>
-        <div className="md:pl-64 flex flex-col flex-1">
+        <div className="lg:pl-64 2xl:pl-96 3xl:pl-[500px] flex flex-col flex-1">
           <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white">
             <button
               type="button"
-              className="px-4 bg-gradient-to-r from-[#13C2E9] to-[#609EEB] text-white  md:hidden"
+              className="px-4 bg-gradient-to-r from-[#13C2E9] to-[#609EEB] text-white  lg:hidden"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
-              <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
+              <MenuAlt2Icon className="h-10 w-10" aria-hidden="true" />
             </button>
-            <div className="flex-1 px-4 flex justify-between bg-gradient-to-r from-[#609EEB] via-purple-500 to-[#E05E99]">
-              <div className="flex-1 flex items-center">
+            <div className="flex-auto px-4 flex bg-gradient-to-r from-[#609EEB] via-purple-500 to-[#E05E99]">
+              <div className="flex-auto flex items-center justify-center">
                 <Search />
               </div>
-              <div className="ml-4 flex items-center md:ml-6">
+              <div className="ml-4 flex items-center md:ml-6 lg:pr-10 xl:pr-44 2xl:pr-56">
                 <button
                   type="button"
                   // onClick={async () => {
                   //   const result = await getNotifications("0x018e");
                   //   console.log("NOTIF", result);
                   // }}
-                  className="bg-white p-1 mr-2 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="hidden sm:block bg-white p-1 mr-2 rounded-full text-gray-400 hover:text-gray-500"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -267,7 +270,7 @@ export default function TopBar() {
             </div>
           </div>
 
-          <main className="flex-1">
+          <main className="flex-1 bg-gray-100">
             <Outlet />
           </main>
         </div>
