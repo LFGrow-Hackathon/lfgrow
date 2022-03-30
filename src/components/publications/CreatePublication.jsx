@@ -87,6 +87,7 @@ function CreatePublication(props) {
                 id="comment"
                 className="block w-full my-2 border-0 focus:ring-0 sm:text-sm"
                 placeholder="Write your post here..."
+                value={message}
                 onChange={(e) => {
                   setMessage(e.target.value);
                 }}
