@@ -140,6 +140,10 @@ export default function ProfilePage() {
     return <p>This profile doesn&apos;t exist</p>;
   }
 
+  function addDefaultPFP(ev) {
+    ev.target.src = defaultUserIcon;
+  }
+
   const profileName = profile?.name
     ? profile?.handle
     : profile?.handle
@@ -191,6 +195,7 @@ export default function ProfilePage() {
                   className="inline-block h-16 w-16 sm:h-20 sm:w-20 rounded-full"
                   src={profile?.picture?.original?.url || defaultUserIcon}
                   alt="profile picture"
+                  onError={addDefaultPFP}
                 />
               </div>
               <div className="">
