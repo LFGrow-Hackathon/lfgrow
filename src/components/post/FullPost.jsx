@@ -38,6 +38,11 @@ const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
     }
   }, []);
 
+  const resolveLink = (url) => {
+    if (!url || !url.includes("ipfs://")) return url;
+    return url.replace("ipfs://", "https://gateway.ipfs.io/ipfs/");
+  };
+
   return (
     <>
       <div className="flex p-5 bg-white rounded-xl flex-col w-full self-start">
@@ -74,7 +79,7 @@ const FullPost = ({ postData, mirrored, mirrorFunc, mirrorsCount }) => {
           ) : (
             <div className="post picture flex justify-center">
               <img
-                src={postData.metadata.image}
+                src={resolveLink(postData.metadata.image)}
                 alt="post image"
                 className="rounded w-96 pr-2"
               />

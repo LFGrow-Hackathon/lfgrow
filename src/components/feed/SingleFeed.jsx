@@ -3,6 +3,7 @@ import { hasMirrored } from "lens/check-mirror.js";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PostStatus from "../post/PostStatus.jsx";
+import defaultUserIcon from "assets/defaultUserIcon.png";
 
 const SingleFeed = ({ data }) => {
   const stats = data.postStats;
@@ -35,6 +36,10 @@ const SingleFeed = ({ data }) => {
     }
   }, [loading]);
 
+  function addDefaultPFP(ev) {
+    ev.target.src = defaultUserIcon;
+  }
+
   return (
     <>
       {/* <div className="bg-gray-700 flex justify-center flex-col items-center text-white border border-rose-300 ">
@@ -62,6 +67,7 @@ const SingleFeed = ({ data }) => {
                   className="h-9 w-9 rounded-full ring-2 ring-blue-100 hover:brightness-90"
                   src={userProPic}
                   alt="profile picture"
+                  onError={addDefaultPFP}
                 />
               </Link>
               <div className="space-y-1 w-full flex flex-col overflow-hidden">
