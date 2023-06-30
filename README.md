@@ -1,3 +1,10 @@
+
+
+![image](https://github.com/LFGrow-Hackathon/lfgrow/assets/33808300/ac8578f6-1790-4b58-a0c6-5c9bfcde704f)
+
+https://ethglobal.com/events/lfgrow/home
+
+
 ## Introduction
 
 This project is built using react, tailwindcss and Moralis ([documentation](https://docs.moralis.io/introduction/readme)) for our backend. 
